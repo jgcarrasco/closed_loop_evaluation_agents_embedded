@@ -1,0 +1,107 @@
+{
+  "agent_name": "pi-thermal_chamber_hysteresis-realistic_self_verify-gpt-5.4-20260329T155511Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-29T17:25:11.256000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 1,
+    "time_to_first_submission_seconds": 259.839,
+    "wall_clock_seconds": 299.31027727993205
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-gpt-5.4-20260329T155511Z/20260329T172511Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-gpt-5.4-20260329T155511Z/20260329T172511Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-gpt-5.4-20260329T155511Z/20260329T172511Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4",
+    "model": "gpt-5.4",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 330624,
+    "cache_write_tokens": 0,
+    "completion_tokens": 12762,
+    "completion_tokens_after_first_submission": 196,
+    "completion_tokens_before_first_submission": 12566,
+    "cost": 0.0,
+    "prompt_tokens": 20275,
+    "prompt_tokens_after_first_submission": 331,
+    "prompt_tokens_before_first_submission": 19944,
+    "total_tokens": 363661,
+    "total_tokens_after_first_submission": 60559,
+    "total_tokens_before_first_submission": 303102
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/pi_stdout.log",
+  "task_id": "thermal_chamber_hysteresis",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 0,
+    "false_green_rate": 0.0,
+    "runtime_probe_case_count": 1,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller_behavior.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 1,
+    "self_test_runs": 1,
+    "self_tests_written": 9
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller_behavior.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 325,
+    "lines_changed_total": 331,
+    "lines_deleted": 6,
+    "tool_call_breakdown": {
+      "bash": 9,
+      "find": 6,
+      "grep": 2,
+      "ls": 1,
+      "read": 17,
+      "write": 2
+    },
+    "tool_call_count": 37
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/thermal_chamber_hysteresis__realistic_self_verify__gpt-5.4/workspace"
+}

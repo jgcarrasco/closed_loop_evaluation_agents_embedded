@@ -1,0 +1,21 @@
+The task is complete. All tests passed:
+
+**Summary:**
+
+1. **Implemented controller logic in `components/controller/controller.c`:**
+   - Boot defaults to PUMP OFF
+   - LEVEL < 30 → PUMP ON (STATE_PUMPING)
+   - LEVEL > 80 → PUMP OFF (STATE_SAFE_OFF)
+   - 30 ≤ LEVEL ≤ 80 → Hold previous state (STATE_HOLDING)
+   - Malformed input or SENSOR_TIMEOUT → PUMP OFF immediately
+   - Timeout (>1000ms without valid sensor) → PUMP OFF
+
+2. **Created comprehensive tests in `agent_tests/test_controller.py`:**
+   - 12 firmware-level end-to-end tests covering all checklist items
+   - Tests for boot state, low/high levels, mid-band holding, malformed input, sensor timeout, idle timeout, and boundary conditions
+
+3. **Results:**
+   - Build: PASS
+   - Host unit tests: PASS
+   - Integration tests: PASS (4 scenarios, 0 constraint violations)
+   - All acceptance criteria from docs/10_task.md satisfied

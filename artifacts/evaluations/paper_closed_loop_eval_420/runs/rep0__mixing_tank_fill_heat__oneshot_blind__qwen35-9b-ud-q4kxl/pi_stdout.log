@@ -1,0 +1,22 @@
+The submission has been recorded. In `oneshot_blind` mode, the hidden grader output is intentionally withheld according to the benchmark documentation. 
+
+**Summary:**
+
+I implemented the mixing tank fill-and-heat controller as specified in `docs/10_task.md`. The implementation:
+
+1. **Files modified:**
+   - `components/controller/controller.c` - Implemented the full control policy
+   - `components/controller/include/controller.h` - Added `heater_was_on_when_entering_holding` field to track heater state when entering HOLDING
+
+2. **Key behaviors implemented:**
+   - Boot leaves inlet closed and heater off (SAFE_IDLE)
+   - Stays in SAFE_IDLE until both temperature and level sensors have been seen validly
+   - Level < 60: INLET OPEN, HEATER OFF (FILLING state)
+   - Level > 75 with temp < 45: INLET CLOSED, HEATER ON (HEATING state)
+   - Level > 75 with temp >= 45: INLET CLOSED, holds heater state based on temp band (HOLDING state)
+   - Level < 55 at any time: keeps HEATER OFF regardless of temperature
+   - Temp 47-48 with rising temperature: early HEATER OFF
+   - Temp > 48: HEATER OFF
+   - Sensor timeout (>1000ms stale): forces SAFE_IDLE with both actuators off
+
+3. **Final status:** SUBMISSION_RECORDED (oneshot_blind mode hides grader output)

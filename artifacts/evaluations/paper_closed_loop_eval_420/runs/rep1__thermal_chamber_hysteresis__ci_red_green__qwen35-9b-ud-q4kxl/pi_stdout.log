@@ -1,0 +1,41 @@
+The implementation looks good. Let me create a summary of what was implemented:
+
+## Summary
+
+I've successfully implemented the thermal chamber hysteresis controller according to the specifications in `docs/10_task.md`. Here's what was done:
+
+### Controller Implementation (`components/controller/controller.c`)
+
+The controller implements the following control policy:
+
+1. **Boot**: Keeps heater off (SAFE_OFF state)
+2. **Low Temperature (< 47°C)**: Turns heater ON (HEATING state)
+3. **High Temperature (> 52°C)**: Turns heater OFF (SAFE_OFF state)
+4. **Mid-Low Range (47-49°C)**: Holds previous safe actuator state (HOLDING state)
+5. **Mid-High Range (50-52°C) with rising temp**: Turns heater OFF early, state is HOLDING
+6. **Mid-High Range (50-52°C) stable**: Holds previous safe actuator state (HOLDING)
+7. **Malformed input / Sensor timeout**: Turns heater OFF (SAFE_OFF)
+8. **Stale data (> 1000ms)**: Turns heater OFF (SAFE_OFF)
+
+### Key Features
+
+- Proper temperature comparison for anticipatory heater-off logic (saves previous temp before updating)
+- Timeout handling for stale sensor data
+- State machine with three states: SAFE_OFF, HEATING, HOLDING
+- Robust input handling for malformed data
+
+### Tests (`agent_tests/test_controller.py`)
+
+Created comprehensive tests covering all acceptance criteria from the task specification:
+- Boot leaves heater off
+- Low temperature drives heater on
+- High temperature drives heater off  
+- Mid-range temperatures preserve state
+- Rising temperature in upper band triggers early heater-off (anticipatory)
+- Malformed input forces heater off
+- Sensor timeout forces heater off
+- Stale sensor data forces heater off
+- Closed-loop stays within safety limits (≤ 56°C)
+- Firmware-level end-to-end probe through UART
+
+All tests pass successfully, and the submission to the hidden grader shows **PASS**.

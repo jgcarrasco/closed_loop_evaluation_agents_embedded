@@ -1,0 +1,21 @@
+The task is complete. The controller implementation passed all tests and the hidden grader submission returned PASS.
+
+## Summary
+
+I implemented a thermal chamber hysteresis controller with the following behavior:
+
+1. **Boot**: Heater starts OFF (SAFE_OFF state)
+
+2. **Temperature Control Policy**:
+   - `TEMP < 47°C`: Turn heater ON (HEATING state)
+   - `TEMP > 52°C`: Turn heater OFF (SAFE_OFF state)
+   - `47°C ≤ TEMP < 50°C`: Hold previous actuator state (HOLDING state)
+   - `50°C ≤ TEMP ≤ 52°C` with rising temperature: Early heater OFF (HOLDING state)
+   - `50°C ≤ TEMP ≤ 52°C` not rising: Hold previous actuator state (HOLDING state)
+
+3. **Fault Handling**:
+   - Malformed input → Heater OFF
+   - Sensor timeout → Heater OFF  
+   - Stale data (>1000ms) → Heater OFF
+
+4. **Self-Verification**: Created 10 comprehensive tests covering all checklist items, including firmware-level end-to-end runtime probes through UART using `FirmwareSession`.

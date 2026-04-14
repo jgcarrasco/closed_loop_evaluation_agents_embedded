@@ -1,0 +1,11 @@
+Implemented the controller behavior in `components/controller/controller.c` and submitted once with:
+
+- `python3 tools/run_eval.py`
+
+Final visible submission status:
+
+- `Status: SUBMISSION_RECORDED`
+- `Benchmark mode: oneshot_blind`
+- `Submission index: 1`
+- `Submission budget: 1`
+- Hidden grader results are withheld in this mode.

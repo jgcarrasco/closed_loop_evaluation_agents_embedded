@@ -1,0 +1,24 @@
+The submission has been recorded successfully. The benchmark mode is `oneshot_blind`, which means:
+- Only one submission is allowed (and we used it)
+- Hidden grader results are withheld
+- Public self-verification helpers are intentionally omitted
+
+## Summary
+
+I implemented the pressure vessel interlock controller in `components/controller/controller.c`. The implementation follows all the requirements from `docs/10_task.md`:
+
+**Control Policy:**
+1. **Boot**: Compressor OFF, Vent OPEN (SAFE_VENT state)
+2. **Door open**: Keep compressor OFF, vent OPEN
+3. **Door closed + PRESS < 40**: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+4. **Door closed + PRESS > 60**: COMPRESSOR OFF, VENT OPEN (RELIEVING)
+5. **Door closed + 40 ≤ PRESS ≤ 60**: Hold previous safe output (HOLDING)
+6. **Malformed input or timeout (>1000ms stale)**: Safe vent-open state
+
+**Key implementation details:**
+- Tracks freshness of both pressure and door sensors using timestamps
+- Checks for sensor staleness on every step call (including `CONTROLLER_INPUT_NONE` for idle polling)
+- Enforces the rule that compressor ON and vent OPEN are never commanded simultaneously
+- Properly handles the transition from safe vent to operational states only after both sensors have been seen validly
+
+**Final submission status:** `SUBMISSION_RECORDED` - Submission index 1 of 1 (budget exhausted in oneshot_blind mode).

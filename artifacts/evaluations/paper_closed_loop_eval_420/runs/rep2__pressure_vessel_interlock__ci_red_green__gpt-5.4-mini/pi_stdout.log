@@ -1,0 +1,19 @@
+Implemented the controller and verified it.
+
+What changed:
+- Added the missing `controller_state_t` enum and state-name macros in `components/controller/include/controller.h`
+- Rewrote `components/controller/controller.c` to:
+  - boot in safe vent-open
+  - track sensor freshness independently
+  - stay safe until both sensors are valid
+  - enforce low/high/band pressure behavior
+  - fail safe on malformed input and stale sensors
+  - never command compressor on with vent open
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- Firmware-level UART runtime probe included in `agent_tests/test_controller_firmware.py` ✅
+- `python3 tools/run_eval.py --strict-exit-code` ✅ hidden PASS
+
+If you want, I can also summarize the control-state logic in a short table.

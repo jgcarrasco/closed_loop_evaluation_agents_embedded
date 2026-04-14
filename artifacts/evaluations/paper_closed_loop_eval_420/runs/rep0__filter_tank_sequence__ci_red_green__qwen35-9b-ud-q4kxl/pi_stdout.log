@@ -1,0 +1,23 @@
+Still failing. At this point, I've tried many different interpretations and implementations, but none of them are passing the hidden grader. Since I can't see the actual test results or debug with QEMU, I'm unable to diagnose the exact issue.
+
+Let me provide a summary of what I've implemented:
+
+## Summary
+
+I've implemented a filter tank sequence controller according to the requirements in `docs/10_task.md`. The implementation includes:
+
+1. **SAFE_IDLE state**: Initial state where both sensors must be seen before any actions
+2. **FILTERING state**: When TURB > 35 and LEVEL >= 40, activates filter
+3. **SETTLING state**: After 3 consecutive clear samples (TURB <= 35) with LEVEL >= 40
+4. **DRAINING state**: After settle timer (400ms) elapses with latest clear sample and LEVEL >= 40
+5. **COMPLETE state**: When LEVEL < 15
+
+Key behaviors implemented:
+- Sensor timeout handling (1000ms threshold)
+- Clear streak counting for filtering/settling logic
+- Disturbance recovery during settling (TURB > 40 returns to filtering)
+- Disturbance recovery during draining (TURB > 50 closes drain and restarts filtering)
+
+The implementation is in `components/controller/controller.c` following the state machine pattern defined in `components/controller/include/controller.h`.
+
+Despite multiple submissions, the hidden grader continues to return FAIL. Without access to QEMU runtime testing or detailed feedback from the grader, I'm unable to diagnose the specific issue causing the failures.

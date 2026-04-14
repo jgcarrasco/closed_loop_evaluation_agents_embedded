@@ -1,0 +1,14 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, hidden grader results are intentionally withheld from visibility. The final visible status is:
+
+**Submission Status: SUBMISSION_RECORDED**
+
+Summary of implementation:
+- Updated `components/controller/controller.c` to implement the pressure vessel interlock controller logic
+- Controller now properly handles:
+  - Boot state: compressor OFF, vent OPEN (safe vent)
+  - Sensor timeout detection (>1000ms stale data forces safe vent)
+  - Door open: always safe vent
+  - Pressure <40 kPa with door closed: COMPRESSOR ON, VENT CLOSED (pressurizing)
+  - Pressure >60 kPa with door closed: COMPRESSOR OFF, VENT OPEN (relieving)
+  - Pressure 40-60 kPa: hold previous safe output (holding)
+  - Invalid/malformed input: safe vent state

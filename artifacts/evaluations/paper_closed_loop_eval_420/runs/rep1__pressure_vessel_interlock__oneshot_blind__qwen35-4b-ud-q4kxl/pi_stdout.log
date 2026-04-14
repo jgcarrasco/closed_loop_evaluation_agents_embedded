@@ -1,0 +1,16 @@
+**Final Submission Status:**
+
+✅ **SUBMISSION RECORDED** - The controller implementation has been submitted to the hidden grader.
+
+Since this is a `oneshot_blind` benchmark mode:
+- Hidden grader results are withheld
+- No public self-verification helpers are available
+- This was intentionally designed as a one-shot submission with blind evaluation
+
+The implementation in `components/controller/controller.c` follows all requirements from `docs/10_task.md`:
+- Safe vent state on boot and when door is open
+- Pressurizing when pressure < 40 kPa with door closed
+- Relieving when pressure > 60 kPa with door closed  
+- Holding previous state when 40 <= pressure <= 60 kPa with door closed
+- Timeout to safe vent when any sensor is stale (>1000ms)
+- Never commands COMPRESSOR ON and VENT OPEN simultaneously

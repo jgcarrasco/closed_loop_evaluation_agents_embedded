@@ -1,0 +1,21 @@
+The submission has been recorded successfully. The status is **SUBMISSION_RECORDED**.
+
+## Summary
+
+I implemented the mixing tank fill-and-heat controller in `components/controller/controller.c` with the following logic:
+
+### Control Policy Implemented:
+1. **Boot state**: Inlet closed, heater off (SAFE_IDLE)
+2. **Safe until both sensors valid**: Controller stays in SAFE_IDLE until both temperature and level sensors have been seen
+3. **Low level (< 60)**: INLET OPEN, HEATER OFF (FILLING state)
+4. **High level (> 75)**: INLET CLOSED, HEATER OFF (SAFE_IDLE)
+5. **Level < 55**: Heater always OFF
+6. **Safe level (60-75) with low temp (< 45)**: INLET CLOSED, HEATER ON (HEATING state)
+7. **Near upper band (45 ≤ TEMP < 47)**: INLET CLOSED, hold previous heater state (HOLDING)
+8. **Early off zone (47 ≤ TEMP ≤ 48)**: 
+   - If temperature is rising: HEATER OFF early
+   - If not rising: hold previous heater state
+9. **High temp (> 48)**: INLET CLOSED, HEATER OFF (SAFE_IDLE)
+10. **Timeout/malformed input**: Go to SAFE_IDLE state
+
+### Final Submission Status: **SUBMISSION_RECORDED**

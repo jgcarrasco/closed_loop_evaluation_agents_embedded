@@ -1,0 +1,32 @@
+All tests pass consistently. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Pressure Vessel Interlock Controller. The key changes were made to `/components/controller/controller.c`:
+
+### Key Implementation Details:
+
+1. **Sensor Stale Detection**: Fixed `is_sensor_stale()` to only check sensor age when sensors have been seen before (not treating uninitialized sensors as stale).
+
+2. **Control Policy Logic**: Implemented the pressure/door interlock policy in `apply_control_policy()`:
+   - Door open or invalid → SAFE_VENT state (compressor OFF, vent OPEN)
+   - Door closed + low pressure (<40) → PRESSURIZING state (compressor ON, vent CLOSED)
+   - Door closed + high pressure (>60) → RELIEVING state (compressor OFF, vent OPEN)
+   - Door closed + medium pressure (40-60) → HOLDING state (preserves previous output)
+
+3. **Timeout Handling**: When either sensor becomes stale for >1000ms, transition to SAFE_VENT state.
+
+4. **Re-evaluation on Idle Steps**: Fixed a critical bug where `CONTROLLER_INPUT_NONE` was passing `0` as pressure value instead of using the existing pressure. This caused the controller to incorrectly try to pressurize even when pressure was high.
+
+### Tests Created:
+
+Created comprehensive tests in `/agent_tests/test_controller.py` covering:
+- Boot behavior (compressor OFF, vent OPEN)
+- Door closed with low/high pressure
+- Holding band preservation
+- Door open forcing safe vent
+- Malformed input handling
+- Never commanding COMPRESSOR ON + VENT OPEN together
+- Full end-to-end nominal cycle through UART
+
+All host unit tests and integration scenarios now pass (6/6).

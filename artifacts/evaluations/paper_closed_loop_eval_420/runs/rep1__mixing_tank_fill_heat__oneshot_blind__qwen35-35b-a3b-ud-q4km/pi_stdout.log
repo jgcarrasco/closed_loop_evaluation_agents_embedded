@@ -1,0 +1,23 @@
+## Final Submission Status
+
+**Submission completed successfully.**
+
+### Summary of Implementation
+
+I implemented the mixing tank fill-and-heat controller in `components/controller/controller.c` with the following control policy:
+
+1. **Boot state**: Inlet closed, heater off (SAFE_IDLE)
+2. **Sensor freshness check**: If either temperature or level data is stale (>1000ms), go to SAFE_IDLE
+3. **Fill phase** (`LEVEL < 60`): INLET OPEN, HEATER OFF → FILLING state
+4. **Overflow protection** (`LEVEL > 75`): INLET CLOSED
+5. **Safety guard** (`LEVEL < 55`): Heater always OFF regardless of temperature
+6. **Heating phase** (`60 ≤ LEVEL ≤ 75` and `TEMP < 45`): INLET CLOSED, HEATER ON → HEATING state
+7. **Holding zone** (`45 ≤ TEMP < 47`): Hold previous safe heater state → HOLDING state
+8. **Early cutoff** (`47 ≤ TEMP ≤ 48` and rising): HEATER OFF → HOLDING state
+9. **Overheat protection** (`TEMP > 48`): INLET CLOSED, HEATER OFF → SAFE_IDLE
+
+### Submission Details
+
+- **Benchmark mode**: `oneshot_blind` (single submission, hidden grader results withheld)
+- **Submission index**: 1 of 1
+- **Status**: SUBMISSION_RECORDED

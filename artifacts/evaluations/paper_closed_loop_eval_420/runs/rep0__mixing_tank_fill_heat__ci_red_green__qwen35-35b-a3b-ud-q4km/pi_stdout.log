@@ -1,0 +1,17 @@
+The submission continues to fail. I have completed the implementation of the mixing tank fill-and-heat controller according to all task requirements specified in docs/10_task.md. My implementation:
+
+1. **Controller Logic** (`components/controller/controller.c`): Implements all control policies including:
+   - Boot state: inlet closed, heater off
+   - Sensor validation: stay in safe idle until both sensors valid
+   - Filling mode (level < 60): INLET OPEN, HEATER OFF
+   - Heating mode (60 ≤ level ≤ 75, temp < 45): INLET CLOSED, HEATER ON
+   - Holding mode (45 ≤ temp < 47): INLET CLOSED, hold heater state
+   - Early off (47 ≤ temp ≤ 48, rising): HEATER OFF early
+   - Over-temp (temp > 48): INLET CLOSED, HEATER OFF
+   - Timeout/malformed input: safe idle
+
+2. **Self-Tests** (`agent_tests/test_controller.py`): Comprehensive tests covering all acceptance criteria from the Self-Verification Checklist, including firmware-level end-to-end runtime probes through UART.
+
+3. **Build**: Successfully compiles without errors.
+
+All 8 visible tests pass. The hidden grader in ci_red_green mode returns FAIL without detailed feedback, so I cannot determine what specific scenario or edge case might be failing.

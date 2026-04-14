@@ -1,0 +1,19 @@
+The implementation is complete. Here's a summary of what was implemented:
+
+## Final Submission Status: **SUBMISSION_RECORDED**
+
+### Implementation Summary
+
+The thermal chamber hysteresis controller in `components/controller/controller.c` implements the following control policy:
+
+1. **Boot state**: Heater OFF, state SAFE_OFF
+2. **TEMP < 47°C**: Heater ON, state HEATING
+3. **TEMP > 52°C**: Heater OFF, state SAFE_OFF
+4. **47 ≤ TEMP < 50°C**: Hold previous safe actuator state, state HOLDING
+5. **50 ≤ TEMP ≤ 52°C and rising**: Early heater OFF (anticipatory), state HOLDING
+6. **50 ≤ TEMP ≤ 52°C and not rising**: Hold previous safe actuator state, state HOLDING
+7. **Malformed input**: Heater OFF, state SAFE_OFF
+8. **Sensor timeout input**: Heater OFF, state SAFE_OFF
+9. **Stale sensor data (>1000ms)**: Heater OFF, state SAFE_OFF
+
+The submission was recorded successfully in `oneshot_blind` benchmark mode where hidden grader results are withheld by design.

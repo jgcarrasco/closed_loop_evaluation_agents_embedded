@@ -1,0 +1,19 @@
+The submission has been recorded successfully. In the `oneshot_blind` benchmark mode, hidden grader results are withheld by design as specified in the task instructions. The implementation is complete:
+
+**Summary of implementation:**
+
+1. **Controller logic implemented in `components/controller/controller.c`:**
+   - Initializes to safe idle state (inlet closed, heater off)
+   - Tracks sensor freshness for temperature and level
+   - Enforces 1000ms timeout threshold for stale sensors
+   - Implements the fill-and-heat policy:
+     - LEVEL < 60 → INLET OPEN, HEATER OFF (filling)
+     - LEVEL > 75 → INLET CLOSED
+     - LEVEL < 55 → HEATER OFF (even if temp is low)
+     - 60 ≤ LEVEL ≤ 75 and TEMP < 45 → INLET CLOSED, HEATER ON (heating)
+     - 45 ≤ TEMP < 47 → hold previous safe heater state
+     - 47 ≤ TEMP ≤ 48 with rising temp → turn off heater early
+     - TEMP > 48 → INLET CLOSED, HEATER OFF
+   - Handles malformed input and sensor timeouts by going to safe all-off state
+
+2. **Submitted via `python3 tools/run_eval.py` in the `oneshot_blind` benchmark mode.**

@@ -1,0 +1,28 @@
+The implementation looks correct. Let me trace through the self-verification checklist one more time to ensure everything is covered:
+
+1. ✅ **Boot leaves compressor off and vent open**: Initial state has `compressor_on = false`, `vent_open = true`
+
+2. ✅ **Controller stays in safe vent-open until both sensors seen validly**: Only transitions out of SAFE_VENT when BOTH `has_valid_pressure` AND `has_valid_door` are true, and pressure is outside the 40-60 band with door closed
+
+3. ✅ **Door closed + low pressure (e.g., 35)**: Transitions to PRESSURIZING with compressor ON, vent CLOSED
+
+4. ✅ **Door closed + high pressure (e.g., 65)**: Transitions to RELIEVING with compressor OFF, vent OPEN
+
+5. ✅ **In the 40..60 band**: Preserves previous safe output (holding state)
+
+6. ✅ **Door-open event immediately forces safe vent-open**: CONTROLLER_INPUT_DOOR_OPEN sets SAFE_VENT
+
+7. ✅ **Malformed input or stale sensor data (>1000ms)**: Forces SAFE_VENT via timeout checks and invalid input handling
+
+8. ✅ **Never commands COMPRESSOR ON and VENT OPEN together**: The logic ensures that when compressor_on is true, vent_open is false, and vice versa
+
+9. ✅ **Firmware-level end-to-end runtime probe**: This was mentioned as a requirement for self-verifying modes, but this is `oneshot_blind` mode which intentionally omits public self-verification helpers.
+
+The implementation is complete and submitted. The final submission status is:
+
+**Status: SUBMISSION_RECORDED**
+**Benchmark mode: oneshot_blind**
+**Submission index: 1**
+**Submission budget: 1**
+
+This was the only submission made, as required by the `oneshot_blind` benchmark mode which hides grader results and provides no public self-verification helpers.

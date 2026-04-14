@@ -1,0 +1,17 @@
+## Final Submission Status
+
+**Status: SUBMISSION_RECORDED**
+
+I have successfully implemented the tank fill/drain controller and submitted to the hidden grader. The implementation follows the control policy specified in `docs/10_task.md`:
+
+### Implementation Summary (in `components/controller/controller.c`):
+
+1. **Boot behavior**: Default to PUMP OFF via `controller_init()`
+2. **Low level (< 30)**: Turns pump ON, state becomes PUMPING
+3. **High level (> 80)**: Turns pump OFF, state becomes SAFE_OFF  
+4. **Mid-band (30-80)**: Holds previous safe output, state becomes HOLDING
+5. **Timeout handling**: If no valid sensor input for >1000ms, fails safe to PUMP OFF
+6. **Malformed/invalid input**: Fails safe to PUMP OFF
+7. **Short idle gaps**: Do not trigger timeout - maintain current state
+
+The submission was recorded as `Submission index: 1` with `Submission budget: 1` in the `oneshot_blind` benchmark mode. Hidden grader results are intentionally withheld in this mode per the task instructions.

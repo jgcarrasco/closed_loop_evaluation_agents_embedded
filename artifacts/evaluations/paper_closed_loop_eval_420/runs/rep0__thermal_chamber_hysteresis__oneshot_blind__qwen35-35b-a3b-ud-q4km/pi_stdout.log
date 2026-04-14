@@ -1,0 +1,26 @@
+## Final Submission Status
+
+**Submission recorded successfully.**
+
+- **Benchmark mode**: `oneshot_blind`
+- **Submission index**: 1 of 1
+- **Editable files modified**: `components/controller/controller.c`
+
+### Implementation Summary
+
+The thermal chamber hysteresis controller implements the following policy:
+
+1. **Boot**: Heater starts OFF (SAFE_OFF state)
+2. **TEMP < 47°C**: Turn heater ON → HEATING state
+3. **TEMP > 52°C**: Turn heater OFF → SAFE_OFF state  
+4. **47°C ≤ TEMP < 50°C**: Hold previous actuator state → HOLDING state
+5. **50°C ≤ TEMP ≤ 52°C**: 
+   - If temperature is rising vs. previous sample AND heater was ON → turn OFF early (anticipatory) → HOLDING state
+   - Otherwise → hold previous state → HOLDING state
+6. **Timeout/malformed/stale data** (>1000ms no valid frame): Turn heater OFF → SAFE_OFF state
+
+The controller properly tracks:
+- Last valid sensor timestamp for timeout detection (1000ms)
+- Previous temperature for rising detection
+- Heater state and state transitions
+- Timeout flag for fail-safe indication

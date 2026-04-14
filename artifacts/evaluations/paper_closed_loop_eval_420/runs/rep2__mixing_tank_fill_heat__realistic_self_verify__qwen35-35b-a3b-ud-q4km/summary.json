@@ -1,0 +1,112 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 3,
+    "first_submission_at_utc": "2026-03-29T22:42:23.436000Z",
+    "hidden_eval_calls": 2,
+    "iterations": 7,
+    "time_to_first_submission_seconds": 1390.882,
+    "wall_clock_seconds": 1409.3380533936433
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T224223Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T224238Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T224238Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T224238Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 36283,
+    "completion_tokens_after_first_submission": 1340,
+    "completion_tokens_before_first_submission": 34943,
+    "cost": 0.0,
+    "prompt_tokens": 3065545,
+    "prompt_tokens_after_first_submission": 442281,
+    "prompt_tokens_before_first_submission": 2623264,
+    "total_tokens": 3101828,
+    "total_tokens_after_first_submission": 443621,
+    "total_tokens_before_first_submission": 2658207
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 0,
+    "runtime_probe_executed": false,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 0,
+    "self_test_runs": 7,
+    "self_tests_written": 9
+  },
+  "tool_behavior": {
+    "files_touched": [
+      ".pytest_cache/.gitignore",
+      ".pytest_cache/CACHEDIR.TAG",
+      ".pytest_cache/README.md",
+      ".pytest_cache/v/cache/nodeids",
+      ".pytest_cache/v/cache/stepwise",
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 7,
+    "lines_added": 300,
+    "lines_changed_total": 305,
+    "lines_deleted": 5,
+    "tool_call_breakdown": {
+      "bash": 42,
+      "edit": 22,
+      "ls": 2,
+      "read": 16,
+      "write": 4
+    },
+    "tool_call_count": 86
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/mixing_tank_fill_heat__realistic_self_verify__qwen35-35b-a3b-ud-q4km/workspace"
+}

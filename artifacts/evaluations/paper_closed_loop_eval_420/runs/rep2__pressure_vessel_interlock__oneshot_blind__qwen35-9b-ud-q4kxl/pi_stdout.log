@@ -1,0 +1,32 @@
+The submission budget has been exhausted. I made two submissions (one initial and one after fixing the code). The final status is `SUBMISSION_BUDGET_EXHAUSTED`.
+
+Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Pressure Vessel Interlock Controller with the following behavior:
+
+### Files Modified:
+1. **`components/controller/include/controller.h`** - Added missing `controller_state_t` enum definition
+2. **`components/controller/controller.c`** - Implemented complete controller logic
+
+### Key Implementation Details:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (safe state)
+
+2. **Door open handling**: Immediately forces SAFE_VENT state (compressor OFF, vent OPEN)
+
+3. **Pressure control (door closed)**:
+   - `PRESS < 40`: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+   - `PRESS > 60`: COMPRESSOR OFF, VENT OPEN (RELIEVING)  
+   - `40 <= PRESS <= 60`: Holds current actuator state (HOLDING)
+
+4. **Sensor freshness tracking**: Separate tracking for pressure and door sensors
+
+5. **Timeout handling**: If either sensor stale > 1000ms, forces SAFE_VENT state
+
+6. **Invalid input handling**: Forces SAFE_VENT state
+
+7. **Safety invariant**: Never commands COMPRESSOR ON and VENT OPEN simultaneously
+
+The implementation correctly handles all acceptance criteria from the task specification.

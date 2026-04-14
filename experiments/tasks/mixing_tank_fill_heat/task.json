@@ -1,0 +1,24 @@
+{
+  "task_id": "mixing_tank_fill_heat",
+  "task_name": "Mixing Tank Fill-and-Heat Controller",
+  "task_version": "v1",
+  "task_spec_path": "specs/mixing_tank_fill_heat.json",
+  "feedback": {
+    "mode": "full",
+    "include_history": false
+  },
+  "benchmark": {
+    "mode": "realistic_self_verify"
+  },
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "sync_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h",
+    "components/protocol/protocol.c",
+    "components/protocol/include/protocol.h",
+    "main/uart_transport.c"
+  ]
+}

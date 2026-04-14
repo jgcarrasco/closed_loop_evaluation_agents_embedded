@@ -1,0 +1,43 @@
+The implementation looks correct. Let me trace through a few key scenarios to verify:
+
+**Scenario 1: Normal batch processing**
+1. Init → SAFE_IDLE (filter OFF, drain CLOSED) ✓
+2. Input: TURB 50, LEVEL 60 → Both valid, TURB > 35, LEVEL >= 40 → FILTERING (filter ON, drain CLOSED) ✓
+3. Input: TURB 20 (streak=1) → Still FILTERING ✓
+4. Input: TURB 25 (streak=2) → Still FILTERING ✓
+5. Input: TURB 22 (streak=3), LEVEL >= 40 → SETTLING (filter OFF, drain CLOSED, timer starts) ✓
+6. After 400ms settle + TURB 20, LEVEL >= 40 → DRAINING (filter OFF, drain OPEN) ✓
+7. While draining, if level drops < 40 → COMPLETE (filter OFF, drain CLOSED) ✓
+
+**Scenario 2: Disturbance during filtering**
+1. In FILTERING with streak=2
+2. Input: TURB 50 → Streak resets to 0, stays in FILTERING ✓
+
+**Scenario 3: Disturbance during settling**
+1. In SETTLING
+2. Input: TURB 45 (> 40) → Streak resets to 0, return to FILTERING ✓
+
+**Scenario 4: Timeout**
+1. Any state with valid sensors
+2. No input for > 1000ms → SAFE_IDLE ✓
+
+The implementation appears correct according to the task specification. The submission was recorded successfully in oneshot_blind mode, and as expected, the hidden grader results are withheld.
+
+## Summary
+
+I implemented the Filter Tank Sequence Controller by:
+
+1. **Replaced the TODO placeholder** with a complete state machine implementation
+2. **Implemented proper sensor timeout handling** - sensors become stale after 1000ms without updates
+3. **Implemented the state transitions**:
+   - SAFE_IDLE → FILTERING (when both sensors valid and TURB > 35, LEVEL >= 40)
+   - FILTERING → SETTLING (after 3 consecutive clear readings with LEVEL >= 40)
+   - SETTLING → DRAINING (after 400ms settle + clear turbidity + LEVEL >= 40)
+   - DRAINING → COMPLETE (when level drops below 40)
+4. **Implemented disturbance handling**:
+   - During FILTERING: TURB > 35 resets streak
+   - During SETTLING: TURB > 40 returns to FILTERING
+   - During DRAINING: TURB > 50 with LEVEL >= 40 closes drain and returns to FILTERING
+5. **Maintained safe all-off state** for invalid/malformed inputs and timeouts
+
+The submission was recorded successfully (`Status: SUBMISSION_RECORDED`) in the oneshot_blind benchmark mode where hidden grader results are intentionally withheld per the benchmark specification.

@@ -1,0 +1,24 @@
+{
+  "task_id": "filter_tank_sequence",
+  "task_name": "Filter Tank Sequence Controller",
+  "task_version": "v1",
+  "task_spec_path": "specs/filter_tank_sequence.json",
+  "feedback": {
+    "mode": "full",
+    "include_history": false
+  },
+  "benchmark": {
+    "mode": "realistic_self_verify"
+  },
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "sync_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h",
+    "components/protocol/protocol.c",
+    "components/protocol/include/protocol.h",
+    "main/uart_transport.c"
+  ]
+}

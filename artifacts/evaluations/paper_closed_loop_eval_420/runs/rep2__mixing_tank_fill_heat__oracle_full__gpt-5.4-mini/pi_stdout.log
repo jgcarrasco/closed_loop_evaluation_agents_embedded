@@ -1,0 +1,20 @@
+Implemented the fill-and-heat controller in `components/controller/controller.c` and updated `components/controller/include/controller.h` to track temp history for early-off logic.
+
+What’s covered:
+- boot safe-off behavior
+- stay idle until both sensors are valid
+- low-level fill guard
+- safe-level heating
+- low-fill heater lockout
+- early heater-off on rising temp near the upper band
+- malformed input and sensor timeout safe shutdown
+
+Also added visible UART end-to-end self-tests in:
+- `agent_tests/test_controller_runtime.py`
+
+Validation:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ passed all hidden stages
+
+

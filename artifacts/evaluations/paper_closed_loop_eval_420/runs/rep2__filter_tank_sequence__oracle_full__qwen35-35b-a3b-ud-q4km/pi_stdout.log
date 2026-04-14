@@ -1,0 +1,52 @@
+I notice that the tests are consistently failing on the same three cases. Let me think about this one more time.
+
+Looking at the assertion failures:
+- Line 100: `!(output.filter_on)` - expects filter OFF
+- Line 186: `!(output.filter_on)` - expects filter OFF  
+- Line 235: `!(output.filter_on)` - expects filter OFF
+
+And the failing tests:
+1. "three clear turbidity samples enter settling" - FAIL
+2. "settled clear tank opens drain" - FAIL  
+3. "low level completes cycle" - FAIL
+
+All three expect filter to be OFF. This suggests that in all three cases, we're transitioning TO states where filter should be OFF (SETTLING, DRAINING, COMPLETE), but my code has it ON.
+
+Wait - I just realized something! Maybe the issue is that I'm not properly handling the case where we need to transition states based on conditions that are checked AFTER processing the input. Let me think about this more carefully.
+
+For "three clear turbidity samples enter settling":
+1. Receive 3rd clear turbidity input
+2. Increment clear_streak_count to 3
+3. Check if clear_streak_count >= 3 AND has_valid_level AND last_level >= 40
+4. If true, call enter_settling which sets filter_on = false
+
+At this point, output.filter_on should be false (from controller->filter_on). But the assertion fails, meaning output.filter_on is still true.
+
+Unless... there's a bug where enter_settling isn't being called? Let me check if maybe the conditions aren't being met correctly.
+
+Actually, I just thought of something! Maybe the issue is that has_valid_level is false when we receive the 3rd clear turbidity input? This would happen if the test sends all 3 turbidity inputs before sending the level input.
+
+Let me trace through:
+1. Send TURB 50 - has_valid_turbidity = true, still SAFE_IDLE
+2. Send TURB 30 - has_valid_turbidity = true (already true), clear_streak_count = 1, still SAFE_IDLE
+3. Send TURB 30 - has_valid_turbidity = true (already true), clear_streak_count = 2, still SAFE_IDLE
+4. Send TURB 30 - has_valid_turbidity = true (already true), clear_streak_count = 3, still SAFE_IDLE (level not valid yet)
+
+At step 4, we're still in SAFE_IDLE because level is not valid. We don't enter SETTLING because we're not in FILTERING state and we haven't checked the settling condition.
+
+But wait - my code only checks for settling transition in the FILTERING state case:
+```c
+case CONTROLLER_STATE_FILTERING:
+    /* ... */
+    if ((controller->clear_streak_count >= CONTROLLER_CLEAR_STREAK_REQUIRED) &&
+        (controller->has_valid_level) &&
+        (controller->last_level >= CONTROLLER_MIN_PROCESS_LEVEL)) {
+        enter_settling(controller, input.now_ms);
+    }
+```
+
+So if we're in SAFE_IDLE and receive turbidity inputs, we don't check for settling transition. This should be correct - we shouldn't count clear streaks until we're actually filtering.
+
+But maybe the test sends inputs in a different order? Let me think about what the test might be doing:
+1. Send TURB 50 - has_valid_turbidity = true, still SAFE_IDLE
+2. Send LEVEL 50 - has_valid_level = true

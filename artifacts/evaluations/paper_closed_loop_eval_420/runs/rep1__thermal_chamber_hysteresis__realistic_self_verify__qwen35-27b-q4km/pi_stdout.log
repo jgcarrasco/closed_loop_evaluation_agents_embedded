@@ -1,0 +1,35 @@
+The implementation is complete. Let me provide a summary:
+
+## Summary
+
+I have successfully implemented the thermal chamber hysteresis controller with the following behavior:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot state**: Heater OFF, SAFE_OFF state
+2. **TEMP < 47°C**: Turn heater ON (HEATING state)
+3. **TEMP > 52°C**: Turn heater OFF (SAFE_OFF state)
+4. **47 ≤ TEMP < 50°C**: HOLD previous actuator state (HOLDING state)
+5. **50 ≤ TEMP ≤ 52°C with rising temp**: Early heater OFF but HOLDING state (not SAFE_OFF)
+6. **50 ≤ TEMP ≤ 52°C without rising**: HOLD previous actuator state (HOLDING state)
+7. **Malformed/invalid input**: Fail safe to heater OFF
+8. **Explicit sensor timeout**: Fail safe to heater OFF  
+9. **Stale data > 1000ms**: Fail safe to heater OFF
+
+### Tests Written (`agent_tests/test_thermal_controller.py`)
+
+All 12 tests pass, covering:
+- Boot behavior (heater off)
+- Low temperature heating (35°C → ON)
+- High temperature shut-off (53°C → OFF)
+- Holding range preservation (47-49°C)
+- Early shut-off with HOLDING state (rising temp at 50-52°C)
+- Malformed input handling
+- Sensor timeout handling
+- Stale data timeout (>1000ms)
+- Safety ceiling (56°C must be OFF)
+- **Firmware-level end-to-end runtime probe** through UART that drives a complete warm-up sequence
+
+### Submission
+
+Submitted to hidden grader with `python3 tools/run_eval.py`. In `realistic_self_verify` mode, hidden results are withheld, but all visible self-tests pass.

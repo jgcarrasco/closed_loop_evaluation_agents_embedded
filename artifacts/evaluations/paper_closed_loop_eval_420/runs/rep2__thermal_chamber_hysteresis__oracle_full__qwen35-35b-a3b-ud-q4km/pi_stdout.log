@@ -1,0 +1,38 @@
+The task is solved. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the thermal chamber hysteresis controller for an ESP32 firmware running in QEMU. The implementation includes:
+
+### Controller Logic (`components/controller/controller.c`)
+
+The control policy implements all requirements from `docs/10_task.md`:
+
+1. **Boot state**: Heater starts OFF, state is SAFE_OFF
+2. **Low temperature (<47°C)**: Turns heater ON, enters HEATING state
+3. **High temperature (>52°C)**: Turns heater OFF, enters SAFE_OFF state
+4. **Holding zone (47-49°C)**: Preserves previous actuator state, enters HOLDING state
+5. **Rising temperature near upper band (50-52°C with rising trend)**: Turns heater OFF early to prevent overshoot, enters HOLDING state
+6. **Malformed input**: Forces heater OFF and SAFE_OFF state
+7. **Sensor timeout (>1000ms no valid frame)**: Forces heater OFF and SAFE_OFF state
+
+### Tests (`agent_tests/test_thermal_controller.py`)
+
+Created 8 comprehensive tests covering all checklist items:
+- Boot leaves heater off
+- Low temperature drives heater on
+- High temperature drives heater off
+- Holding zone preserves previous state
+- Rising temperature triggers early heater off
+- Malformed input forces heater off
+- Sensor timeout forces heater off
+- End-to-end warmup sequence through UART
+
+### Results
+
+All tests pass:
+- Build: PASS
+- Host unit tests: PASS (100%)
+- Integration: PASS (5/5 scenarios)
+- No constraint violations
+- Max overshoot: 1.0°C (well below 56°C hard limit)

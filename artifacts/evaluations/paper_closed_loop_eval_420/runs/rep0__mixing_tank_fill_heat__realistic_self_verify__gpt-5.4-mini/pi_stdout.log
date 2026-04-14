@@ -1,0 +1,22 @@
+Implemented the controller behavior in `components/controller/controller.c` and kept the public interface intact.
+
+What’s covered:
+- safe all-off boot state
+- wait for both sensors before control
+- fill below 60
+- heat only in 60–75 with low temp
+- hold/early-off behavior near 45–48
+- hard safe-off above 48 / on malformed input / on timeout
+- stale-sensor safety timeout handling
+
+Visible verification added:
+- `agent_tests/test_controller_uart.py`
+  - firmware-level UART end-to-end nominal fill→heat→early-off probe
+  - malformed input and stale timeout safety probe
+
+Validation run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ submitted twice; latest submission recorded
+
+

@@ -1,0 +1,22 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld and only the submission status is shown.
+
+## Final Submission Status
+
+**Status: SUBMISSION_RECOGNIZED / SUBMISSION_RECORDED**
+
+- **Benchmark Mode**: oneshot_blind
+- **Submission Index**: 1 (of 1 allowed)
+- **Result**: Hidden grader results are withheld in this benchmark mode
+
+The controller implementation was completed with the following key behaviors:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (SAFE_VENT)
+2. **Initial validation**: Stays in SAFE_VENT until both pressure and door sensors have been seen validly
+3. **Door open handling**: Forces SAFE_VENT when door is open
+4. **Pressure control** (when door closed):
+   - PRESS < 40: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+   - PRESS > 60: COMPRESSOR OFF, VENT OPEN (RELIEVING)
+   - 40 ≤ PRESS ≤ 60: Hold previous safe output (HOLDING)
+5. **Timeout handling**: Any sensor stale for >1000ms forces SAFE_VENT
+6. **Invalid input handling**: Malformed/invalid inputs force SAFE_VENT
+7. **Safety invariant**: Never commands COMPRESSOR ON and VENT OPEN simultaneously

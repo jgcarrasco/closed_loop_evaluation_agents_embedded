@@ -1,0 +1,19 @@
+The submission has been recorded successfully. In `oneshot_blind` mode:
+- This is the one and only submission allowed (submission budget: 1)
+- Hidden grader results are intentionally withheld
+- No public self-verification helpers are provided
+
+**Final Submission Status:** `SUBMISSION_RECORDED`
+
+The controller implementation includes:
+1. **Boot state**: Inlet closed, heater off (SAFE_IDLE)
+2. **Sensor validation**: Stays in safe state until both temperature and level sensors have been seen validly
+3. **Timeout handling**: Goes to safe all-off state if either sensor is stale for > 1000ms
+4. **Fill policy**: LEVEL < 60 → INLET OPEN, HEATER OFF (FILLING)
+5. **Heat guard**: LEVEL < 55 → HEATER OFF regardless of temperature
+6. **Heating policy**: 60 ≤ LEVEL ≤ 75 AND TEMP < 45 → INLET CLOSED, HEATER ON (HEATING)
+7. **Holding policy**: 
+   - 45 ≤ TEMP < 47 → HOLD previous safe heater state
+   - 47 ≤ TEMP ≤ 48 and not rising → HOLD previous safe heater state
+   - 47 ≤ TEMP ≤ 48 and rising → HEATER OFF early
+8. **High temp protection**: TEMP > 48 → INLET CLOSED, HEATER OFF

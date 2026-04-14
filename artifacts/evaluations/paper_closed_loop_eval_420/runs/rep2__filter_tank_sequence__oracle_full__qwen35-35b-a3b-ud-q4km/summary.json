@@ -1,0 +1,111 @@
+{
+  "agent_name": "pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 14,
+    "first_submission_at_utc": "2026-03-29T22:14:12.254000Z",
+    "hidden_eval_calls": 7,
+    "iterations": 14,
+    "time_to_first_submission_seconds": 1468.2,
+    "wall_clock_seconds": 1683.6549747828394
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221412Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221445Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221516Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221553Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221633Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221712Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221723Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221723Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260329T221723Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 46771,
+    "completion_tokens_after_first_submission": 16887,
+    "completion_tokens_before_first_submission": 29884,
+    "cost": 0.0,
+    "prompt_tokens": 6867557,
+    "prompt_tokens_after_first_submission": 2264907,
+    "prompt_tokens_before_first_submission": 4602650,
+    "total_tokens": 6914328,
+    "total_tokens_after_first_submission": 2281794,
+    "total_tokens_before_first_submission": 4632534
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 11,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 10,
+    "self_test_runs": 11,
+    "self_tests_written": 11
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 503,
+    "lines_changed_total": 525,
+    "lines_deleted": 22,
+    "tool_call_breakdown": {
+      "bash": 71,
+      "edit": 9,
+      "read": 20,
+      "write": 4
+    },
+    "tool_call_count": 104
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/filter_tank_sequence__oracle_full__qwen35-35b-a3b-ud-q4km/workspace"
+}

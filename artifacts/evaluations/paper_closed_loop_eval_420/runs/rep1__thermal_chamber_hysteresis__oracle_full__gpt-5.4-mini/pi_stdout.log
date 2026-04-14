@@ -1,0 +1,15 @@
+Implemented the thermal chamber hysteresis controller in:
+
+- `components/controller/controller.c`
+
+Also added visible self-tests in:
+
+- `agent_tests/test_thermal_chamber_hysteresis.py`
+
+Verified with:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py` → PASS
+
+

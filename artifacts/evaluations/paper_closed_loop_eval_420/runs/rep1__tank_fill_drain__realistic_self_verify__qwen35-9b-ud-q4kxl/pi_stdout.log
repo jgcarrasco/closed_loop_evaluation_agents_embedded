@@ -1,0 +1,21 @@
+My implementation is complete. Here's a summary of what I've done:
+
+## Summary
+
+### Controller Implementation (components/controller/controller.c)
+
+I implemented a tank fill/drain controller that follows these rules:
+1. **Default to PUMP OFF on boot** - The `controller_init()` function sets `pump_on = false`
+2. **Turn pump ON when LEVEL < 30** - Using `controller_should_turn_on()` which checks `level < CONTROLLER_LEVEL_LOW_THRESHOLD`
+3. **Turn pump OFF when LEVEL > 80** - Using `controller_should_turn_off()` which checks `level > CONTROLLER_LEVEL_HIGH_THRESHOLD`
+4. **Hold previous output while 30 <= LEVEL <= 80** - The controller sets state to HOLDING but doesn't change the pump state
+5. **Fail safe to PUMP OFF on malformed input or timeout** - All error cases call `controller_set_safe_off()`
+
+### Tests (agent_tests/test_controller.py)
+
+I wrote comprehensive tests covering all acceptance criteria:
+- Unit tests for controller behavior
+- Firmware-level end-to-end runtime probes through UART using `FirmwareSession`
+- Tests for each acceptance bullet in docs/10_task.md
+
+The implementation has been submitted via `python3 tools/run_eval.py`.

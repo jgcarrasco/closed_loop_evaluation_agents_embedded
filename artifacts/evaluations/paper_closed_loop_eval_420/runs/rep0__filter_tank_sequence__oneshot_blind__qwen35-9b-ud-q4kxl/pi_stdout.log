@@ -1,0 +1,29 @@
+The implementation is complete. Let me summarize what was implemented according to the task specification:
+
+**Implementation Summary:**
+
+1. **Boot/Safe Idle**: Controller starts in `SAFE_IDLE` with filter off and drain closed
+
+2. **Sensor Validation**: Stays in `SAFE_IDLE` until both turbidity and level sensors have been seen validly
+
+3. **COMPLETE State**: If `LEVEL < 15`, controller enters `COMPLETE` state (filter off, drain closed)
+
+4. **FILTERING State**: When `TURB > 35` and `LEVEL >= 40`, commands `FILTER ON` and `DRAIN CLOSED`
+
+5. **Clear Streak Logic**: 
+   - Valid `TURB <= 35` increments the clear streak counter
+   - Valid `TURB > 35` resets the clear streak to zero
+   - After 3 consecutive clear samples while `LEVEL >= 40`, enters `SETTLING`
+
+6. **SETTLING State**: 
+   - Filter off, drain closed
+   - If `TURB > 40` arrives, reset streak and return to `FILTERING`
+   - When 400ms elapsed + latest `TURB <= 35` + `LEVEL >= 40`, enters `DRAINING`
+
+7. **DRAINING State**: 
+   - Drain open
+   - If `TURB > 50` and `LEVEL >= 40`, close drain, turn filter on, reset streak, return to `FILTERING`
+
+8. **Timeout/Malformed Input**: Forces safe all-off state (`SAFE_IDLE`)
+
+The submission was recorded successfully with status `SUBMISSION_RECORDED`. In the `oneshot_blind` mode, hidden grader results are intentionally withheld as per the benchmark configuration.

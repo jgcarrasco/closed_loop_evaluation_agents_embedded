@@ -1,0 +1,22 @@
+The submission has been recorded. In the `oneshot_blind` benchmark mode, hidden grader results are intentionally withheld. The submission is final as we've used our single allowed submission.
+
+## Summary
+
+I have implemented the thermal chamber hysteresis controller in `$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/thermal_chamber_hysteresis__oneshot_blind__qwen35-35b-a3b-ud-q4km/workspace/components/controller/controller.c` according to the specification in `docs/10_task.md`:
+
+**Control Policy Implemented:**
+- **On boot**: Heater off (SAFE_OFF state)
+- **TEMP < 47°C**: Turn heater ON (HEATING state)
+- **TEMP > 52°C**: Turn heater OFF (SAFE_OFF state)
+- **47°C ≤ TEMP < 50°C**: Hold previous safe actuator state (HOLDING state)
+- **50°C ≤ TEMP ≤ 52°C**: 
+  - If temperature is rising compared to previous sample: turn heater OFF early (HOLDING state)
+  - If not rising: hold previous safe actuator state (HOLDING state)
+- **Malformed input / SENSOR_TIMEOUT**: Turn heater OFF (SAFE_OFF state)
+- **Stale sensor data (>1000ms)**: Turn heater OFF (SAFE_OFF state)
+
+**Submission Status:**
+- Benchmark mode: `oneshot_blind`
+- Submission index: 1 of 1
+- Status: `SUBMISSION_RECORDED`
+- Hidden grader results are withheld in this benchmark mode as per specification

@@ -1,0 +1,23 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Kept changes within the allowed editable surface.
+
+Verified with:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Visible tests added under:
+- `agent_tests/test_controller.py`
+
+Coverage includes:
+- boot safe state
+- wait-for-both-sensors behavior
+- low-level fill behavior
+- safe-level heating behavior
+- heater-off low-fill guard
+- early heater-off on rising 47–48 C
+- malformed/stale input safe shutdown
+- firmware-level UART end-to-end nominal fill/heat probe with temperature ceiling check

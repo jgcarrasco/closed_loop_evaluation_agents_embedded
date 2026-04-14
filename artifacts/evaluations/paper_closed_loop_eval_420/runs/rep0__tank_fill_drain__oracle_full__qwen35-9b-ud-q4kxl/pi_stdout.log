@@ -1,0 +1,33 @@
+The task is solved. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Tank Fill/Drain Controller as specified in `docs/10_task.md`. 
+
+### Implementation Details
+
+**File modified:** `components/controller/controller.c`
+
+The controller implements the following behavior:
+1. **Boot state**: Default to `PUMP OFF` on boot (state = `CONTROLLER_STATE_SAFE_OFF`)
+2. **Low level (< 30)**: Turn pump ON and set state to `CONTROLLER_STATE_PUMPING`
+3. **High level (> 80)**: Turn pump OFF and set state to `CONTROLLER_STATE_SAFE_OFF`
+4. **Mid-band (30-80)**: Hold previous actuator output (set state to `CONTROLLER_STATE_HOLDING`)
+5. **Malformed input**: Force pump OFF
+6. **Sensor timeout (>1000ms without valid sensor)**: Force pump OFF
+
+### Tests Created
+
+Created comprehensive tests in `agent_tests/test_controller.py` covering all acceptance criteria:
+- Unit tests for controller logic (7 tests)
+- Firmware-level end-to-end tests using `FirmwareSession(...)` for UART communication (7 tests)
+
+### Results
+
+All 4 integration scenarios now pass:
+- ✅ **smoke**: QEMU boots and handles timeout scenario
+- ✅ **happy_path**: Low-to-high level sequence works correctly
+- ✅ **sensor_timeout**: Timeout forces pump OFF after 1000ms
+- ✅ **malformed_frame**: Malformed input forces pump OFF
+
+The task is complete!

@@ -1,0 +1,30 @@
+The submission has been recorded successfully. Let me provide a summary of the final submission status:
+
+---
+
+## Final Submission Status
+
+**Submission Recorded**: ✅ Yes  
+**Benchmark Mode**: `oneshot_blind`  
+**Submission Index**: 1 / 1 (budget exhausted)  
+
+### Implementation Summary
+
+I implemented the mixing tank fill-and-heat controller in `components/controller/controller.c` with the following logic:
+
+1. **Boot State**: Inlet closed, heater off (SAFE_IDLE)
+2. **Sensor Validation**: Stays in SAFE_IDLE until both temperature and level sensors have valid fresh data (within 1000ms)
+3. **Control Policy**:
+   - `LEVEL < 60`: INLET OPEN, HEATER OFF (FILLING)
+   - `LEVEL > 75`: INLET CLOSED, HEATER OFF
+   - `LEVEL < 55` at any time: HEATER OFF
+   - `60 ≤ LEVEL ≤ 75` and `TEMP < 45`: INLET CLOSED, HEATER ON (HEATING)
+   - `45 ≤ TEMP < 47`: INLET CLOSED, hold previous heater state (HOLDING)
+   - `47 ≤ TEMP ≤ 48`: If temp rising → HEATER OFF; else hold previous state
+   - `TEMP > 48`: INLET CLOSED, HEATER OFF
+
+4. **Fault Handling**: Malformed input or sensor timeout (>1000ms) forces SAFE_IDLE (all-off state)
+
+### Feedback
+
+The hidden grader results are withheld in this `oneshot_blind` benchmark mode. The submission has been recorded and synced into the hidden harness for evaluation.

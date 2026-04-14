@@ -1,0 +1,11 @@
+Implemented the controller behavior in:
+
+- `components/controller/controller.c`
+
+Final visible submission status:
+
+- `Status: SUBMISSION_RECORDED`
+- `Benchmark mode: oneshot_blind`
+- `Submission index: 1 / 1`
+
+Visible feedback says hidden grader results are withheld in this mode.

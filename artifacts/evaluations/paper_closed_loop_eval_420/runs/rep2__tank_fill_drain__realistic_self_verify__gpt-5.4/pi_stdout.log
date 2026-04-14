@@ -1,0 +1,27 @@
+Implemented the tank controller in:
+
+- `components/controller/controller.c`
+
+Behavior now matches the task contract:
+
+- boots safe with pump off
+- turns on below `30`
+- turns off above `80`
+- holds prior output in `30..80`
+- ignores short idle gaps
+- fails safe on malformed input
+- times out to off after `>1000 ms`
+- handles explicit sensor-timeout input as safe off
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller.py`
+
+Coverage includes each checklist bullet plus a firmware-level UART end-to-end probe.
+
+Validation run:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ submission recorded
+- checked `artifacts/latest/feedback.md` ✅

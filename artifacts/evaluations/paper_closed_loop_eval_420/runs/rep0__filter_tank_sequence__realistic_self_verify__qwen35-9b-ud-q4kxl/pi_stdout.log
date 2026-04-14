@@ -1,0 +1,26 @@
+I have completed the implementation of the Filter Tank Sequence Controller according to the requirements in `docs/10_task.md`. The controller is implemented in `components/controller/controller.c` and includes:
+
+**State Machine:**
+- `SAFE_IDLE` - fail-safe all-off state, stays here until both sensors are valid
+- `FILTERING` - filter ON, drain CLOSED, actively reducing turbidity
+- `SETTLING` - filter OFF, drain CLOSED, waiting out settle timer (400ms minimum)
+- `DRAINING` - drain OPEN after clear-and-settle conditions satisfied
+- `COMPLETE` - level below threshold (< 15), all off
+
+**Key Behaviors Implemented:**
+1. Boot leaves filter off and drain closed
+2. Stays in SAFE_IDLE until both turbidity and level have been seen validly
+3. Enters FILTERING when TURB > 35 AND LEVEL >= 40
+4. Counts clear streak (TURB <= 35 increments, TURB > 35 resets)
+5. Enters SETTLING after 3 clear samples while LEVEL >= 40
+6. Handles disturbances during SETTLING (TURB > 40 returns to FILTERING)
+7. Opens drain only after 400ms settle time with clear sample and LEVEL >= 40
+8. Handles disturbances during DRAINING (TURB > 50 closes drain, restarts filtering)
+9. Enters COMPLETE when LEVEL < 15
+10. Forces SAFE_IDLE on malformed input or sensor timeout (> 1000ms)
+
+**Tests Created:**
+- Comprehensive unit tests in `agent_tests/test_controller.py`
+- Firmware-level end-to-end runtime probe through UART that exercises the nominal clarification batch path (FILTERING → SETTLING → DRAINING → COMPLETE)
+
+The implementation has been built successfully and submitted for evaluation.

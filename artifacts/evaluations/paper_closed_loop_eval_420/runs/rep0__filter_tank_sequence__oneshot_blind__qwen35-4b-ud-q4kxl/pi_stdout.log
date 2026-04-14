@@ -1,0 +1,26 @@
+## Final Submission Status
+
+**Submission recorded successfully.**
+
+In `oneshot_blind` benchmark mode:
+- The hidden grader results are **withheld** by design
+- This is intentional per the task specification to prevent premature optimization loops
+- Only one submission was allowed (submission budget: 1)
+
+### Implementation Summary
+
+I implemented the Filter Tank Sequence Controller in `components/controller/controller.c` with the following behavior:
+
+1. **SAFE_IDLE**: Start state - stays here until both turbidity and level sensors have been seen validly within 1000ms
+2. **COMPLETE**: When LEVEL < 15, filter off, drain closed
+3. **FILTERING**: When TURB > 35 and LEVEL >= 40, FILTER ON, DRAIN CLOSED
+   - Clear streak counts valid TURB <= 35 readings
+   - High TURB resets clear streak
+4. **SETTLING**: After 3 consecutive clear readings with LEVEL >= 40, FILTER OFF, DRAIN CLOSED
+   - TURB > 40 disturbance returns to FILTERING
+   - 400ms settling elapsed + latest TURB <= 35 + LEVEL >= 40 → transition to DRAINING
+5. **DRAINING**: Filter OFF, DRAIN OPEN
+   - TURB > 50 disturbance closes drain, restarts filtering, resets clear streak
+6. **Sensor timeout** (>1000ms stale): Forces safe all-off state
+
+The implementation follows the task specification in `docs/10_task.md` and uses only the allowed editable files: `components/controller/controller.c` and `components/controller/include/controller.h`.

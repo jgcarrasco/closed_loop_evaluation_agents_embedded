@@ -1,0 +1,12 @@
+Implemented in:
+- `components/controller/controller.c`
+
+Verified with:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+
+Visible tests added:
+- `agent_tests/test_controller_behavior.py`
+
+Hidden submission:
+- `python3 tools/run_eval.py` → PASS

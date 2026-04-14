@@ -1,0 +1,26 @@
+Implemented in:
+- `components/controller/controller.c`
+
+Behavior now:
+- boots safe with pump off
+- turns pump on for `LEVEL < 30`
+- turns pump off for `LEVEL > 80`
+- holds prior actuator output in the 30–80 band
+- ignores short idle gaps
+- forces safe-off on malformed input
+- forces safe-off after `> 1000 ms` without valid input
+- handles explicit `FAULT SENSOR_TIMEOUT` as safe-off timeout
+
+Visible verification added:
+- `agent_tests/test_controller.py`
+  - host-side controller tests for each acceptance bullet
+  - firmware-level UART end-to-end probe
+  - additional UART fault/timeout probe
+
+Build/test loop run:
+- `python3 tools/run_build.py --flash-image` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py --strict-exit-code` ✅
+
+Hidden eval result:
+- PASS

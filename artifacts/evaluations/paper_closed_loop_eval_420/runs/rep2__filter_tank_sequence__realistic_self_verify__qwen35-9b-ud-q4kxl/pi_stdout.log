@@ -1,0 +1,37 @@
+The implementation has been submitted. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Filter Tank Sequence Controller according to the specifications in `docs/10_task.md`. The controller is implemented in `components/controller/controller.c` and declares its types in `components/controller/include/controller.h`.
+
+### Key Implementation Details:
+
+1. **State Machine**: The controller implements a state machine with states:
+   - `SAFE_IDLE`: Initial safe state, filter off, drain closed
+   - `FILTERING`: Filter is ON, drain CLOSED, processing turbidity readings
+   - `SETTLING`: Filter OFF, drain CLOSED, waiting for settle timer to expire
+   - `DRAINING`: Drain OPEN after clear-and-settle conditions met
+   - `COMPLETE`: Level below minimum threshold (< 15)
+
+2. **Control Logic**:
+   - Stays in SAFE_IDLE until both turbidity and level sensors have valid readings
+   - Enters COMPLETE state when LEVEL < 15
+   - Starts FILTERING when TURB > 35 AND LEVEL >= 40
+   - Counts clear streak (consecutive TURB <= 35 samples) while in FILTERING
+   - Transitions to SETTLING after 3 clear samples with LEVEL >= 40
+   - Returns to FILTERING if TURB > 40 during SETTLING
+   - Opens drain after 400ms settle time when clear streak is met and LEVEL >= 40
+   - Closes drain and restarts filtering if TURB > 50 during DRAINING
+   - Forces SAFE_IDLE on timeouts or malformed input
+
+3. **Constants** (from `controller.h`):
+   - Clear threshold: 35 NTU
+   - Settle reset threshold: 40 NTU  
+   - Draining disturbance threshold: 50 NTU
+   - Min process level: 40
+   - Complete level: 15
+   - Clear streak required: 3
+   - Settle time: 400ms
+   - Sensor timeout: 1000ms
+
+The implementation has been submitted and tested with visible self-tests that cover most of the acceptance criteria.

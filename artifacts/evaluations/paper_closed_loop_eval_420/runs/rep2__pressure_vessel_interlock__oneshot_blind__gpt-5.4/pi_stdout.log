@@ -1,0 +1,15 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Final visible submission status from `artifacts/latest/feedback.md`:
+
+- Status: `SUBMISSION_RECORDED`
+- Benchmark mode: `oneshot_blind`
+- Submission index: `1`
+- Submission budget: `1`
+
+Visible commentary:
+- Hidden grader results are withheld in this benchmark mode.
+- Public self-verification helpers are intentionally omitted for this run.

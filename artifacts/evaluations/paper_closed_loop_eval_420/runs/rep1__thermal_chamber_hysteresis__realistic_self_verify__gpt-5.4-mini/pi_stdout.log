@@ -1,0 +1,11 @@
+Implemented the thermal chamber controller policy in `components/controller/controller.c` and added visible self-tests in:
+
+- `agent_tests/test_thermal_chamber_hysteresis.py`
+
+Verified with:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅
+
+The visible UART probe covers boot, low-temp heating, band-hold behavior, early off on rising temperatures, malformed input fail-safe, and stale timeout fail-safe.

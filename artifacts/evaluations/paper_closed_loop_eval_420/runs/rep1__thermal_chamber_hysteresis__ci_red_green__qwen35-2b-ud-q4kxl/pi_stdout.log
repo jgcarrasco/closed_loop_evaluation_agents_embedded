@@ -1,0 +1,2 @@
+I see - when running directly from the workspace, it looks for `test_controller.py` as a file in the current directory, but my files are inside `agent_tests/`. The issue is that unittest expects test files to be either:
+1. In a package directory (like `agent_tests/test_controller`)

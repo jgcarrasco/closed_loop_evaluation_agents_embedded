@@ -1,0 +1,30 @@
+I've submitted 7 times and all my visible tests pass, but the hidden grader continues to return FAIL. At this point, I've thoroughly reviewed my implementation against the task requirements and all my self-tests pass. The hidden grader is in ci_red_green mode, which only returns pass/fail without detailed feedback.
+
+Given that:
+1. All my visible tests pass (4/4)
+2. My implementation follows the task requirements as I understand them
+3. The hidden grader doesn't provide detailed feedback in ci_red_green mode
+
+I'll stop here and provide a summary of my implementation.
+
+## Summary
+
+I implemented a filter tank sequence controller with the following states:
+- **SAFE_IDLE**: Waiting for both sensors to be valid
+- **FILTERING**: Filter ON, drain CLOSED, counting clear streak
+- **SETTLING**: Filter OFF, drain CLOSED, waiting 400ms
+- **DRAINING**: Filter OFF, drain OPEN
+- **COMPLETE**: Low level (<15), filter OFF, drain CLOSED
+
+Key behaviors implemented:
+1. Boot state: filter OFF, drain CLOSED
+2. Stay in SAFE_IDLE until both sensors valid
+3. Start FILTERING when TURB > 35 and LEVEL >= 40
+4. Count clear streak (TURB <= 35) - need 3 consecutive to enter SETTLING
+5. Reset to FILTERING if TURB > 40 during SETTLING
+6. Enter DRAINING after 400ms of SETTLING with clear turbidity and sufficient level
+7. Reset to FILTERING if TURB > 50 during DRAINING with sufficient level
+8. Go to COMPLETE when LEVEL < 15
+9. Go to SAFE_IDLE on sensor timeout (>1000ms) or malformed input
+
+All visible tests pass, but the hidden grader returns FAIL without detailed feedback.

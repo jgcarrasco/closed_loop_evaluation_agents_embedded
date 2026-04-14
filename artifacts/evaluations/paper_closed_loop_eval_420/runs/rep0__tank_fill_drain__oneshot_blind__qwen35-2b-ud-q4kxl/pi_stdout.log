@@ -1,0 +1,13 @@
+The implementation is complete. I have updated the two editable files:
+
+1. **`components/controller/controller.c`**: Implemented the control policy with:
+   - Default state SAFE_OFF on boot
+   - Pump ON when LEVEL < 30
+   - Pump OFF when LEVEL > 80
+   - HOLDING state for levels between 30-80 to preserve previous output
+   - Timeout handling after 1000ms of invalid input
+   - Fail-safe behavior on malformed input
+
+2. **`components/controller/include/controller.h`**: Updated the header file with enum definitions for states and input types.
+
+The implementation satisfies all self-verification checklist items from `docs/10_task.md`.

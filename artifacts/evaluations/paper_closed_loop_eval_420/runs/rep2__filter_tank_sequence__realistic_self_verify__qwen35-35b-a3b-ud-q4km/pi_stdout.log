@@ -1,0 +1,29 @@
+The implementation is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Filter Tank Sequence Controller as specified in `docs/10_task.md`. The controller manages a filter tank that clarifies, settles, and drains water based on turbidity and level sensor readings.
+
+### Key Implementation Details:
+
+**State Machine States:**
+- `SAFE_IDLE`: Initial state, waits for both sensors to be valid
+- `FILTERING`: Filter ON, drain CLOSED - counts clear turbidity samples
+- `SETTLING`: Filter OFF, drain CLOSED - waits 400ms settle timer
+- `DRAINING`: Filter OFF, drain OPEN - drains remaining water
+- `COMPLETE`: Level < 15, process finished
+
+**Control Logic:**
+- Starts filtering when TURB > 35 and LEVEL >= 40
+- Counts clear streak (TURB <= 35) - needs 3 consecutive samples to settle
+- Resets streak if TURB > 35 during filtering
+- Resets to FILTERING if TURB > 40 disturbs settling
+- Resets to FILTERING if TURB > 50 disturbs draining
+- Goes to COMPLETE when LEVEL < 15
+
+**Sensor Handling:**
+- Turbidity and level arrive as separate lines
+- Each valid reading refreshes only its own freshness timer
+- Sensor timeout (1000ms) triggers SAFE_IDLE state
+
+The implementation correctly handles all the acceptance criteria from the task specification. The controller logic has been verified through manual testing showing the full state machine progression: SAFE_IDLE → FILTERING → SETTLING → DRAINING → COMPLETE.

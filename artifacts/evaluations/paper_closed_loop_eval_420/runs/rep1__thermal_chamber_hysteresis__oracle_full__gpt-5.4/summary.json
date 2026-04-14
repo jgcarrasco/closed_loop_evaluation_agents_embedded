@@ -1,0 +1,108 @@
+{
+  "agent_name": "pi-thermal_chamber_hysteresis-oracle_full-gpt-5.4-20260327T135426Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/thermal_chamber_hysteresis__oracle_full__gpt-5.4/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-27T15:59:43.550000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 3,
+    "time_to_first_submission_seconds": 346.387,
+    "wall_clock_seconds": 385.33332994394004
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-oracle_full-gpt-5.4-20260327T135426Z/20260327T155943Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-oracle_full-gpt-5.4-20260327T135426Z/20260327T155943Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-oracle_full-gpt-5.4-20260327T135426Z/20260327T155943Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4",
+    "model": "gpt-5.4",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 438272,
+    "cache_write_tokens": 0,
+    "completion_tokens": 13125,
+    "completion_tokens_after_first_submission": 228,
+    "completion_tokens_before_first_submission": 12897,
+    "cost": 0.0,
+    "prompt_tokens": 34831,
+    "prompt_tokens_after_first_submission": 6095,
+    "prompt_tokens_before_first_submission": 28736,
+    "total_tokens": 486228,
+    "total_tokens_after_first_submission": 44211,
+    "total_tokens_before_first_submission": 442017
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__oracle_full__gpt-5.4/pi_stdout.log",
+  "task_id": "thermal_chamber_hysteresis",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 0,
+    "false_green_rate": 0.0,
+    "runtime_probe_case_count": 1,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_firmware.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 3,
+    "self_test_runs": 3,
+    "self_tests_written": 9
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "agent_tests/test_firmware.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 313,
+    "lines_changed_total": 317,
+    "lines_deleted": 4,
+    "tool_call_breakdown": {
+      "bash": 5,
+      "edit": 3,
+      "find": 4,
+      "grep": 2,
+      "ls": 3,
+      "read": 17,
+      "write": 2
+    },
+    "tool_call_count": 36
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/thermal_chamber_hysteresis__oracle_full__gpt-5.4/workspace"
+}

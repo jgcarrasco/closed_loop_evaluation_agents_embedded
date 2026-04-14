@@ -1,0 +1,14 @@
+The submission has been recorded. In `oneshot_blind` mode, the hidden grader results are withheld as per the benchmark specification. The implementation is complete with:
+
+1. **Thermal control policy** implemented in `components/controller/controller.c`:
+   - Boot leaves heater off (SAFE_OFF state)
+   - TEMP < 47°C → HEATING (heater ON)
+   - TEMP > 52°C → SAFE_OFF (heater OFF)
+   - 47 ≤ TEMP < 50°C → HOLDING (preserves previous safe actuator state)
+   - 50 ≤ TEMP ≤ 52°C:
+     - If temperature rising → early heater OFF, still HOLDING
+     - If temperature not rising → preserve previous safe actuator state, HOLDING
+   - Malformed input or sensor timeout → SAFE_OFF with timed_out flag
+   - Stale sensor data (>1000ms) → SAFE_OFF with timed_out flag
+
+The task is complete.

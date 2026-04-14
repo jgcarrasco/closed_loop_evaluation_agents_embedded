@@ -1,0 +1,15 @@
+Implemented the filter tank controller state machine in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests and a firmware UART end-to-end probe in:
+
+- `agent_tests/test_controller.py`
+
+Verification completed:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ submitted
+
+

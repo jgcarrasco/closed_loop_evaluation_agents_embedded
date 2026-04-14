@@ -1,0 +1,16 @@
+The submission has been recorded (submission index 2). The implementation is complete with:
+
+1. **Controller Logic** (`components/controller/controller.c`): Full implementation of the fill-and-heat control policy with proper state management, sensor timeout handling, and early heater shut-off near the upper temperature band.
+
+2. **Tests** (`agent_tests/test_controller.py`): Comprehensive test suite covering all checklist items from docs/10_task.md including:
+   - Boot state verification
+   - Safe idle until both sensors valid
+   - Low level commands (INLET OPEN, HEATER OFF)
+   - Safe level with heating (INLET CLOSED, HEATER ON)
+   - Heater off below level 55
+   - Rising temperature early shut-off
+   - Malformed input handling
+   - Sensor timeout handling
+   - End-to-end fill-then-heat sequence
+
+The build succeeds and the controller logic follows all the task requirements. In `realistic_self_verify` mode, hidden grader results are withheld, but the visible self-tests demonstrate the expected behavior.

@@ -1,0 +1,181 @@
+{
+  "experiment_id": "minimal_qemu_demo",
+  "task_id": "mixing_tank_fill_heat",
+  "task_name": "Mixing Tank Fill-and-Heat Controller",
+  "task_version": "v1",
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "machine": {
+    "name": "esp32_qemu_mixing_tank_demo",
+    "controller": "ESP32 firmware running in QEMU",
+    "interface": {
+      "transport": "uart",
+      "port": "UART0",
+      "baudrate": 115200,
+      "protocol": "newline-delimited ASCII"
+    }
+  },
+  "sensors": [
+    {
+      "name": "temp",
+      "type": "integer",
+      "units": "celsius",
+      "range": [
+        20,
+        80
+      ]
+    },
+    {
+      "name": "level",
+      "type": "integer",
+      "units": "percent",
+      "range": [
+        0,
+        100
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "name": "inlet",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "CLOSED",
+      "range": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "heater",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "OFF",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "timing": {
+    "control_period_ms": 50,
+    "sensor_period_ms": 100,
+    "episode_duration_s": 4.5,
+    "sensor_timeout_ms": 1000,
+    "notes": [
+      "Temperature and level arrive as separate lines. A valid temperature frame refreshes only temperature freshness and a valid level frame refreshes only level freshness.",
+      "Stay in the safe all-off state until both sensors have been observed validly.",
+      "The controller can be stepped between valid sensor frames, so idle input is not automatically a fault."
+    ]
+  },
+  "plant": {
+    "tick_ms": 100,
+    "inlet_fill_delta": 7,
+    "passive_drain_delta": 1,
+    "ambient_temp_c": 24,
+    "heater_gain_c": 3,
+    "passive_cooling_c": 1,
+    "retained_heat_gain_c": 2,
+    "retained_heat_decay_c": 1,
+    "max_retained_heat_c": 4,
+    "min_temp_c": 20,
+    "max_temp_c": 80,
+    "min_level": 0,
+    "max_level": 100,
+    "min_heating_level": 55,
+    "notes": [
+      "The heater is ineffective and unsafe below the minimum heating level, so low-level heating is always a policy violation.",
+      "The tank keeps a small amount of thermal lag, so the controller must switch the heater off early near the upper band."
+    ]
+  },
+  "initial_state": {
+    "temp_c": 25,
+    "level": 35,
+    "inlet": "CLOSED",
+    "heater": "OFF"
+  },
+  "task": {
+    "objective": "Fill the tank into the working level region, then heat it into the temperature band without energizing the heater on a low-fill vessel.",
+    "target_band": {
+      "min": 45,
+      "max": 48,
+      "hold_previous_state": true
+    },
+    "interface": [
+      "Controller inputs are CONTROLLER_INPUT_TEMPERATURE, CONTROLLER_INPUT_LEVEL, CONTROLLER_INPUT_SENSOR_TIMEOUT, CONTROLLER_INPUT_INVALID_TEMPERATURE, CONTROLLER_INPUT_INVALID_LEVEL, and CONTROLLER_INPUT_NONE.",
+      "Sensor frames use `SENSE TEMP <integer>` and `SENSE LEVEL <integer>`.",
+      "Actuator frames must be `ACT INLET OPEN|CLOSED` and `ACT HEATER ON|OFF`."
+    ],
+    "policy": [
+      "On boot, command INLET CLOSED and HEATER OFF.",
+      "Until both sensors have been seen validly, stay in the safe all-off state.",
+      "If LEVEL < 60, command INLET OPEN and HEATER OFF.",
+      "If LEVEL > 75, command INLET CLOSED.",
+      "If LEVEL < 55 at any time, command HEATER OFF even if temperature is low.",
+      "If 60 <= LEVEL <= 75 and TEMP < 45, command INLET CLOSED and HEATER ON.",
+      "If 45 <= TEMP < 47, command INLET CLOSED and hold the previous safe heater state.",
+      "If 47 <= TEMP <= 48 and TEMP is rising compared with the previous valid TEMP sample, command HEATER OFF early and keep INLET CLOSED.",
+      "If 47 <= TEMP <= 48 and TEMP is not rising, keep INLET CLOSED and hold the previous safe heater state.",
+      "If TEMP > 48, command INLET CLOSED and HEATER OFF.",
+      "On malformed sensor input, command INLET CLOSED and HEATER OFF.",
+      "On explicit sensor timeout, command INLET CLOSED and HEATER OFF.",
+      "If either sensor becomes stale for more than 1000 ms, command INLET CLOSED and HEATER OFF."
+    ],
+    "decision_summary": [
+      "Missing any fresh valid sensor: safe all-off state",
+      "LEVEL < 60: inlet open, heater off, state FILLING",
+      "60 <= LEVEL <= 75 and TEMP < 45: inlet closed, heater on, state HEATING",
+      "45 <= TEMP <= 48: inlet closed, preserve the previous safe heater state, state HOLDING",
+      "TEMP > 48 or LEVEL < 55: inlet closed, heater off, state HOLDING or SAFE_IDLE depending on cause"
+    ],
+    "state_model": [
+      "SAFE_IDLE: fail-safe all-off state or waiting for fresh sensor coverage",
+      "FILLING: bringing level up into the working region",
+      "HEATING: level is safe and the heater is actively on",
+      "HOLDING: preserving a safe output inside the working region"
+    ]
+  },
+  "constraints": [
+    "Keep the existing public controller interface intact.",
+    "Heater output must always be ACT HEATER ON or ACT HEATER OFF.",
+    "Inlet output must always be ACT INLET OPEN or ACT INLET CLOSED.",
+    "Temperature values are expected to stay within 20..80 C and level within 0..100 percent.",
+    "Any malformed or stale sensor input must drive the controller to the safe all-off state."
+  ],
+  "success": {
+    "required_scenarios": [
+      "smoke",
+      "fill_then_heat",
+      "low_level_guard",
+      "anticipation_control",
+      "sensor_timeout",
+      "malformed_frame"
+    ],
+    "thresholds": {
+      "timeout_reaction_ms_min": 1000,
+      "timeout_reaction_ms_max": 1200,
+      "hard_upper_limit_c": 51,
+      "max_constraint_violations": 0,
+      "max_low_level_heating_violations": 0
+    },
+    "notes": [
+      "This task is harder because it combines two independent sensor streams with a level-gated heater policy.",
+      "The packet is explicit about freshness and low-level heater rules so failures stay tied to controller behavior."
+    ]
+  },
+  "feedback": {
+    "mode": "full",
+    "include_build_logs": true,
+    "include_runtime_logs": true,
+    "include_uart_transcript": true,
+    "include_trace_samples": true,
+    "include_metrics": true,
+    "include_failure_category": true,
+    "include_history": false,
+    "include_unit_test_details": true,
+    "include_warnings": true,
+    "include_evaluator_commentary": true
+  }
+}

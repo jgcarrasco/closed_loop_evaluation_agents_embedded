@@ -1,0 +1,15 @@
+Implemented the controller policy and added visible firmware probes.
+
+Changed:
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Added self-tests:
+- `agent_tests/test_controller.py`
+
+Verified:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+

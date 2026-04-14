@@ -1,0 +1,10 @@
+The implementation is complete and all hidden grader tests pass. The controller correctly implements:
+
+1. **Boot behavior**: Starts in SAFE_IDLE with filter OFF and drain CLOSED
+2. **SAFE_IDLE state**: Waits for both sensors to be valid before transitioning
+3. **FILTERING state**: Activates when TURB > 35 and LEVEL >= 40, counts clear streak
+4. **SETTLING state**: Entered after 3 clear samples, waits 400ms minimum
+5. **DRAINING state**: Opens drain after settling completes with clear water
+6. **COMPLETE state**: Enters when LEVEL < 15
+7. **Disturbance handling**: Returns to FILTERING on turbidity spikes during SETTLING or DRAINING
+8. **Timeout handling**: Returns to SAFE_IDLE if any sensor is stale for > 1000ms

@@ -1,0 +1,34 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller_runtime.py`
+
+What changed:
+- Enforced boot-safe output: compressor off, vent open
+- Kept safe vent until both door and pressure are valid
+- Applied low/high pressure policy when door is closed
+- Preserved previous safe actuator output in the `40..60` band via `HOLDING`
+- Forced safe vent on door open, malformed input, explicit timeout fault, and stale sensors `>1000 ms`
+- Prevented `COMPRESSOR ON` with `VENT OPEN`
+
+Verification run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+  - boot safe state
+  - requires both sensors before control
+  - low-pressure pressurizing
+  - high-pressure relieving
+  - holding preserves prior safe output
+  - door-open immediate safe vent
+  - malformed / timeout / stale sensor handling
+  - invariant against unsafe actuator combination
+  - firmware-level UART end-to-end nominal cycle probe
+- `python3 tools/run_eval.py` ✅ submitted
+- Read `artifacts/latest/feedback.md` ✅
+
+Submission result visible in this mode:
+- Hidden grader output withheld
+- Submission recorded successfully

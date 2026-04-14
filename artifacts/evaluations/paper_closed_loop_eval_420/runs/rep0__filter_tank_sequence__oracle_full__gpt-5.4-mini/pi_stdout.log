@@ -1,0 +1,21 @@
+Implemented the filter-tank controller behavior in:
+
+- `components/controller/controller.c`
+
+Visible verification completed:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅
+
+The controller now handles:
+
+- boot-safe idle
+- waiting for both sensors
+- filtering / clear-streak logic
+- settling and drain timing
+- disturbance recovery
+- complete-on-low-level
+- malformed input and sensor timeout safe shutdown
+
+Also added visible UART end-to-end tests under `agent_tests/`.

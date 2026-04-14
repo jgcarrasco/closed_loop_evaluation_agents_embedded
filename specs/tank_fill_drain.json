@@ -1,0 +1,114 @@
+{
+  "experiment_id": "minimal_qemu_demo",
+  "task_id": "tank_fill_drain",
+  "task_name": "Tank Fill/Drain Controller",
+  "task_version": "v2",
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "machine": {
+    "name": "esp32_qemu_tank_demo",
+    "controller": "ESP32 firmware running in QEMU",
+    "interface": {
+      "transport": "uart",
+      "port": "UART0",
+      "baudrate": 115200,
+      "protocol": "newline-delimited ASCII"
+    }
+  },
+  "actuators": [
+    {
+      "name": "pump",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "OFF",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "sensors": [
+    {
+      "name": "level",
+      "type": "integer",
+      "units": "percent",
+      "range": [
+        0,
+        100
+      ]
+    }
+  ],
+  "timing": {
+    "control_period_ms": 50,
+    "sensor_period_ms": 100,
+    "episode_duration_s": 3.0,
+    "sensor_timeout_ms": 1000,
+    "notes": [
+      "Valid LEVEL frames arrive every 100 ms while the controller can still be stepped every 50 ms.",
+      "Treat CONTROLLER_INPUT_NONE as an idle/no-new-frame step. Only fail safe after malformed input, explicit timeout input, or more than 1000 ms without a valid sensor frame."
+    ]
+  },
+  "plant": {
+    "tick_ms": 100,
+    "fill_delta": 6,
+    "drain_delta": 1,
+    "min_level": 0,
+    "max_level": 100
+  },
+  "initial_state": {
+    "level": 20,
+    "pump": "OFF"
+  },
+  "task": {
+    "objective": "Keep the tank in the safe band with a simple bang-bang controller and fail safe to pump-off on bad input.",
+    "target_band": {
+      "min": 30,
+      "max": 80,
+      "hold_previous_state": true
+    },
+    "policy": [
+      "On boot, keep the pump off.",
+      "If LEVEL < 30, command PUMP ON.",
+      "If LEVEL > 80, command PUMP OFF.",
+      "If 30 <= LEVEL <= 80, hold the previous safe actuator state.",
+      "On malformed sensor input, command PUMP OFF.",
+      "On explicit sensor timeout, command PUMP OFF.",
+      "If no valid sensor frame arrives for more than 1000 ms, command PUMP OFF."
+    ]
+  },
+  "constraints": [
+    "Keep the existing controller public interface intact.",
+    "Pump commands must always be ACT PUMP ON or ACT PUMP OFF.",
+    "Level values are expected to stay within 0..100.",
+    "Any malformed or stale sensor input must drive the controller to the safe OFF state.",
+    "Internal helper names and code organization are not graded; only the required public behavior and runtime behavior are."
+  ],
+  "success": {
+    "required_scenarios": [
+      "smoke",
+      "happy_path",
+      "sensor_timeout",
+      "malformed_frame"
+    ],
+    "thresholds": {
+      "timeout_reaction_ms_min": 1000,
+      "timeout_reaction_ms_max": 1200,
+      "max_constraint_violations": 0
+    }
+  },
+  "feedback": {
+    "mode": "full",
+    "include_build_logs": true,
+    "include_runtime_logs": true,
+    "include_uart_transcript": true,
+    "include_trace_samples": true,
+    "include_metrics": true,
+    "include_failure_category": true,
+    "include_history": false,
+    "include_unit_test_details": true,
+    "include_warnings": true,
+    "include_evaluator_commentary": true
+  }
+}

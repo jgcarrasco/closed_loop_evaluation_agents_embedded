@@ -1,0 +1,18 @@
+The submission has been recorded successfully. In "oneshot_blind" mode, the hidden grader results are intentionally withheld as per the benchmark design. The task is complete - I've implemented the controller logic and made exactly one submission as required.
+
+## Summary
+
+I implemented the Tank Fill/Drain Controller with the following behavior:
+
+1. **Boot**: Pump starts OFF (safe default)
+2. **Low level (< 30)**: Turns pump ON
+3. **High level (> 80)**: Turns pump OFF  
+4. **Mid-band (30-80)**: Holds previous pump state (doesn't change)
+5. **Invalid input/timeout**: Fails safe to PUMP OFF
+6. **Timeout tracking**: No valid sensor for >1000ms triggers safe off
+
+The implementation is in the two editable files:
+- `components/controller/controller.c` - main controller logic
+- `components/controller/include/controller.h` - header with types and constants
+
+**Final Status**: SUBMISSION_RECORDED (oneshot_blind mode)

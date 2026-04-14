@@ -1,0 +1,34 @@
+The submission passed on the first try. The controller implementation is working correctly. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented a thermal chamber hysteresis controller for an ESP32-based system. The controller manages a binary heater to maintain temperature within a target band (47-52°C) with the following behavior:
+
+### Controller Logic (`components/controller/controller.c`):
+
+1. **Boot state**: Heater OFF, SAFE_OFF state
+2. **Low temperature (< 47°C)**: Turn heater ON (HEATING state)
+3. **High temperature (> 52°C)**: Turn heater OFF (SAFE_OFF state)  
+4. **Holding zone (47-49°C)**: Preserve previous actuator state (HOLDING state)
+5. **Early-off zone (50-52°C)**: 
+   - If temperature is rising compared to previous sample → Turn heater OFF early (HOLDING state)
+   - If temperature not rising → Hold previous safe actuator state (HOLDING state)
+6. **Fault conditions**: Malformed input, sensor timeout, or stale data (>1000ms) → Fail safe to OFF (SAFE_OFF state)
+
+### Key Features:
+- Tracks previous temperature for rise detection in early-off zone
+- Implements 1000ms timeout for stale sensor data
+- Properly handles all controller states: SAFE_OFF, HEATING, HOLDING
+- Fails safely on any error condition
+
+### Tests Created (`agent_tests/test_controller.py`):
+- Boot leaves heater OFF ✓
+- Low temperature drives heater ON ✓
+- High temperature drives heater OFF ✓
+- Holding zone preserves state ✓
+- Rising temp near upper band triggers early OFF ✓
+- Malformed input forces heater OFF ✓
+- Stale sensor data timeout forces heater OFF ✓
+- End-to-end firmware test through UART ✓
+
+The hidden grader returned **PASS** on the first submission.

@@ -1,0 +1,21 @@
+The submission has been recorded successfully. In `oneshot_blind` mode:
+- **Submission index**: 1 (of budget 1)
+- **Status**: SUBMISSION_RECORDED
+- Hidden grader results are withheld as per the benchmark mode design
+
+## Final Submission Status
+
+**Status: SUBMISSION_RECORDED**
+
+The thermal chamber hysteresis controller has been implemented in `components/controller/controller.c` with the following behavior:
+
+1. **Boot**: Heater starts OFF (SAFE_OFF state)
+2. **TEMP < 47°C**: Heater ON (HEATING state)
+3. **TEMP > 52°C**: Heater OFF (SAFE_OFF state)
+4. **47 ≤ TEMP < 50°C**: Hold previous actuator state (HOLDING)
+5. **50 ≤ TEMP ≤ 52°C and rising**: Early heater OFF, HOLDING state
+6. **50 ≤ TEMP ≤ 52°C and not rising**: Hold previous state (HOLDING)
+7. **Malformed/invalid input**: Heater OFF (SAFE_OFF)
+8. **Sensor timeout (>1000ms)**: Heater OFF (SAFE_OFF)
+
+The implementation tracks the last valid temperature for detecting rising conditions, monitors sensor timestamps for stale data detection, and maintains proper state transitions per the task specification.

@@ -1,0 +1,5 @@
+The examples controller.c doesn't have the function. This is very strange because the workspace controller.c has 8844 bytes, which is larger than the examples (6615 bytes). The workspace controller.c was modified at 07:36.
+
+Let me check if there's a reference to the function in the workspace header that I need to add:
+
+Actually, let me just try to understand what's happening. The workspace controller.c file has been created with my edit. The edit adds `controller_set_safe_idle` and the variables like `previous_inlet_open`, etc. These need to be declared somewhere. They're declared in the

@@ -1,0 +1,38 @@
+The implementation is complete. Let me summarize what was implemented:
+
+## Summary
+
+I implemented a mixing tank fill-and-heat controller in `components/controller/controller.c` that follows the specified control policy:
+
+### Control Policy Implemented:
+1. **Boot**: Starts with inlet closed and heater off (SAFE_IDLE state)
+2. **Sensor validity**: Stays in SAFE_IDLE until both temperature and level sensors are valid
+3. **Low level (< 55)**: INLET OPEN, HEATER OFF (FILLING state) - heater guard
+4. **Medium-low level (55-60)**: INLET OPEN, HEATER OFF (FILLING state)
+5. **Safe level (≥ 60) with low temp (< 45)**: INLET CLOSED, HEATER ON (HEATING state)
+6. **Temp 45-47**: INLET CLOSED, hold previous heater state (HOLDING state)
+7. **Temp 47-48 rising**: HEATER OFF early (anticipation control)
+8. **Temp 47-48 not rising**: Hold previous heater state
+9. **Temp > 48**: INLET CLOSED, HEATER OFF (HOLDING state)
+10. **Sensor timeout (> 1000ms)**: Force SAFE_IDLE state
+
+### Test Coverage:
+Created comprehensive tests in `agent_tests/test_controller.py` covering:
+- Boot safety (inlet closed, heater off)
+- Sensor validity requirements
+- Low level fill behavior
+- Safe level heating behavior
+- Level < 55 heater guard
+- Early heater off with rising temperature
+- Malformed input handling
+- Sensor timeout handling
+- End-to-end fill-then-heat sequence
+
+### Results:
+All 6 hidden grader scenarios passed:
+- smoke: PASS
+- anticipation_control: PASS (max_temp=49°C, within 51°C limit)
+- fill_then_heat: PASS (max_temp=48°C, within 51°C limit)
+- low_level_guard: PASS (max_temp=50°C, within 51°C limit)
+- malformed_frame: PASS (safe state triggered on invalid input)
+- sensor_timeout: PASS (max_temp=49°C, within 51°C limit)

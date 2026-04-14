@@ -1,0 +1,24 @@
+Implemented the pressure vessel interlock controller and added visible self-tests.
+
+What changed:
+- `components/controller/controller.c`
+  - Added full safe/pressurize/hold/relieve state logic
+  - Enforced safe vent on boot, malformed input, timeout, and stale sensors
+  - Preserved actuator state in the working band
+  - Kept compressor off whenever vent is open
+- `agent_tests/test_pressure_vessel_interlock.py`
+  - Added visible UART firmware probes covering:
+    - boot/safe vent behavior
+    - waiting until both sensors are valid
+    - low/high pressure transitions
+    - holding behavior in the 40..60 band
+    - door-open immediate safe vent
+    - malformed input and stale timeout recovery
+    - unsafe actuator pair check
+
+Verification completed:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` submitted ✅
+
+

@@ -1,0 +1,25 @@
+Implemented the thermal chamber controller policy in:
+
+- `components/controller/controller.c`
+
+Added visible self-verification coverage in:
+
+- `agent_tests/test_thermal_chamber_controller.py`
+
+Verified locally with:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+The controller now handles:
+
+- boot-safe off
+- low-temp heating
+- upper-band shutdown
+- hysteresis holding
+- early off on rising temps near the upper band
+- malformed input fail-safe off
+- stale sensor timeout fail-safe off
+
+

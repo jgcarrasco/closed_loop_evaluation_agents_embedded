@@ -1,0 +1,43 @@
+The submission passes consistently. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented a pressure vessel interlock controller for ESP32 firmware with the following behavior:
+
+### Controller Logic (components/controller/controller.c)
+
+1. **Boot State**: Compressor OFF, Vent OPEN (SAFE_VENT state)
+
+2. **Sensor Freshness Tracking**: 
+   - Tracks when each sensor (pressure and door) was last seen
+   - Each sensor type updates its own freshness independently
+   - Stays in SAFE_VENT until BOTH sensors have been seen validly
+
+3. **Control Policy** (when door is closed and both sensors valid):
+   - Pressure < 40 kPa: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+   - Pressure > 60 kPa: COMPRESSOR OFF, VENT OPEN (RELIEVING)  
+   - 40 ≤ Pressure ≤ 60 kPa: Hold previous safe output (HOLDING)
+
+4. **Safety Rules**:
+   - Door open → Immediately force SAFE_VENT regardless of pressure
+   - Sensor timeout (>1000ms stale) → Force SAFE_VENT
+   - Malformed input → Force SAFE_VENT
+   - Never command COMPRESSOR ON and VENT OPEN simultaneously
+
+### Key Fix
+
+The critical fix was ensuring that `force_safe_vent()` properly sets all output fields including `output.state`, so that when returning early from the function, the state is correctly propagated to the caller.
+
+### Tests (agent_tests/test_controller.py)
+
+Created 10 comprehensive tests covering:
+- Boot leaves compressor off and vent open
+- Controller stays safe until both sensors seen
+- Low pressure pressurizing behavior
+- High pressure relieving behavior  
+- Band holding behavior
+- Door open forces safe vent
+- Malformed input handling
+- Sensor timeout handling
+- Never compressor on with vent open
+- Full end-to-end firmware cycle through UART

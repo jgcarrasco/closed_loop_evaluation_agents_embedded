@@ -1,0 +1,30 @@
+## Final Submission Status Report
+
+**Task Completed: Tank Fill/Drain Controller Implementation**
+
+### Summary
+
+I implemented the required control policy in `components/controller/controller.c`:
+
+1. **Boot behavior**: Pump starts OFF (via `controller_init()` calling `controller_set_safe_off()`)
+2. **Low level (< 30)**: Turns pump ON, state = PUMPING
+3. **High level (> 80)**: Turns pump OFF, state = SAFE_OFF
+4. **Mid-band (30-80)**: Holds previous output, state = HOLDING
+5. **Malformed input/timeout**: Fails safe to PUMP OFF
+
+### Implementation Details
+
+The `controller_step()` function now:
+- Checks for timeout conditions before processing new input
+- Handles `CONTROLLER_INPUT_LEVEL` by applying the hysteresis control policy
+- Handles `CONTROLLER_INPUT_SENSOR_TIMEOUT` and `CONTROLLER_INPUT_INVALID_LEVEL` by failing safe
+- Handles `CONTROLLER_INPUT_NONE` by checking if sensor has timed out
+
+### Submission Result
+
+- **Status**: SUBMISSION_RECORDED
+- **Benchmark Mode**: oneshot_blind
+- **Submission Index**: 1/1
+- **Hidden Grader Results**: Withheld (as per benchmark mode specification)
+
+The implementation follows the task contract in `docs/10_task.md` and is ready for evaluation by the hidden grader.

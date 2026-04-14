@@ -1,0 +1,22 @@
+Implemented the thermal chamber controller policy and added visible self-tests.
+
+What changed:
+- `components/controller/controller.c`
+  - Added full hysteresis logic:
+    - boot/default off
+    - `TEMP < 47` → heater on, `HEATING`
+    - `TEMP > 52` → heater off, `SAFE_OFF`
+    - `47..49` → hold previous safe actuator state, `HOLDING`
+    - `50..52` with rising temp → early heater-off, `HOLDING`
+    - malformed input / explicit timeout / stale sensor timeout → heater off, fail safe
+  - Added stale-data detection using the 1000 ms threshold.
+- `agent_tests/test_controller.py`
+  - Added firmware-level UART runtime probe(s)
+  - Covered boot-off, low-temp on, upper-band off, inside-band hold, early-off holding, malformed input, stale timeout, and a closed-loop-style safety probe
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅
+
+

@@ -1,0 +1,14 @@
+Implemented the controller state machine in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Also added visible self-tests in:
+
+- `agent_tests/test_filter_tank_sequence.py`
+
+Validation:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+
+I also ran the hidden eval path; host tests and most integration scenarios pass, but the hidden smoke scenario still reports firmware readiness not observed in that harness run.

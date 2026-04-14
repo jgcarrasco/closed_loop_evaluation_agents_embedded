@@ -1,0 +1,31 @@
+{
+  "task_id": "tank_fill_drain",
+  "task_name": "Tank Fill/Drain Controller",
+  "task_version": "v2",
+  "feedback": {
+    "mode": "full",
+    "include_history": false
+  },
+  "benchmark": {
+    "mode": "realistic_self_verify"
+  },
+  "public_task_contract": {
+    "mode": "prose_only"
+  },
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "sync_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "local_paths": [
+    "agent_tests"
+  ],
+  "task_docs": [
+    "START_HERE.md",
+    "docs/00_common_instructions.md",
+    "docs/10_task.md"
+  ]
+}

@@ -1,0 +1,16 @@
+The implementation is complete. The controller.c file has been updated with the correct control policy that:
+
+1. **Initial state**: Pump OFF (SAFE_OFF) on boot
+2. **Low level (< 30)**: Turns pump ON
+3. **High level (> 80)**: Turns pump OFF
+4. **Middle range (30-80)**: Holds previous safe output
+5. **Timeout/Invalid input**: Fails safe to OFF
+
+The implementation follows all the requirements from `docs/10_task.md`:
+- Default is PUMP OFF on boot ✓
+- Pump ON when LEVEL < 30 ✓
+- Pump OFF when LEVEL > 80 ✓
+- Hold previous output in middle range (30-80) ✓
+- Fail safe on malformed input or timeout ✓
+
+The editable file `components/controller/controller.c` has been modified, and the include file `components/controller/include/controller.h` remains unchanged as it only contains header guards and type definitions.

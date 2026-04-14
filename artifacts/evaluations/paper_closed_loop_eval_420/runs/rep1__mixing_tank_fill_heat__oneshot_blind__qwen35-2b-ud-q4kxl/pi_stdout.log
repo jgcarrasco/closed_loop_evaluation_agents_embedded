@@ -1,0 +1,27 @@
+The implementation is complete. Let me provide a summary:
+
+## Summary
+
+I have implemented the controller for the mixing tank fill-and-heat task in `$TMPDIR/embedded_agent_eval_matrix/20260329T025855Z/mixing_tank_fill_heat__oneshot_blind__qwen35-2b-ud-q4kxl/workspace/components/controller/controller.c` and `$TMPDIR/embedded_agent_eval_matrix/20260329T025855Z/mixing_tank_fill_heat__oneshot_blind__qwen35-2b-ud-q4kxl/workspace/components/controller/include/controller.h`.
+
+### Key Implementation Points:
+
+1. **State Machine**: The controller implements a state machine with states SAFE_IDLE, FILLING, HEATING, and HOLDING as specified in the task contract.
+
+2. **Control Policy**:
+   - If LEVEL < 60: Open INLET, Keep Heater OFF
+   - If LEVEL > 75: Close INLET
+   - If LEVEL < 55 at any time: Keep Heater OFF
+   - If 60 <= LEVEL <= 75 and TEMP < 45: Close INLET, Turn ON Heater
+   - If 45 <= TEMP < 47: Close INLET, Hold Previous Heater State
+   - If 47 <= TEMP <= 48 AND rising temp: Turn OFF Heater early
+   - If 47 <= TEMP <= 48 AND NOT rising temp: Hold Previous Heater State
+   - If TEMP > 48: Close INLET, Turn OFF Heater
+
+3. **Safety**: The controller stays in all-off state (SAFE_IDLE) until both sensors have been seen validly, with a `valid_frame_count` counter that resets on invalid input or timeout.
+
+4. **Timeout Handling**: If either sensor becomes stale for more than 1000ms (`MAX_VALID_FRAMES = 1000`), the controller goes to safe idle state.
+
+5. **Boot Behavior**: On boot, the controller initializes in SAFE_IDLE state with inlet closed and heater off.
+
+The submission was recorded successfully with `python3 tools/run_eval.py`. The benchmark mode is `oneshot_blind`, which means only one submission is allowed (budget exhausted).

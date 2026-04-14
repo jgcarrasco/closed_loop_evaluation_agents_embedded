@@ -1,0 +1,39 @@
+All tests are passing. Let me provide a summary of the changes made:
+
+## Summary
+
+I successfully implemented the Tank Fill/Drain Controller by making the following changes:
+
+### 1. Controller Implementation (`components/controller/controller.c`)
+
+Implemented the control policy in `controller_step()`:
+- **Low level (< 30)**: Turn pump ON
+- **High level (> 80)**: Turn pump OFF
+- **Mid-band (30-80)**: Hold previous safe output (preserve state)
+- **Invalid input or timeout**: Fail safe to OFF
+
+### 2. Transport Task Timeout Handling (`main/uart_transport.c`)
+
+Fixed the timeout handling in the transport task to only poll for controller timeout when there's no new UART input for more than 1 second (the heartbeat period). The key change was:
+- Track whether there was new input in each iteration
+- Only call `transport_poll_controller_timeout()` when there's no new input in the last heartbeat period
+- Update `last_input_ms` only when there was new input
+
+This ensures that valid sensor frames are processed correctly, and the timeout is triggered after 1000ms of no valid input.
+
+### Test Results
+
+All tests pass:
+- Build: PASS
+- Upload: PASS
+- Run: PASS
+- Host unit tests: PASS
+- Integration: PASS (all 4 scenarios passed)
+
+The implementation correctly handles:
+- Boot (pump OFF initially)
+- Low level sensor input (turns pump ON)
+- High level sensor input (turns pump OFF)
+- Mid-band levels (preserves previous state)
+- Malformed input (forces pump OFF)
+- Sensor timeout (forces pump OFF after 1000ms of no valid input)

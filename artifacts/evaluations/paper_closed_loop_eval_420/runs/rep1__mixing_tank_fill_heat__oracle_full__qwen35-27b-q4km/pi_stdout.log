@@ -1,0 +1,35 @@
+I see two places where `output.changed` is checked:
+1. In `transport_apply_protocol_input`: `if (output.changed || controller_input.kind != CONTROLLER_INPUT_NONE)`
+2. In `transport_poll_controller_timeout`: `if (output.changed)`
+
+For `CONTROLLER_INPUT_NONE`, the first check would be `if (output.changed || false)`, which simplifies to `if (output.changed)`. So if I set `output.changed = true` when timeout triggers, ACT commands should be sent.
+
+But looking at the transcript, no ACT commands are sent after 0.300s. This suggests either:
+1. The timeout check isn't triggering
+2. There's a bug in my code
+
+Let me add some debug output to understand what's happening. Actually, let me first check if the issue is with how I'm calculating the timeout. Looking at my code:
+
+```c
+static bool controller_check_timeout(controller_t *controller, uint32_t now_ms)
+{
+    /* Check if either sensor is stale for more than 1000ms */
+    if (controller->has_valid_temperature) {
+        uint32_t temp_age = now_ms - controller->last_temperature_ms;
+        if (temp_age > CONTROLLER_SENSOR_TIMEOUT_MS) {
+            return true;
+        }
+    }
+    ...
+}
+```
+
+The issue might be that `now_ms` is the firmware's internal time, not the plant's time. Let me check if there's a mismatch.
+
+Actually, looking at the transcript timestamps again:
+- 0.300s: Last sensor (plant time = 300ms)
+- 1.300s: Heartbeat (firmware time?)
+
+The heartbeat is sent every 1000ms from boot according to `UART_TRANSPORT_HEARTBEAT_MS`. If the first heartbeat is at 0.600s and the second at 1.300s, that's only 700ms apart, not 1000ms. This suggests there might be an issue with how time is being tracked.
+
+

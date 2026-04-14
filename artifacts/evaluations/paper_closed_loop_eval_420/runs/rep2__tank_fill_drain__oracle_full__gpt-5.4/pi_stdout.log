@@ -1,0 +1,24 @@
+Implemented the tank controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests in:
+
+- `agent_tests/test_firmware_controller.py`
+
+What changed:
+- Boot defaults to pump off
+- `LEVEL < 30` => pump on
+- `LEVEL > 80` => pump off
+- `30 <= LEVEL <= 80` => preserve previous actuator output
+- Malformed input => safe off
+- Explicit timeout input => safe off
+- Idle `CONTROLLER_INPUT_NONE` only times out after `> 1000 ms` since last valid sensor frame
+
+Visible verification run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Hidden grader result:
+- All host checks, build, runtime, and integration scenarios passed.

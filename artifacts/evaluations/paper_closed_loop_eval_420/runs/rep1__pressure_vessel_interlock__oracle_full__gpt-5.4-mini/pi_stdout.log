@@ -1,0 +1,25 @@
+Implemented the pressure vessel interlock controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests in:
+
+- `agent_tests/test_pressure_vessel.py`
+
+What I covered:
+- boot safe vent behavior
+- safe state until both sensors are valid
+- low-pressure pressurizing
+- high-pressure relieving
+- band holding previous safe output
+- door-open immediate safe vent
+- malformed input safe vent
+- sensor timeout / stale sensor safe vent
+- no compressor-on + vent-open combination
+
+Validation performed:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅
+
+Hidden/visible evaluation passed.

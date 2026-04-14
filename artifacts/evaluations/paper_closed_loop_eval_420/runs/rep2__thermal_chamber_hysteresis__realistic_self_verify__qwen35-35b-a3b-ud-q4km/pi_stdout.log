@@ -1,0 +1,21 @@
+As expected, in `realistic_self_verify` mode, hidden grader results are withheld. My implementation is complete with:
+
+1. **Controller Implementation** (`components/controller/controller.c`):
+   - On boot: heater OFF (SAFE_OFF state)
+   - TEMP < 47°C → HEATER ON (HEATING state)
+   - TEMP > 52°C → HEATER OFF (SAFE_OFF state)  
+   - 47°C ≤ TEMP < 50°C → HOLDING (preserve previous actuator state)
+   - 50°C ≤ TEMP ≤ 52°C with rising temp → HEATER OFF early (HOLDING state)
+   - 50°C ≤ TEMP ≤ 52°C without rising → HOLDING (preserve previous state)
+   - Malformed input, sensor timeout, or stale data (>1000ms) → HEATER OFF
+
+2. **Test Suite** (`agent_tests/test_thermal_controller.py`):
+   - `test_heater_on_at_low_temperature`: Verifies 35°C triggers HEATER ON
+   - `test_heater_off_above_upper_band`: Verifies 53°C triggers HEATER OFF
+   - `test_holding_in_mid_band`: Verifies 48°C preserves state (HOLDING)
+   - `test_rising_temperature_triggers_early_off`: Verifies rising temp at 51°C triggers early OFF
+   - `test_malformed_input_forces_heater_off`: Verifies invalid input triggers HEATER OFF
+   - `test_sensor_timeout_forces_heater_off`: Verifies SENSOR_TIMEOUT fault triggers HEATER OFF
+   - `test_closed_loop_stays_below_56c`: Closed-loop warm-up simulation
+
+All 7 tests pass. The submission has been recorded for the hidden grader evaluation.

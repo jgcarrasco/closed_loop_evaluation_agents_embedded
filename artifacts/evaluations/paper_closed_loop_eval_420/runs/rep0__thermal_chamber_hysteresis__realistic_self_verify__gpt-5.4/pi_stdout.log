@@ -1,0 +1,32 @@
+Implemented the thermal hysteresis controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller.py`
+
+What changed:
+- Boot initializes `SAFE_OFF` / heater off
+- `TEMP < 47` => `HEATING` / heater on
+- `TEMP > 52` => `SAFE_OFF` / heater off
+- `47..49` => preserves prior actuator state, reports `HOLDING`
+- `50..52` rising vs previous valid sample => early heater off, reports `HOLDING`
+- `50..52` non-rising => preserves prior actuator state, reports `HOLDING`
+- Malformed input => heater off
+- Explicit sensor timeout => heater off, `timed_out = true`
+- Stale valid sensor data `> 1000 ms` => heater off, `timed_out = true`
+- Normal no-new-frame controller steps do not fault before timeout
+
+Visible verification completed:
+- `source .embedded_eval_env.sh && python3 tools/run_build.py`
+- `source .embedded_eval_env.sh && python3 tools/run_self_tests.py`
+- `source .embedded_eval_env.sh && python3 tools/run_eval.py`
+
+Self-tests cover the checklist, including:
+- controller-level acceptance tests for each policy bullet
+- a visible closed-loop host-side probe staying `<= 56 C`
+- firmware-level UART end-to-end probes for nominal warmup, malformed input, and stale-timeout behavior
+
+Submission status:
+- `artifacts/latest/feedback.md`: hidden results withheld, submission recorded

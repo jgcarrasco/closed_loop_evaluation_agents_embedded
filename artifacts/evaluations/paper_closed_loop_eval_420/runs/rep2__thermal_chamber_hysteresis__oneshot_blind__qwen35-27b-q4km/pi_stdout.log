@@ -1,0 +1,18 @@
+The submission has been recorded successfully. The final visible submission status is:
+
+**Status: SUBMISSION_RECORDED**
+
+In the `oneshot_blind` benchmark mode:
+- Submission index: 1 (of budget 1)
+- Hidden grader results are withheld by design
+- No public self-verification helpers are available in this mode
+
+The implementation I provided handles all the specified control policy requirements:
+1. **Boot**: Heater starts OFF in SAFE_OFF state
+2. **TEMP < 47**: Turns heater ON (HEATING state)
+3. **TEMP > 52**: Turns heater OFF (SAFE_OFF state)  
+4. **47 <= TEMP < 50**: Holds previous actuator state (HOLDING state)
+5. **50 <= TEMP <= 52 with rising temp**: Early anticipatory OFF (HOLDING state)
+6. **50 <= TEMP <= 52 without rising**: Holds previous actuator state (HOLDING state)
+7. **Malformed input / sensor timeout**: Forces heater OFF (SAFE_OFF)
+8. **Stale data > 1000ms**: Forces heater OFF (SAFE_OFF)

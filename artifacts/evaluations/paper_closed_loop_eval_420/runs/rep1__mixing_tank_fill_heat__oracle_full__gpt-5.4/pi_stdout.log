@@ -1,0 +1,27 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Added visible firmware-level self-tests in:
+
+- `agent_tests/test_mixing_tank_controller.py`
+
+What was implemented:
+- Safe boot all-off behavior
+- Independent temp/level validity and freshness handling
+- Safe idle until both sensors are valid
+- >1000 ms stale-sensor fail-safe
+- Malformed input fail-safe
+- Fill / heat / hold policy
+- Low-level heater guard
+- Early heater-off on rising 47–48 C samples
+
+Visible verification run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅
+
+Hidden eval result:
+- PASS
+- All host-side, build, runtime, and integration checks passed.

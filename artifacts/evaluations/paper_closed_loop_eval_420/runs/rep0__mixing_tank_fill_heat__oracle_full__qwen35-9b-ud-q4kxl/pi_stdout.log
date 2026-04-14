@@ -1,0 +1,18 @@
+The feedback confirms that the sensor_timeout scenario is failing. The last valid sensor frame was at 300ms, and the controller should have gone to SAFE_IDLE at around 1300ms (300 + 1000). But it didn't!
+
+Looking at the scenario metrics:
+- duration_ms: 1800
+- final_temp_c: 35
+- heater_transitions: 2
+- inlet_transitions: 0
+
+The heater turned on and off twice, but never due to timeout. The temperature dropped from 49 to 35, which suggests that the plant (simulated environment) was cooling down. But the controller should have gone to SAFE_IDLE when the sensors timed out, not because the temperature dropped.
+
+I think the issue is that my timeout logic is not working correctly. Let me check if maybe there's a bug in how I'm tracking the timestamps or checking for timeouts.
+
+Actually, I just realized something! Looking at my `controller_update_sensor_freshness` function:
+```c
+static void controller_update_sensor_freshness(controller_t *controller, uint32_t now_ms)
+{
+    if (controller->has_valid_temperature && !controller->has_valid_level) {
+       

@@ -1,0 +1,28 @@
+The submission has been completed. Here's a summary of what I did:
+
+## Summary
+
+I implemented the filter tank sequence controller according to the specification in `docs/10_task.md`:
+
+### Controller Implementation (`components/controller/controller.c`)
+
+The state machine implements all required states and transitions:
+
+1. **SAFE_IDLE**: Initial state, waits for both turbidity and level sensors to provide valid data
+2. **FILTERING**: Filter ON when turbidity > 35 NTU and level >= 40, counts clear streak (turbidity <= 35)
+3. **SETTLING**: After 3 consecutive clear samples, filter OFF, drain CLOSED, waits 400ms; disturbance (turbidity > 40) returns to FILTERING
+4. **DRAINING**: After settling period with clear turbidity and sufficient level, drain OPEN; disturbance (turbidity > 50) returns to FILTERING
+5. **COMPLETE**: When level drops below 15 NTU
+
+### Key Features:
+- Sensor timeout handling (1000ms stale data → SAFE_IDLE)
+- Clear streak counting based on turbidity inputs only
+- Disturbance recovery during SETTLING and DRAINING states
+- Proper state transitions with actuator commands
+
+### Submission Status:
+- **Status**: `SUBMISSION_RECORDED`
+- **Benchmark mode**: `oneshot_blind` (hidden grader results withheld)
+- **Submission index**: 1/1
+
+The controller implementation is complete and has been submitted to the hidden grader.

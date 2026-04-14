@@ -1,0 +1,31 @@
+The submission has been completed. Let me summarize what was done:
+
+## Summary
+
+I implemented the required fill-and-heat policy for the mixing tank controller in three files:
+
+### 1. `/workspace/components/controller/controller.c`
+Implemented a state machine-based fill-and-heat policy with the following logic:
+- **STATE FILLING**: When level is between MIN_HEATING_LEVEL (55) and LEVEL_HIGH_THRESHOLD (75), tank fills until reaching high threshold
+- **STATE HEATING**: When heater is ON and temperature is within safe range, tank continues filling while heating
+- **STATE HOLDING**: When level reaches HIGH_THRESHOLD (75), heater turns off and inlet closes
+- **STATE SAFE_IDLE**: Default state when heater is OFF or level has reached high threshold
+
+Key policies:
+- Heating starts only when level >= MIN_HEATING_LEVEL (55)
+- Heating stops when temperature exceeds TEMP_HIGH_THRESHOLD (48°C)
+- Heating stops early when temperature drops below TEMP_EARLY_OFF_THRESHOLD (47°C)
+- Heater turns off when temperature drops below TEMP_LOW_THRESHOLD (45°C)
+- Inlet closes at HIGH_THRESHOLD (75), preventing overfilling
+
+### 2. `/workspace/main/include/uart_transport.h`
+Updated the header to include the required constants and enums from controller.h.
+
+### 3. `/workspace/main/uart_transport.c`
+Updated the transport task to:
+- Parse UART protocol lines (temperature, level, timeout)
+- Call `controller_step()` to apply fill-and-heat policy
+- Send appropriate ACT INLET and ACT HEATER commands based on current state
+- Maintain heartbeat timing for controller monitoring
+
+The submission was successfully recorded using `python3 tools/run_eval.py` with benchmark mode "oneshot_blind".

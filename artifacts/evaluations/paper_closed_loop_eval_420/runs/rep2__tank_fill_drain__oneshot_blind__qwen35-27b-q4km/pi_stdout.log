@@ -1,0 +1,18 @@
+The submission has been recorded successfully. Since this is `oneshot_blind` mode:
+
+- **Submission index:** 1 (of 1 allowed)
+- **Status:** SUBMISSION_RECORDED
+- The hidden grader results are intentionally withheld in this benchmark mode.
+
+## Summary
+
+I implemented the tank fill/drain controller with the following behavior in `components/controller/controller.c`:
+
+1. **Boot leaves pump OFF** - `controller_init()` sets `pump_on = false` and state to `SAFE_OFF`
+2. **Low level (< 30) → PUMP ON** - When `LEVEL < 30`, pump turns on and state becomes `PUMPING`
+3. **High level (> 80) → PUMP OFF** - When `LEVEL > 80`, pump turns off and state becomes `SAFE_OFF`
+4. **Mid-band (30-80) → Hold previous output** - State becomes `HOLDING` but keeps current pump state
+5. **Malformed input / timeout → Fail safe PUMP OFF** - Both `SENSOR_TIMEOUT` and `INVALID_LEVEL` inputs force pump off
+6. **Timeout handling (> 1000ms)** - If no valid sensor frame for > 1000ms, pump is forced OFF
+
+The final submission status is **SUBMISSION_RECORDED**.

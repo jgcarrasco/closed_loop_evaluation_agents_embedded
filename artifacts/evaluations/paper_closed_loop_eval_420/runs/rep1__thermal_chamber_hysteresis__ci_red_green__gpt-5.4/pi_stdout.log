@@ -1,0 +1,29 @@
+Implemented hysteresis controller in:
+
+- `components/controller/controller.c`
+
+Behavior added:
+
+- boot-safe heater off
+- low/high threshold control
+- holding behavior in `47..49`
+- anticipatory off with `HOLDING` in rising `50..52`
+- fail-safe off on malformed input / explicit timeout
+- stale-data timeout only after `> 1000 ms`
+
+Visible verification completed:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+
+Added visible tests in:
+
+- `agent_tests/test_controller_logic.py`
+- `agent_tests/test_firmware_runtime.py`
+
+Coverage includes all checklist bullets, including a firmware-level UART end-to-end closed-loop probe.
+
+Hidden submission:
+
+- `python3 tools/run_eval.py`
+- Result: **PASS**

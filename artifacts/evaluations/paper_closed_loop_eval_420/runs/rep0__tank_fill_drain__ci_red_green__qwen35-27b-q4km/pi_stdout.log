@@ -1,0 +1,25 @@
+The task is solved. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented a tank fill/drain controller for ESP32 firmware that:
+
+### Control Policy (in `components/controller/controller.c`)
+1. **Default to PUMP OFF on boot** - The `controller_init()` function initializes the controller with pump off and SAFE_OFF state
+2. **Turn pump ON when LEVEL < 30** - When a valid sensor input arrives with level below the low threshold, the controller sets pump_on=true and state=PUMPING
+3. **Turn pump OFF when LEVEL > 80** - When a valid sensor input arrives with level above the high threshold, the controller sets pump_on=false and state=SAFE_OFF
+4. **Hold previous safe output while 30 <= LEVEL <= 80** - For mid-band levels, the controller preserves the current pump state without triggering any changes
+5. **Fail safe to PUMP OFF on malformed input or timeout** - Invalid sensor input or timeout (>1000ms without valid input) forces the controller to SAFE_OFF state
+
+### Tests (in `agent_tests/test_controller.py`)
+All 9 tests pass, covering:
+- Boot leaves pump off before any valid sensor input
+- Low level (20) produces ACT PUMP ON
+- High level (85) produces ACT PUMP OFF
+- Mid-band level (50) preserves previous actuator output
+- Short idle steps don't trip timeout immediately
+- Malformed input forces ACT PUMP OFF
+- Timeout (>1000ms) forces ACT PUMP OFF
+- End-to-end low-to-high sequence through UART
+
+The submission to the hidden grader passed with status PASS.

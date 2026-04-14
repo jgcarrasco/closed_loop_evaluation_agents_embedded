@@ -1,0 +1,73 @@
+{
+  "date": "2026-03-18",
+  "task_id": "tank_fill_drain",
+  "summary": "Final closed-loop benchmark state after evaluator and guidance improvements.",
+  "models": [
+    {
+      "framework": "codex",
+      "model": "gpt-5.4",
+      "final_status": "PASS",
+      "notes": "Solves quickly and reliably."
+    },
+    {
+      "framework": "opencode",
+      "model": "gpt-5-nano",
+      "final_status": "PASS",
+      "notes": "Needed clearer timing semantics and richer visible feedback, then converged."
+    },
+    {
+      "framework": "opencode",
+      "model": "nemotron-3-super-free",
+      "final_status": "PASS",
+      "notes": "Improved from early stalling to a clean closed-loop solve once feedback became actionable."
+    },
+    {
+      "framework": "opencode",
+      "model": "big-pickle",
+      "final_status": "PASS",
+      "notes": "Converged after multiple visible eval cycles."
+    },
+    {
+      "framework": "opencode",
+      "model": "mimo-v2-flash-free",
+      "final_status": "PASS",
+      "notes": "Solved on the first visible eval in the final packet."
+    },
+    {
+      "framework": "opencode",
+      "model": "minimax-m2.5-free",
+      "final_status": "PASS",
+      "notes": "Solved after multiple feedback iterations."
+    },
+    {
+      "framework": "pi",
+      "model": "qwen35-35b-a3b-ud-q4kxl",
+      "final_status": "PASS",
+      "notes": "Local/llama.cpp-backed path solved cleanly."
+    },
+    {
+      "framework": "pi",
+      "model": "qwen35-9b-ud-q6-k-xl",
+      "final_status": "PASS",
+      "notes": "Solved locally with more iterations than the 35B."
+    },
+    {
+      "framework": "opencode",
+      "model": "qwen3-coder-tools-long",
+      "final_status": "FAIL",
+      "notes": "Stayed distracted by hidden-test hunting and never became a reliable closed-loop solver."
+    },
+    {
+      "framework": "opencode",
+      "model": "local Qwen3.5-9B via llama.cpp",
+      "final_status": "FAIL",
+      "notes": "Failed for agent/tooling reasons before a valid benchmark solve; the same local family passed under pi."
+    }
+  ],
+  "takeaways": [
+    "The benchmark is no longer mainly measuring harness confusion.",
+    "Concrete visible assertions, compiler errors, and integration symptoms materially improve weaker-agent performance.",
+    "Local models are viable when the agent runtime does not become the bottleneck.",
+    "A 9B local model can solve this task through the intended feedback loop."
+  ]
+}

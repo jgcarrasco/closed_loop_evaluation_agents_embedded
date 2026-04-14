@@ -1,0 +1,16 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld - this is by design according to the task instructions. The status shows:
+
+- **Status**: SUBMISSION_RECORDED
+- **Benchmark mode**: oneshot_blind
+- **Submission index**: 1 (of 1 budget)
+
+My implementation correctly addresses all requirements from `docs/10_task.md`:
+
+1. ✅ Boot leaves pump off (default safe state in `controller_init()`)
+2. ✅ Low level (< 30) produces ACT PUMP ON
+3. ✅ High level (> 80) produces ACT PUMP OFF  
+4. ✅ Mid-band levels (30-80) preserve previous safe output
+5. ✅ Malformed input forces PUMP OFF (handled in `CONTROLLER_INPUT_INVALID_LEVEL` case)
+6. ✅ Sensor timeout forces PUMP OFF (handled in `CONTROLLER_INPUT_SENSOR_TIMEOUT` case)
+
+The submission is complete and recorded.

@@ -1,0 +1,29 @@
+All 10 tests pass:
+- 9 unit tests covering the controller state machine logic
+- 1 firmware-level end-to-end test through UART
+
+Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented a filter tank sequence controller for an ESP32-based embedded system. The controller manages three phases:
+
+### States Implemented:
+1. **SAFE_IDLE** - Initial state, waits for both sensors to be valid
+2. **FILTERING** - Activates filter when turbidity > 35 NTU and level >= 40
+3. **SETTLING** - After 3 consecutive clear turbidity readings (<=35 NTU), enters settling mode for 400ms
+4. **DRAINING** - Opens drain after settling period with clear turbidity and sufficient level
+5. **COMPLETE** - When level drops below 15
+
+### Key Features:
+- Sensor freshness tracking with 1000ms timeout
+- Clear streak counting (3 consecutive readings <= 35 NTU)
+- Disturbance recovery: TURB > 40 during SETTLING resets to FILTERING
+- Disturbance recovery: TURB > 50 during DRAINING closes drain and restarts filtering
+- Malformed input handling forces safe all-off state
+
+### Tests Written:
+- Unit tests for each state transition and edge case
+- Firmware-level end-to-end test that boots QEMU, sends UART commands, and verifies state transitions through FILTERING → SETTLING → DRAINING → COMPLETE cycle
+
+The implementation was verified with both unit tests (simulating controller logic in Python) and a firmware-level test using the `bench_public.FirmwareSession` to communicate with the actual ESP32 firmware over UART.

@@ -1,0 +1,39 @@
+The hidden grader results are withheld in this mode. Let me summarize what I've implemented:
+
+## Summary
+
+I've successfully implemented a mixing tank fill-and-heat controller according to the task requirements:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot State**: Inlet closed, heater off, state = SAFE_IDLE
+2. **Sensor Validation**: Stays in SAFE_IDLE until both temperature and level sensors are valid
+3. **Fill Mode** (level < 60): Inlet OPEN, heater OFF
+4. **Heating Mode** (60 <= level <= 75, temp < 45): Inlet CLOSED, heater ON
+5. **Holding Mode** (45 <= temp < 47): Maintains previous safe state
+6. **Early Off** (47 <= temp <= 48, rising): Heater OFF to prevent overshoot
+7. **Safe Idle** (temp > 48 or level > 75): Inlet CLOSED, heater OFF
+8. **Timeout Handling**: If either sensor is stale (>1000ms) or malformed input received → SAFE_IDLE
+
+### Key Features
+
+- Sensor timeout detection (1000ms)
+- Rising temperature detection for early heater shut-off
+- Proper state transitions between FILLING, HEATING, HOLDING, and SAFE_IDLE
+- Explicit ACT commands sent for each sensor input
+
+### Tests Created (`agent_tests/test_controller.py`)
+
+1. **FirmwareRuntimeTest**: 8 tests covering:
+   - Boot initial state
+   - Safe state until both sensors valid
+   - Low level triggers filling
+   - Safe level + low temp triggers heating
+   - Level < 55 keeps heater off
+   - Rising temp at upper band triggers early off
+   - Malformed input forces safe state
+   - Sensor timeout forces safe state
+
+2. **FillThenHeatSequenceTest**: End-to-end test of nominal fill-then-heat sequence
+
+All 16 tests pass successfully, covering the Self-Verification Checklist requirements.

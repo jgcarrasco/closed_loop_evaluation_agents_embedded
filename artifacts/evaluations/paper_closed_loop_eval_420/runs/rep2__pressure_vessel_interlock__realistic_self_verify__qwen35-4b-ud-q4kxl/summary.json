@@ -1,0 +1,108 @@
+{
+  "agent_name": "pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-30T22:01:27.682000Z",
+    "hidden_eval_calls": 3,
+    "iterations": 29,
+    "time_to_first_submission_seconds": 1606.869,
+    "wall_clock_seconds": 1638.582812055014
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z/20260330T220127Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z/20260330T220134Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z/20260330T220141Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z/20260330T220141Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-qwen35-4b-ud-q4kxl-20260329T205029Z/20260330T220141Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-4b-ud-q4kxl",
+    "model": "qwen35-4b-ud-q4kxl",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 47592,
+    "completion_tokens_after_first_submission": 1160,
+    "completion_tokens_before_first_submission": 46432,
+    "cost": 0.0,
+    "prompt_tokens": 8852784,
+    "prompt_tokens_after_first_submission": 1105479,
+    "prompt_tokens_before_first_submission": 7747305,
+    "total_tokens": 8900376,
+    "total_tokens_after_first_submission": 1106639,
+    "total_tokens_before_first_submission": 7793737
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-4b-ud-q4kxl",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/pi_stdout.log",
+  "task_id": "pressure_vessel_interlock",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 1,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 15,
+    "self_test_runs": 29,
+    "self_tests_written": 10
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 386,
+    "lines_changed_total": 426,
+    "lines_deleted": 40,
+    "tool_call_breakdown": {
+      "bash": 90,
+      "edit": 14,
+      "read": 18,
+      "write": 9
+    },
+    "tool_call_count": 131
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/pressure_vessel_interlock__realistic_self_verify__qwen35-4b-ud-q4kxl/workspace"
+}

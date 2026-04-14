@@ -1,0 +1,7 @@
+The submission has been recorded. In `oneshot_blind` mode, the hidden grader results are withheld from the visible workspace. The task is complete - I have:
+
+1. Read all required files (`START_HERE.md`, `docs/00_common_instructions.md`, `docs/10_task.md`, `experiment.json`)
+2. Implemented the thermal hysteresis controller logic in `components/controller/controller.c` according to the control policy specified in `docs/10_task.md`
+3. Made exactly one submission with `python3 tools/run_eval.py`
+
+**Final visible submission status:** `SUBMISSION_RECORDED` - The hidden grader results are withheld in oneshot_blind mode as per the benchmark configuration.

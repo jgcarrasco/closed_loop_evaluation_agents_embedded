@@ -1,0 +1,35 @@
+Good. The implementation is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I've implemented the Pressure Vessel Interlock Controller with the following changes:
+
+### 1. `components/controller/controller.c` - Controller Logic Implementation
+
+The controller implements all requirements from `docs/10_task.md`:
+
+- **Initial state**: Compressor OFF, vent OPEN (SAFE_VENT)
+- **Stale sensor handling**: If either door or pressure sensor is stale (>1000ms), go to SAFE_VENT
+- **Door control**: When door opens → SAFE_VENT; when door closes → apply pressure-based control
+- **Pressure control** (when door closed):
+  - PRESS < 40: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+  - PRESS > 60: COMPRESSOR OFF, VENT OPEN (RELIEVING)
+  - 40 <= PRESS <= 60: HOLD previous safe output (HOLDING)
+- **Invariant**: Never commands COMPRESSOR ON and VENT OPEN together
+
+### 2. `main/uart_transport.c` - Input Processing Fix
+
+Fixed a bug where parsed inputs from UART were not being passed to the controller. The `transport_apply_protocol_input()` function now properly converts protocol inputs to controller inputs and calls `controller_step()`.
+
+### Key Logic Flow in `controller_step()`:
+1. Check for stale sensors → if stale, go to SAFE_VENT
+2. If door is open → go to SAFE_VENT (compressor OFF, vent OPEN)
+3. If door is closed:
+   - If pressure valid and < 40 → pressurize
+   - If pressure valid and > 60 → relieve
+   - If pressure valid and in band → hold previous actuator state
+   - If pressure not valid yet → stay in SAFE_VENT
+4. If only pressure input (door unknown) → go to SAFE_VENT
+5. If timeout/invalid input → go to SAFE_VENT
+
+The implementation ensures the invariant that we never command COMPRESSOR ON and VENT OPEN together by always setting vent state appropriately based on the current state machine.

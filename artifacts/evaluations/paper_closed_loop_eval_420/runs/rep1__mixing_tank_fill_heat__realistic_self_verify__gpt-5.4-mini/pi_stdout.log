@@ -1,0 +1,13 @@
+Implemented the controller behavior in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests in:
+
+- `agent_tests/test_controller_fill_heat.py`
+
+Verification done:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` submitted ✅

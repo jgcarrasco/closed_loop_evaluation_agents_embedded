@@ -1,0 +1,27 @@
+I have completed the implementation of the Pressure Vessel Interlock Controller as specified in the task documents. Here's a summary:
+
+## Implementation Summary
+
+### Files Modified:
+1. **`components/controller/controller.c`** - Implemented the complete controller logic with:
+   - Proper state machine (SAFE_VENT, PRESSURIZING, HOLDING, RELIEVING)
+   - Pressure/door interlock policy per specification
+   - Staleness detection (>1000ms between sensor readings)
+   - Safe fail behavior on malformed input or timeout
+
+2. **`agent_tests/test_pressure_vessel_controller.py`** - Created comprehensive tests:
+   - 10 unit tests covering each acceptance criterion
+   - Firmware-level end-to-end test with UART probe
+   - Tests for boot state, pressure bands, door events, and safety conditions
+
+### Key Features:
+- **Boot**: Compressor OFF, vent OPEN (SAFE_VENT)
+- **Door closed + PRESS < 40**: COMPRESSOR ON, VENT CLOSED (PRESSURIZING)
+- **Door closed + PRESS > 60**: COMPRESSOR OFF, VENT OPEN (RELIEVING)
+- **Door closed + 40 ≤ PRESS ≤ 60**: HOLD previous state
+- **Door open**: Immediate SAFE_VENT transition
+- **Staleness (>1000ms)**: Forces safe vent-open
+- **Never commands COMPRESSOR ON and VENT OPEN simultaneously**
+
+### Submission:
+The implementation has been submitted via `python3 tools/run_eval.py` (submission index 2). In realistic_self_verify mode, feedback is withheld and iteration should continue using the visible build/self-test tools.

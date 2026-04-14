@@ -1,0 +1,18 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are withheld as expected. The final visible submission status is:
+
+**Status: SUBMISSION_RECORDED**
+
+Summary of what was implemented in `components/controller/controller.c`:
+
+1. **Sensor freshness tracking**: Tracks last valid temperature and level timestamps, with timeout check at 1000ms
+2. **Safe state initialization**: Boot starts with inlet closed and heater off
+3. **Control policy implementation**:
+   - `LEVEL < 60`: INLET OPEN, HEATER OFF (FILLING state)
+   - `LEVEL > 75`: INLET CLOSED
+   - `LEVEL < 55`: HEATER OFF always
+   - `60 <= LEVEL <= 75` and `TEMP < 45`: INLET CLOSED, HEATER ON (HEATING state)
+   - `45 <= TEMP < 47`: HOLDING with previous heater state preserved
+   - `47 <= TEMP <= 48` and rising: HEATER OFF early (HOLDING state)
+   - `47 <= TEMP <= 48` and not rising: hold previous safe heater state (HOLDING state)
+   - `TEMP > 48`: INLET CLOSED, HEATER OFF (SAFE_IDLE state)
+4. **Fault handling**: Malformed input or timeout forces safe all-off state

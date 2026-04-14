@@ -1,0 +1,127 @@
+{
+  "agent_name": "pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 13,
+    "first_submission_at_utc": "2026-03-27T23:23:44.819000Z",
+    "hidden_eval_calls": 23,
+    "iterations": 23,
+    "time_to_first_submission_seconds": 523.707,
+    "wall_clock_seconds": 1747.6911358986981
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T232344Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T232531Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T232748Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T232939Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233114Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233205Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233248Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233327Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233404Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233535Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233613Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233648Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233817Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233850Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T233932Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234101Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234110Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234207Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234242Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234315Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234400Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234402Z",
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234405Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234405Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260327T234405Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 42851,
+    "completion_tokens_after_first_submission": 24590,
+    "completion_tokens_before_first_submission": 18261,
+    "cost": 0.0,
+    "prompt_tokens": 5320657,
+    "prompt_tokens_after_first_submission": 4171343,
+    "prompt_tokens_before_first_submission": 1149314,
+    "total_tokens": 5363508,
+    "total_tokens_after_first_submission": 4195933,
+    "total_tokens_before_first_submission": 1167575
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "pressure_vessel_interlock",
+  "testing_behavior": {
+    "false_green_denominator": 23,
+    "false_green_numerator": 23,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 5,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_pressure_vessel.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 15,
+    "self_test_runs": 15,
+    "self_tests_written": 5
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_pressure_vessel.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 336,
+    "lines_changed_total": 343,
+    "lines_deleted": 7,
+    "tool_call_breakdown": {
+      "bash": 72,
+      "edit": 17,
+      "ls": 2,
+      "read": 15,
+      "write": 5
+    },
+    "tool_call_count": 111
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/pressure_vessel_interlock__ci_red_green__qwen35-35b-a3b-ud-q4km/workspace"
+}

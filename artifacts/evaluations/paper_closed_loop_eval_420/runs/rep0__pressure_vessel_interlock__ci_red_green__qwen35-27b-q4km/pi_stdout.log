@@ -1,0 +1,31 @@
+The task is solved. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Pressure Vessel Interlock Controller in `components/controller/controller.c` with the following behavior:
+
+### Control Policy
+1. **Boot state**: Compressor OFF, Vent OPEN (SAFE_VENT)
+2. **Door open**: Keep compressor OFF and vent OPEN (SAFE_VENT)
+3. **Door closed + PRESS < 40**: Compressor ON, Vent CLOSED (PRESSURIZING)
+4. **Door closed + PRESS > 60**: Compressor OFF, Vent OPEN (RELIEVING)
+5. **Door closed + 40 ≤ PRESS ≤ 60**: Hold previous safe output (HOLDING)
+6. **Malformed input or timeout (>1000ms)**: Safe vent state (SAFE_VENT)
+7. **Invariant**: Never command COMPRESSOR ON and VENT OPEN simultaneously
+
+### Key Implementation Details
+- Process inputs first to update timestamps, then check for staleness
+- Both sensors must be valid and fresh (< 1000ms old) to exit SAFE_VENT state
+- The HOLDING state preserves the previous safe output when pressure is in the band
+- Safety check in HOLDING ensures compressor is never ON with vent OPEN
+
+### Tests Created
+Created comprehensive tests in `agent_tests/test_controller.py` covering:
+- Boot behavior (compressor off, vent open)
+- Low pressure pressurizing
+- High pressure relieving  
+- Band holding behavior
+- Door open forcing safe vent
+- Malformed input handling
+- Pressure boundary values (40 and 60)
+- Nominal sealed pressure cycle (end-to-end firmware test)

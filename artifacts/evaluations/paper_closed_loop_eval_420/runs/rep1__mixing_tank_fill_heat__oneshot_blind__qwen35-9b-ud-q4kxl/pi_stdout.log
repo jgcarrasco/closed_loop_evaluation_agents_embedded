@@ -1,0 +1,14 @@
+**Final Submission Status:** `SUBMISSION_RECORDED`
+
+The implementation has been completed and submitted via `python3 tools/run_eval.py`. The submission was recorded successfully in `oneshot_blind` mode where hidden grader results are intentionally withheld.
+
+**Summary of Implementation:**
+- Modified `components/controller/controller.c` with the complete fill-and-heat control policy
+- Kept `components/controller/include/controller.h` unchanged (public interface intact)
+- Implemented all control logic per `docs/10_task.md`:
+  - Safe idle on boot and until both sensors valid
+  - Fill state when level < 60
+  - Heating state when level 60-75 and temp < 45
+  - Early heater off at rising temp in 47-48 band
+  - Heater guard when level < 55
+  - Timeout handling forcing safe all-off state

@@ -1,0 +1,38 @@
+As expected, in `realistic_self_verify` mode, the hidden grader results are withheld. Let me verify my implementation is complete by reviewing what I've done:
+
+## Summary of Implementation
+
+### Controller Logic (`components/controller/controller.c`)
+
+I implemented the thermal chamber hysteresis controller with the following behavior:
+
+1. **Boot state**: Heater OFF (SAFE_OFF)
+2. **Low temperature (< 47°C)**: Heater ON (HEATING state)
+3. **High temperature (> 52°C)**: Heater OFF (SAFE_OFF state)
+4. **Holding region (47-49°C)**: Preserve previous safe actuator state (HOLDING state)
+5. **Early-off region (50-52°C)**: 
+   - If temperature is rising: Turn heater OFF early, but keep HOLDING state
+   - If not rising: Hold previous safe actuator state
+6. **Malformed input**: Fail safe to Heater OFF (SAFE_OFF)
+7. **Sensor timeout (explicit FAULT SENSOR_TIMEOUT)**: Fail safe to Heater OFF (SAFE_OFF)
+8. **Stale sensor data (> 1000ms)**: Fail safe to Heater OFF (SAFE_OFF)
+
+### Tests (`agent_tests/test_thermal_controller.py`)
+
+I created comprehensive tests covering all items from the Self-Verification Checklist:
+
+1. ✅ Boot leaves heater off
+2. ✅ Low temperature (35°C) drives ACT HEATER ON
+3. ✅ High temperature (53°C) drives ACT HEATER OFF
+4. ✅ Inside 47-49°C, controller preserves previous safe actuator state
+5. ✅ Near upper band (50-52°C), rising temperature causes early ACT HEATER OFF with HOLDING state
+6. ✅ Malformed input forces ACT HEATER OFF
+7. ✅ Stale sensor data (> 1000ms) forces ACT HEATER OFF
+8. ✅ Firmware-level end-to-end runtime probe through UART (warmup_sequence test)
+
+The implementation includes:
+- Proper handling of the stale sensor timeout check in both TEMPERATURE and NONE input cases
+- Correct temperature comparison for rising detection (only when we have valid previous sensor data)
+- Proper state transitions between HEATING, HOLDING, and SAFE_OFF states
+
+All 13 tests pass consistently, including the firmware-level end-to-end runtime probe that exercises a complete warm-up sequence through UART.

@@ -1,0 +1,20 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are withheld by design - this is expected behavior for this benchmark mode.
+
+## Summary
+
+**Final Submission Status: SUBMISSION_RECORDED**
+
+I implemented the filter tank sequence controller in `components/controller/controller.c` with the following state machine logic:
+
+1. **SAFE_IDLE**: Initial boot state, waits for both turbidity and level sensors to be valid
+2. **COMPLETE**: When LEVEL < 15, keeps filter off and drain closed
+3. **FILTERING**: When TURB > 35 and LEVEL >= 40, turns FILTER ON; tracks clear streak when TURB <= 35
+4. **SETTLING**: After 3 consecutive clear turbidity samples (TURB <= 35) with LEVEL >= 40, turns FILTER OFF, DRAIN CLOSED, and waits 400ms
+5. **DRAINING**: After settling for 400ms with TURB <= 35 and LEVEL >= 40, opens DRAIN
+
+**Disturbance handling:**
+- During SETTLING: TURB > 40 returns to FILTERING with streak reset
+- During DRAINING: TURB > 50 with LEVEL >= 40 closes drain, restarts filtering with streak reset
+- Sensor timeout (>1000ms stale): Returns to SAFE_IDLE
+
+The submission was recorded as `SUBMISSION_RECORDED` with submission index 1 of 1 (oneshot_blind mode).

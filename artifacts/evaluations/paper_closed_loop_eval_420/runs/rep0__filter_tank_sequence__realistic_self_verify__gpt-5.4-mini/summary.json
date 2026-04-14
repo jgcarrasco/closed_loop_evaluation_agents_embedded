@@ -1,0 +1,107 @@
+{
+  "agent_name": "pi-filter_tank_sequence-realistic_self_verify-gpt-5.4-mini-20260324T125039Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-24T15:15:49.254000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 4,
+    "time_to_first_submission_seconds": 680.866,
+    "wall_clock_seconds": 688.9375153321307
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T151549Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T151549Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T151549Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 841728,
+    "cache_write_tokens": 0,
+    "completion_tokens": 29936,
+    "completion_tokens_after_first_submission": 140,
+    "completion_tokens_before_first_submission": 29796,
+    "cost": 0.0,
+    "prompt_tokens": 110577,
+    "prompt_tokens_after_first_submission": 2176,
+    "prompt_tokens_before_first_submission": 108401,
+    "total_tokens": 982241,
+    "total_tokens_after_first_submission": 114956,
+    "total_tokens_before_first_submission": 867285
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 1,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 6,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_filter_tank_sequence.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 4,
+    "self_test_runs": 4,
+    "self_tests_written": 6
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_filter_tank_sequence.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 325,
+    "lines_changed_total": 336,
+    "lines_deleted": 11,
+    "tool_call_breakdown": {
+      "bash": 6,
+      "edit": 7,
+      "find": 10,
+      "grep": 3,
+      "ls": 2,
+      "read": 21,
+      "write": 2
+    },
+    "tool_call_count": 51
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/filter_tank_sequence__realistic_self_verify__gpt-5.4-mini/workspace"
+}

@@ -1,0 +1,7 @@
+The submission has been recorded. The implementation is complete with:
+
+1. **Controller Implementation** (`components/controller/controller.c`): Implements the fill-and-heat policy with all required behavior including sensor timeout handling, level-based inlet control, temperature-based heater control, and safety guards.
+
+2. **Comprehensive Tests** (`agent_tests/test_controller.py`): All 9 tests cover the Self-Verification Checklist items from docs/10_task.md, including a firmware-level end-to-end runtime probe through UART.
+
+The submission was recorded successfully in the `realistic_self_verify` benchmark mode.

@@ -1,0 +1,83 @@
+{
+  "failure_family_histogram": {
+    "pass": 180,
+    "host_tests": 124,
+    "integration": 41,
+    "no_submission": 69,
+    "unknown": 5,
+    "infra": 1
+  },
+  "failure_family_histogram_by_mode": {
+    "ci_red_green": {
+      "pass": 48,
+      "host_tests": 28,
+      "no_submission": 21,
+      "integration": 8
+    },
+    "oneshot_blind": {
+      "pass": 37,
+      "host_tests": 45,
+      "integration": 9,
+      "no_submission": 9,
+      "unknown": 5
+    },
+    "oracle_full": {
+      "pass": 56,
+      "integration": 13,
+      "host_tests": 15,
+      "no_submission": 20,
+      "infra": 1
+    },
+    "realistic_self_verify": {
+      "pass": 39,
+      "host_tests": 36,
+      "no_submission": 19,
+      "integration": 11
+    }
+  },
+  "failure_family_histogram_by_model": {
+    "gpt-5.4": {
+      "pass": 56,
+      "integration": 3,
+      "no_submission": 1
+    },
+    "gpt-5.4-mini": {
+      "host_tests": 10,
+      "integration": 9,
+      "pass": 41
+    },
+    "qwen35-27b-q4km": {
+      "integration": 6,
+      "host_tests": 16,
+      "pass": 38
+    },
+    "qwen35-2b-ud-q4kxl": {
+      "no_submission": 53,
+      "host_tests": 4,
+      "unknown": 3
+    },
+    "qwen35-35b-a3b-ud-q4km": {
+      "host_tests": 29,
+      "integration": 5,
+      "pass": 26
+    },
+    "qwen35-4b-ud-q4kxl": {
+      "host_tests": 34,
+      "integration": 10,
+      "pass": 5,
+      "no_submission": 10,
+      "unknown": 1
+    },
+    "qwen35-9b-ud-q4kxl": {
+      "host_tests": 31,
+      "integration": 8,
+      "pass": 14,
+      "no_submission": 5,
+      "infra": 1,
+      "unknown": 1
+    }
+  },
+  "infra_failure_count": 1,
+  "pass_count": 180,
+  "run_count": 420
+}

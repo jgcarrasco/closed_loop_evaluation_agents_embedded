@@ -1,0 +1,31 @@
+All tests pass! Let me create a final summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Mixing Tank Fill-and-Heat Controller in `/components/controller/controller.c`. The implementation includes:
+
+### Key Features:
+1. **Safe Idle Initialization**: Boot leaves inlet closed and heater off (SAFE_IDLE state)
+2. **Sensor Visibility Tracking**: Uses `ever_seen_temperature` and `ever_seen_level` flags to track when each sensor type has been seen
+3. **Control Logic**:
+   - Low level (< 55): Inlet opens if level < 60, heater stays OFF
+   - Safe level with low temp (60-75, temp < 45): Inlet closed, heater ON
+   - Temperature band [45, 47): Inlet closed, holds previous heater state
+   - Temperature band [47, 48]: Early heater OFF if temperature is rising
+   - High temp (> 48) or high level (> 75): Inlet closed, heater OFF
+4. **Staleness Handling**: If either sensor becomes stale (> 1000ms), goes to safe idle and resets `ever_seen` flags
+5. **Invalid Input Handling**: Malformed input or timeout forces safe idle and resets `ever_seen` flags
+
+### Files Modified:
+- `/components/controller/include/controller.h`: Added `ever_seen_temperature` and `ever_seen_level` fields to track sensor visibility
+- `/components/controller/controller.c`: Implemented the complete control logic
+
+The implementation passes all host unit tests and QEMU integration scenarios, including:
+- Startup defaults to safe idle
+- Safe until both sensors are valid
+- Low level opens inlet and keeps heater off
+- Adequate level and low temp turns heater on
+- Low level guard turns heater off
+- Rising upper band turns heater off early
+- Timeout forces safe idle
+- Invalid input forces safe idle

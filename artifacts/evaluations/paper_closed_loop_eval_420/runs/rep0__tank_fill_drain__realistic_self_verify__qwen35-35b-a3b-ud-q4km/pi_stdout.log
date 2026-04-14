@@ -1,0 +1,25 @@
+As expected, in `realistic_self_verify` mode, the hidden grader results are withheld. The task is complete - I've:
+
+1. **Implemented the controller logic** in `components/controller/controller.c`:
+   - Boot leaves pump OFF (SAFE_OFF state)
+   - Turn pump ON when level < 30 (PUMPING state)
+   - Turn pump OFF when level > 80 (SAFE_OFF state)
+   - Hold previous state when 30 <= level <= 80 (HOLDING state)
+   - Fail safe to OFF on malformed input or timeout (>1000ms)
+
+2. **Written comprehensive self-tests** in `agent_tests/test_tank_controller.py`:
+   - Unit tests for controller logic
+   - Firmware-level E2E tests through UART covering:
+     - Boot leaves pump off
+     - Low level (20) turns pump on
+     - High level (85) turns pump off
+     - Mid-band level (50) holds previous state
+     - Malformed input forces pump off
+     - Timeout (>1000ms) forces pump off
+     - Short idle steps don't trigger timeout
+
+3. **All 11 tests pass** successfully
+
+4. **Submission recorded** via `python3 tools/run_eval.py`
+
+The implementation follows the task requirements from `docs/10_task.md` and covers all items in the Self-Verification Checklist.

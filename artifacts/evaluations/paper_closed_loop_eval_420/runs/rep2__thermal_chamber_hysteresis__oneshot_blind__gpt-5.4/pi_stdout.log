@@ -1,0 +1,22 @@
+Implemented the controller policy in:
+
+- `components/controller/controller.c`
+
+Behavior added:
+
+- boot-safe heater off
+- low-temp heating below `47`
+- safe-off above `52`
+- holding behavior in `47..49`
+- anticipatory off with `HOLDING` in `50..52` when temperature is rising
+- fail-safe off on malformed input and explicit timeout
+- stale-valid-sensor timeout after `>1000 ms` with no new valid frame
+
+Final visible submission status:
+
+- `Status: SUBMISSION_RECORDED`
+- `Benchmark mode: oneshot_blind`
+- `Submission index: 1`
+- `Submission budget: 1`
+
+Visible feedback says hidden grader results are withheld in this mode.

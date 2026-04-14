@@ -1,0 +1,18 @@
+The submission was successful with a **PASS** status. 
+
+## Summary
+
+I implemented the thermal chamber hysteresis controller according to the task requirements in `components/controller/controller.c`. The control policy:
+
+1. **On boot**: Heater stays OFF (SAFE_OFF state)
+2. **TEMP < 47°C**: Turn heater ON (HEATING state)
+3. **TEMP > 52°C**: Turn heater OFF (SAFE_OFF state)
+4. **47 ≤ TEMP < 50°C**: Hold previous actuator state (HOLDING state)
+5. **50 ≤ TEMP ≤ 52°C**: Check for rising temperature
+   - If rising: Turn heater OFF early, HOLDING state
+   - If not rising: Hold previous actuator state, HOLDING state
+6. **Malformed input** (`SENSE TEMP <invalid>`): Turn heater OFF
+7. **Sensor timeout**: Turn heater OFF
+8. **Stale sensor data (>1000ms)**: Turn heater OFF
+
+I also created comprehensive tests in `agent_tests/test_thermal_controller.py` that cover all the checklist items with firmware-level end-to-end runtime probes through UART using `bench_public.FirmwareSession`.

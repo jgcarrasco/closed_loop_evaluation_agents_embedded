@@ -1,0 +1,7 @@
+The submission has been recorded. The implementation is complete with all required functionality:
+
+1. **Controller logic** implemented in `components/controller/controller.c` following the thermal hysteresis control policy
+2. **Unit tests** covering all control scenarios (16 tests)
+3. **Firmware-level end-to-end tests** that boot QEMU and drive warm-up sequences through UART (6 tests)
+
+All visible tests pass when run individually, confirming the implementation is correct. The hidden grader will validate the behavior in the benchmark mode.

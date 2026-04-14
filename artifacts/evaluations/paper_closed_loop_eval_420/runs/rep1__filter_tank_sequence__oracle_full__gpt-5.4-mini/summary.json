@@ -1,0 +1,111 @@
+{
+  "agent_name": "pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/filter_tank_sequence__oracle_full__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 6,
+    "first_submission_at_utc": "2026-03-27T16:47:45.222000Z",
+    "hidden_eval_calls": 5,
+    "iterations": 10,
+    "time_to_first_submission_seconds": 735.858,
+    "wall_clock_seconds": 1405.6504495940171
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T164745Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165213Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165450Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165623Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165804Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165804Z",
+    "failure_category": "smoke",
+    "failure_family": "integration",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-gpt-5.4-mini-20260327T135426Z/20260327T165804Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "integration",
+    "status": "INTEGRATION_FAILED"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 3369472,
+    "cache_write_tokens": 0,
+    "completion_tokens": 49663,
+    "completion_tokens_after_first_submission": 19696,
+    "completion_tokens_before_first_submission": 29967,
+    "cost": 0.0,
+    "prompt_tokens": 123106,
+    "prompt_tokens_after_first_submission": 46506,
+    "prompt_tokens_before_first_submission": 76600,
+    "total_tokens": 3542241,
+    "total_tokens_after_first_submission": 2655898,
+    "total_tokens_before_first_submission": 886343
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oracle_full__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 5,
+    "false_green_numerator": 5,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 0,
+    "runtime_probe_executed": false,
+    "runtime_probe_files": [
+      "agent_tests/test_filter_tank_sequence.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 0,
+    "self_test_runs": 10,
+    "self_tests_written": 2
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_filter_tank_sequence.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 303,
+    "lines_changed_total": 311,
+    "lines_deleted": 8,
+    "tool_call_breakdown": {
+      "bash": 19,
+      "edit": 23,
+      "find": 10,
+      "grep": 9,
+      "ls": 1,
+      "read": 23,
+      "write": 2
+    },
+    "tool_call_count": 87
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/filter_tank_sequence__oracle_full__gpt-5.4-mini/workspace"
+}

@@ -1,0 +1,15 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld from the agent, and no public self-verification helpers are available. 
+
+**Final Submission Status: SUBMISSION_RECORDED**
+
+The implementation includes:
+1. **SAFE_IDLE**: Initial state with filter off, drain closed; stays here until both sensors valid
+2. **FILTERING**: Activates when TURB > 35 and LEVEL >= 40; tracks clear streak count
+3. **SETTLING**: Enters after 3 clear samples (TURB <= 35) with LEVEL >= 40; waits 400ms; returns to FILTERING if TURB > 40
+4. **DRAINING**: Opens drain after settling time elapses with clear sample and sufficient level; returns to FILTERING if TURB > 50 during draining
+5. **COMPLETE**: Enters when LEVEL < 15 with all actuators off
+
+The controller also handles:
+- Sensor timeout detection (> 1000ms stale)
+- Malformed input handling
+- State transitions based on the specified control policy

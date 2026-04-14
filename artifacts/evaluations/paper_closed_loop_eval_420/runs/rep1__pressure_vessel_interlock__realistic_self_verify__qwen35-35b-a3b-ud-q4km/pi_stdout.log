@@ -1,0 +1,20 @@
+As expected, in `realistic_self_verify` mode, the hidden grader results are withheld. The submission has been recorded successfully. Let me summarize what was implemented:
+
+## Summary
+
+I implemented a pressure vessel interlock controller that:
+
+1. **Controller Logic** (`components/controller/controller.c`):
+   - On boot: compressor OFF, vent OPEN (SAFE_VENT state)
+   - When door is open: always SAFE_VENT (compressor OFF, vent OPEN)
+   - When door is closed and pressure < 40 kPa: PRESSURIZING (compressor ON, vent CLOSED)
+   - When door is closed and pressure > 60 kPa: RELIEVING (compressor OFF, vent OPEN)
+   - When door is closed and 40-60 kPa: HOLDING (maintain previous state)
+   - On malformed input or sensor timeout (>1000ms): SAFE_VENT (invalidate sensors)
+
+2. **Self-Verification Tests** (`agent_tests/test_pressure_vessel_controller.py`):
+   - 9 tests covering all checklist items from docs/10_task.md
+   - Firmware-level end-to-end runtime probes through UART
+   - Tests for boot state, pressurizing, relieving, holding, door open handling, malformed input handling, and sensor timeout
+
+3. **All visible tests pass** before submission to the hidden grader.

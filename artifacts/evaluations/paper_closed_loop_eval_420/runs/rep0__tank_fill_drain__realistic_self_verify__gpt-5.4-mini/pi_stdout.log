@@ -1,0 +1,23 @@
+Implemented the tank fill/drain controller policy in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h` (unchanged interface, verified against it)
+
+Behavior now:
+- boots pump off
+- turns on below 30
+- turns off above 80
+- holds previous safe output in the mid band
+- fails safe on malformed input or timeout
+- treats `>1000 ms` since last valid sensor as timeout
+
+Visible verification added:
+- host-side controller policy tests for every checklist bullet
+- firmware-level UART end-to-end probe for boot + low-to-high sequence
+
+Checks run:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py` twice; latest submission recorded
+
+

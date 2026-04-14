@@ -1,0 +1,108 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-realistic_self_verify-gpt-5.4-mini-20260324T125039Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 2,
+    "first_submission_at_utc": "2026-03-24T16:22:59.304000Z",
+    "hidden_eval_calls": 2,
+    "iterations": 3,
+    "time_to_first_submission_seconds": 257.393,
+    "wall_clock_seconds": 409.9518805400003
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T162259Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T162444Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T162444Z",
+    "failure_category": "fill_then_heat",
+    "failure_family": "integration",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T162444Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "integration",
+    "status": "INTEGRATION_FAILED"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 553472,
+    "cache_write_tokens": 0,
+    "completion_tokens": 20873,
+    "completion_tokens_after_first_submission": 1674,
+    "completion_tokens_before_first_submission": 19199,
+    "cost": 0.0,
+    "prompt_tokens": 67306,
+    "prompt_tokens_after_first_submission": 5572,
+    "prompt_tokens_before_first_submission": 61734,
+    "total_tokens": 641651,
+    "total_tokens_after_first_submission": 312398,
+    "total_tokens_before_first_submission": 329253
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 2,
+    "false_green_numerator": 2,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 2,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller_uart.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 3,
+    "self_test_runs": 3,
+    "self_tests_written": 2
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller_uart.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 199,
+    "lines_changed_total": 211,
+    "lines_deleted": 12,
+    "tool_call_breakdown": {
+      "bash": 7,
+      "edit": 3,
+      "find": 7,
+      "grep": 5,
+      "ls": 4,
+      "read": 17,
+      "write": 2
+    },
+    "tool_call_count": 45
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/mixing_tank_fill_heat__realistic_self_verify__gpt-5.4-mini/workspace"
+}

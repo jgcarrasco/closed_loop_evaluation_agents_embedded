@@ -1,0 +1,10 @@
+The implementation is complete. The file `$TMPDIR/embedded_agent_eval_matrix/20260325T174111Z/filter_tank_sequence__oneshot_blind__qwen35-2b-ud-q4kxl/workspace/components/controller/controller.c` has been updated with the proper state machine logic for filtering, settling, and draining.
+
+**Final submission status: IMPLEMENTATION_COMPLETE**
+
+The controller.c file now contains a complete implementation of the Filter Tank Sequence Controller with:
+- Proper state machine (SAFE_IDLE, FILTERING, SETTLING, DRAINING, COMPLETE)
+- State transitions based on turbidity/level sensor data
+- Clear streak tracking for filtering/drain decisions
+- Minimum level processing threshold enforcement
+- All constants properly implemented from the header file

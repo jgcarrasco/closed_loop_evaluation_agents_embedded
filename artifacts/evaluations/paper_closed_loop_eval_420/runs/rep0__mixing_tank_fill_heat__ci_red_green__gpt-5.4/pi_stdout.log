@@ -1,0 +1,21 @@
+Implemented `components/controller/controller.c` and `components/controller/include/controller.h` only.
+
+Verification run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Added visible runtime coverage in:
+- `agent_tests/test_controller_runtime.py`
+
+This includes:
+- boot safe-off check
+- both-sensors-valid gating
+- low-level fill behavior
+- safe-level heating behavior
+- low-level heater guard
+- malformed-input safe-off
+- stale-sensor safe-off
+- UART end-to-end nominal fill-then-heat probe
+- early heater-off near upper temperature band
+- upper-bound guard probe

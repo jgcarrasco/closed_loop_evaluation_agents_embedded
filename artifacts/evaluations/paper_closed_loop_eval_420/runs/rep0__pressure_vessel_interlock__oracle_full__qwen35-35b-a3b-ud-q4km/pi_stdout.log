@@ -1,0 +1,15 @@
+The task is complete. All tests pass with:
+- **6/6 scenarios passed**
+- **0 constraint violations**
+- **0 mutual exclusion violations** (never COMPRESSOR ON + VENT OPEN together)
+
+The implementation satisfies all requirements from the Self-Verification Checklist in `docs/10_task.md`:
+1. ✓ Boot leaves compressor off and vent open
+2. ✓ Stays in safe vent-open until both door and pressure seen validly
+3. ✓ Door closed + low pressure (35) → COMPRESSOR ON, VENT CLOSED
+4. ✓ Door closed + high pressure (65) → COMPRESSOR OFF, VENT OPEN
+5. ✓ In 40..60 band, preserves previous safe output
+6. ✓ Door-open event immediately forces safe vent-open output
+7. ✓ Malformed input or stale sensor data (>1000ms) forces safe vent-open
+8. ✓ Never commands COMPRESSOR ON and VENT OPEN together
+9. ✓ Firmware-level end-to-end runtime probe through UART included in tests

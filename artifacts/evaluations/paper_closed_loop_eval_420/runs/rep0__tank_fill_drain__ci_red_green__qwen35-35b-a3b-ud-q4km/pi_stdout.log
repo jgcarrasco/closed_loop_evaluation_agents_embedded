@@ -1,0 +1,39 @@
+The task is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Tank Fill/Drain Controller according to the requirements in `docs/10_task.md`:
+
+### Controller Logic (`components/controller/controller.c`)
+
+The controller implements the following control policy:
+1. **Boot**: Default to `PUMP OFF` (SAFE_OFF state)
+2. **Low level (< 30)**: Turn pump ON (PUMPING state)
+3. **High level (> 80)**: Turn pump OFF (SAFE_OFF state)  
+4. **Mid-band (30-80)**: Hold previous safe output (HOLDING state if pump was ON, SAFE_OFF if pump was OFF)
+5. **Malformed input**: Fail safe to PUMP OFF
+6. **Sensor timeout**: Fail safe to PUMP OFF
+7. **No input for > 1000ms**: Timeout and fail safe to PUMP OFF
+
+### Key Fix
+
+The main issue was in the `CONTROLLER_INPUT_NONE` case - I was incorrectly setting the state to `HOLDING` even when the pump was OFF. The fix ensures that:
+- If pump is ON and no new input arrives, stay in HOLDING state
+- If pump is OFF and no new input arrives, stay in SAFE_OFF state
+
+### Self-Tests (`agent_tests/test_controller.py`)
+
+Created 9 firmware-level E2E tests covering all checklist items:
+1. Boot leaves pump off
+2. Low level (20) turns pump on
+3. High level (85) turns pump off
+4. Mid-band level (50) preserves previous output
+5. Malformed input forces pump off
+6. Sensor timeout forces pump off
+7. Nominal low-to-high sequence (ON → OFF)
+8. Idle steps don't trigger immediate timeout
+9. Timeout after 1000ms+ forces pump off
+
+### Result
+
+All self-tests pass and the hidden grader returns **PASS**.

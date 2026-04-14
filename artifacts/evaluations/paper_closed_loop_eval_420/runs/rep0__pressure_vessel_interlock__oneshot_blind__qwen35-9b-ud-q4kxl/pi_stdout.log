@@ -1,0 +1,38 @@
+The implementation looks correct. Let me summarize what was implemented:
+
+## Summary
+
+I implemented the Pressure Vessel Interlock Controller according to the specifications in `docs/10_task.md`:
+
+### Key Implementation Details:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (SAFE_VENT) ✓
+2. **Door open**: Forces SAFE_VENT state (compressor OFF, vent OPEN) ✓
+3. **Door closed + low pressure (< 40)**: COMPRESSOR ON, VENT CLOSED (PRESSURIZING) ✓
+4. **Door closed + high pressure (> 60)**: COMPRESSOR OFF, VENT OPEN (RELIEVING) ✓
+5. **Door closed + holding band (40-60)**: Preserves previous safe output (HOLDING) ✓
+6. **Sensor timeout (> 1000ms)**: Forces SAFE_VENT state ✓
+7. **Malformed input**: Forces SAFE_VENT state ✓
+8. **Never commands COMPRESSOR ON and VENT OPEN together** ✓
+
+### Files Modified:
+- `components/controller/controller.c` - Implemented the complete control policy logic
+
+### Test Results:
+All 34 controller tests pass, covering:
+- Boot behavior
+- Sensor validation requirements
+- Low pressure pressurization
+- High pressure relief
+- Holding band behavior
+- Door open interlock
+- Malformed input handling
+- Sensor timeout handling
+- End-to-end cycle verification
+
+### Submission Status:
+- **Status**: SUBMISSION_RECORDED
+- **Benchmark mode**: oneshot_blind
+- **Hidden grader results**: Withheld (as expected for this mode)
+
+The implementation follows the task contract exactly and all visible self-tests pass.

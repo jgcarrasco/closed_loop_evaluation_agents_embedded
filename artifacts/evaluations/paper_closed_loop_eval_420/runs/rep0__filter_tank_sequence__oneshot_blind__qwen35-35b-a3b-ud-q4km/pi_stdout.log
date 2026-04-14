@@ -1,0 +1,17 @@
+The submission has been recorded. In `oneshot_blind` mode, hidden grader results are intentionally withheld. The submission is final with status `SUBMISSION_RECORDED`.
+
+**Final Submission Status:**
+- **Submission Index:** 1
+- **Submission Budget:** 1 (one-shot mode)
+- **Status:** SUBMISSION_RECORDED
+- **Benchmark Mode:** oneshot_blind (hidden grader results withheld)
+
+The controller implementation in `components/controller/controller.c` now properly implements:
+1. Safe idle state until both turbidity and level sensors are valid
+2. Filtering when turbidity > 35 NTU and level >= 40
+3. Clear streak counting (3 consecutive clear samples to enter settling)
+4. Settling state with disturbance recovery (turbidity > 40 returns to filtering)
+5. Drain opening after 400ms of settling with valid clear sample
+6. Drain disturbance recovery (turbidity > 50 closes drain, restarts filtering)
+7. Complete state when level < 15
+8. Sensor timeout handling (1000ms stale data triggers safe idle)

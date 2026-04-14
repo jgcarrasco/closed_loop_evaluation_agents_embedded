@@ -1,0 +1,31 @@
+As expected, in `realistic_self_verify` mode, hidden grader results are withheld. Let me verify that all the required components are in place by reviewing what we've implemented:
+
+## Summary of Implementation
+
+### Controller Implementation (`components/controller/controller.c` and `.h`)
+1. **Boot state**: Compressor OFF, Vent OPEN ✓
+2. **Sensor freshness tracking**: Both pressure and door sensors track their last valid time ✓
+3. **Both-sensors-seen requirement**: Controller stays in safe vent-open until both sensors have been seen at least once ✓
+4. **Pressurizing state** (pressure < 40, door closed): Compressor ON, Vent CLOSED ✓
+5. **Relieving state** (pressure > 60, door closed): Compressor OFF, Vent OPEN ✓
+6. **Holding state** (40 <= pressure <= 60, door closed): Preserves previous safe output ✓
+7. **Door open**: Forces safe vent-open (Compressor OFF, Vent OPEN) ✓
+8. **Sensor timeout** (>1000ms stale): Forces safe vent-open ✓
+9. **Malformed input**: Forces safe vent-open ✓
+10. **Safety invariant**: Never commands COMPRESSOR ON and VENT OPEN together ✓
+
+### Self-Tests (`agent_tests/`)
+1. **20 unit tests** covering controller logic, protocol parsing, and simulated firmware integration
+2. **6 firmware-level end-to-end tests** using `bench_public.FirmwareSession` to test actual QEMU firmware through UART:
+   - Boot verification
+   - Low pressure pressurization
+   - High pressure relieving
+   - Door open safety
+   - Pressure band holding
+   - Safety invariant (never COMPRESSOR ON + VENT OPEN)
+
+### Build Verification
+- Firmware builds successfully with ESP-IDF v5.5 ✓
+- All 26 tests pass ✓
+
+The implementation is complete and follows all the requirements from `docs/10_task.md`. The submission has been recorded via `tools/run_eval.py`.

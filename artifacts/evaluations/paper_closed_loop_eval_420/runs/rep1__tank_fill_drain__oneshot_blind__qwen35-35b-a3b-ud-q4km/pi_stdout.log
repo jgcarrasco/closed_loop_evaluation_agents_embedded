@@ -1,0 +1,20 @@
+## Final Submission Status
+
+**Submission recorded successfully.** 
+
+Summary of implementation:
+
+### Controller Policy Implemented in `components/controller/controller.c`:
+
+1. **Boot**: Pump starts OFF (via `controller_init` → `controller_set_safe_off`)
+2. **LEVEL < 30**: Pump turns ON, state = PUMPING
+3. **LEVEL > 80**: Pump turns OFF, state = SAFE_OFF  
+4. **30 ≤ LEVEL ≤ 80**: Holds previous output, state transitions to HOLDING
+5. **Malformed input (SENSOR_TIMEOUT/INVALID_LEVEL)**: Failsafe to OFF, sets `timed_out=true`
+6. **No new input (NONE)**: Checks timeout window; if elapsed ≥ 1000ms, failsafe to OFF
+
+### Submission Details:
+- **Benchmark mode**: oneshot_blind
+- **Submission index**: 1 of 1
+- **Status**: SUBMISSION_RECORDED
+- Hidden grader results are withheld (as expected for oneshot_blind mode)

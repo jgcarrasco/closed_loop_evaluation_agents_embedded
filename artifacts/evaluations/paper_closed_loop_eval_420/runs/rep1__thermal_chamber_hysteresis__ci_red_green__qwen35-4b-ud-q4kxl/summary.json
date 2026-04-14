@@ -1,0 +1,107 @@
+{
+  "agent_name": "pi-thermal_chamber_hysteresis-ci_red_green-qwen35-4b-ud-q4kxl-20260327T185742Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/baseline",
+  "efficiency": {
+    "build_attempts": 5,
+    "first_submission_at_utc": "2026-03-29T02:25:33.523000Z",
+    "hidden_eval_calls": 2,
+    "iterations": 11,
+    "time_to_first_submission_seconds": 355.226,
+    "wall_clock_seconds": 671.0717191519216
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-qwen35-4b-ud-q4kxl-20260327T185742Z/20260329T022533Z",
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-qwen35-4b-ud-q4kxl-20260327T185742Z/20260329T022813Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-qwen35-4b-ud-q4kxl-20260327T185742Z/20260329T022813Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-qwen35-4b-ud-q4kxl-20260327T185742Z/20260329T022813Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-4b-ud-q4kxl",
+    "model": "qwen35-4b-ud-q4kxl",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 47205,
+    "completion_tokens_after_first_submission": 26033,
+    "completion_tokens_before_first_submission": 21172,
+    "cost": 0.0,
+    "prompt_tokens": 4572551,
+    "prompt_tokens_after_first_submission": 1842526,
+    "prompt_tokens_before_first_submission": 2730025,
+    "total_tokens": 4619756,
+    "total_tokens_after_first_submission": 1868559,
+    "total_tokens_before_first_submission": 2751197
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-4b-ud-q4kxl",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/pi_stdout.log",
+  "task_id": "thermal_chamber_hysteresis",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 7,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 2,
+    "self_test_runs": 11,
+    "self_tests_written": 7
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 184,
+    "lines_changed_total": 203,
+    "lines_deleted": 19,
+    "tool_call_breakdown": {
+      "bash": 92,
+      "edit": 3,
+      "ls": 2,
+      "read": 15,
+      "write": 7
+    },
+    "tool_call_count": 119
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/thermal_chamber_hysteresis__ci_red_green__qwen35-4b-ud-q4kxl/workspace"
+}

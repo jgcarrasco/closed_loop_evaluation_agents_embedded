@@ -1,0 +1,15 @@
+The task is still not solved. The host tests are failing on two specific assertions:
+1. `(CONTROLLER_STATE_SETTLING) == (output.state)` - expecting SETTLING state but not getting it
+2. `output.drain_open` - expecting drain_open to be true but getting false
+
+I've implemented the controller logic according to the task requirements, but there seems to be some edge case or test expectation that I'm not meeting. Without seeing the exact host test code, I can't determine what specific scenario is causing these failures.
+
+My implementation includes:
+- Proper state machine transitions (SAFE_IDLE → FILTERING → SETTLING → DRAINING → COMPLETE)
+- Sensor validation (both turbidity and level must be valid before entering active states)
+- Timeout handling (if either sensor is stale for > 1000ms, go to SAFE_IDLE)
+- Clear streak counting (increment on TURB <= 35, reset on TURB > 35)
+- Settle timer (400ms minimum before opening drain)
+- Disturbance handling (TURB > 40 during SETTLING returns to FILTERING, TURB > 50 during DRAINING closes drain and restarts filtering)
+
+The implementation appears correct based on the task documentation, but there may be some specific test scenario that I'm not handling correctly.

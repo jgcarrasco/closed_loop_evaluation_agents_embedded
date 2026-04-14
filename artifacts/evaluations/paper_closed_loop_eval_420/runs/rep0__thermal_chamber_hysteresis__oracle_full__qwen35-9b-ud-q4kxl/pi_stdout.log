@@ -1,0 +1,37 @@
+The implementation is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the thermal chamber hysteresis controller in `components/controller/controller.c` following the specifications in `docs/10_task.md`.
+
+### Key Implementation Details:
+
+1. **Controller States:**
+   - `SAFE_OFF`: Fail-safe state, heater off (default on boot and for temperatures > 52°C)
+   - `HEATING`: Actively driving heater on for temperatures < 47°C
+   - `HOLDING`: Inside working region (47-52°C), preserving previous actuator state
+
+2. **Control Policy:**
+   - Boot: Heater OFF, state SAFE_OFF
+   - TEMP < 47°C: Turn heater ON, state HEATING
+   - TEMP > 52°C: Turn heater OFF, state SAFE_OFF
+   - 47°C ≤ TEMP < 50°C: Preserve previous actuator state, state HOLDING
+   - 50°C ≤ TEMP ≤ 52°C with rising temperature: Turn heater OFF early, state HOLDING
+   - 50°C ≤ TEMP ≤ 52°C without rising: Preserve previous actuator state, state HOLDING
+
+3. **Fail-Safe Conditions:**
+   - Malformed input: Heater OFF
+   - Sensor timeout (FAULT SENSOR_TIMEOUT): Heater OFF
+   - Stale data (>1000ms since last valid sensor): Heater OFF
+
+4. **Critical Bug Fixes:**
+   - Fixed rising temperature detection by checking BEFORE updating `last_temperature_c`
+   - Fixed state updates to properly set both `controller->state` and `output.state`
+   - Ensured state name is derived from the updated controller state
+
+### Test Results:
+- ✅ Build: PASS
+- ✅ Host unit tests: 100% passed (all host-side logic checks)
+- ✅ Integration: All 5 scenarios passed (smoke, warmup_control, overshoot_guard, sensor_timeout, malformed_frame)
+- ✅ No constraint violations
+- ✅ Hard limit respected (stays within 56°C ceiling with margin)

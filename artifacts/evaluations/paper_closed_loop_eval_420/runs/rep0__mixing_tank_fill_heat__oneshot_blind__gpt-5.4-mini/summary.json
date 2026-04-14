@@ -1,0 +1,104 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-oneshot_blind-gpt-5.4-mini-20260324T125039Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 0,
+    "first_submission_at_utc": "2026-03-24T16:18:32.534000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 1,
+    "time_to_first_submission_seconds": 175.032,
+    "wall_clock_seconds": 184.32639392698184
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oneshot_blind-gpt-5.4-mini-20260324T125039Z/20260324T161832Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oneshot_blind-gpt-5.4-mini-20260324T125039Z/20260324T161832Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oneshot_blind-gpt-5.4-mini-20260324T125039Z/20260324T161832Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "oneshot_blind",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 249344,
+    "cache_write_tokens": 0,
+    "completion_tokens": 16051,
+    "completion_tokens_after_first_submission": 188,
+    "completion_tokens_before_first_submission": 15863,
+    "cost": 0.0,
+    "prompt_tokens": 14898,
+    "prompt_tokens_after_first_submission": 413,
+    "prompt_tokens_before_first_submission": 14485,
+    "total_tokens": 280293,
+    "total_tokens_after_first_submission": 54873,
+    "total_tokens_before_first_submission": 225420
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as one-shot code generation. Do not build a new local harness or spend time on repeated verification loops. Make exactly one submission with python3 tools/run_eval.py, then report the final visible submission status."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 0,
+    "runtime_probe_executed": false,
+    "runtime_probe_files": [],
+    "runtime_probe_present": false,
+    "runtime_probe_runs": 0,
+    "self_test_runs": 0,
+    "self_tests_written": 0
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 101,
+    "lines_changed_total": 109,
+    "lines_deleted": 8,
+    "tool_call_breakdown": {
+      "bash": 1,
+      "edit": 4,
+      "grep": 6,
+      "ls": 3,
+      "read": 12,
+      "write": 1
+    },
+    "tool_call_count": 27
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/mixing_tank_fill_heat__oneshot_blind__gpt-5.4-mini/workspace"
+}

@@ -1,0 +1,17 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller.py`
+
+What I verified:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+  - 11 tests passing
+  - includes controller-behavior checks for each acceptance bullet
+  - includes a firmware-level UART end-to-end probe via `FirmwareSession(...)`
+- `python3 tools/run_eval.py` ✅
+  - Hidden grader: `PASS`

@@ -1,0 +1,15 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Verification done:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Result:
+
+- Visible build: passed
+- Visible self-tests: passed
+- Hidden eval: PASS

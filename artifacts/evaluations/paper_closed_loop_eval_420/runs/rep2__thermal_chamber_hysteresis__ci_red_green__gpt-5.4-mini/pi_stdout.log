@@ -1,0 +1,14 @@
+Implemented the thermal chamber controller policy in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Also added visible UART-based self-tests in:
+
+- `agent_tests/test_controller_behavior.py`
+
+Visible checks:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+
+

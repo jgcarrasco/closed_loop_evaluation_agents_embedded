@@ -1,0 +1,107 @@
+{
+  "agent_name": "pi-filter_tank_sequence-realistic_self_verify-qwen35-2b-ud-q4kxl-20260329T025855Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T025855Z/filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/baseline",
+  "efficiency": {
+    "build_attempts": 4,
+    "first_submission_at_utc": null,
+    "hidden_eval_calls": 0,
+    "iterations": 47,
+    "time_to_first_submission_seconds": null,
+    "wall_clock_seconds": 446.4281281023286
+  },
+  "evaluation_dirs": [],
+  "final_hidden_outcome": {
+    "evaluation_dir": null,
+    "failure_category": "no_submission",
+    "failure_family": "no_submission",
+    "hidden_summary_path": null,
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": null,
+    "status": "NO_SUBMISSION"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-2b-ud-q4kxl",
+    "model": "qwen35-2b-ud-q4kxl",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 58108,
+    "completion_tokens_after_first_submission": null,
+    "completion_tokens_before_first_submission": null,
+    "cost": 0.0,
+    "prompt_tokens": 5402826,
+    "prompt_tokens_after_first_submission": null,
+    "prompt_tokens_before_first_submission": null,
+    "total_tokens": 5460934,
+    "total_tokens_after_first_submission": null,
+    "total_tokens_before_first_submission": null
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-2b-ud-q4kxl",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 0,
+    "runtime_probe_executed": false,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 0,
+    "self_test_runs": 47,
+    "self_tests_written": 16
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/README.md",
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h",
+      "components/protocol/include/protocol.h",
+      "tools/run_self_tests.py"
+    ],
+    "files_touched_count": 6,
+    "lines_added": 704,
+    "lines_changed_total": 845,
+    "lines_deleted": 141,
+    "tool_call_breakdown": {
+      "bash": 93,
+      "edit": 6,
+      "ls": 8,
+      "read": 10,
+      "write": 13
+    },
+    "tool_call_count": 130
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T025855Z/filter_tank_sequence__realistic_self_verify__qwen35-2b-ud-q4kxl/workspace"
+}

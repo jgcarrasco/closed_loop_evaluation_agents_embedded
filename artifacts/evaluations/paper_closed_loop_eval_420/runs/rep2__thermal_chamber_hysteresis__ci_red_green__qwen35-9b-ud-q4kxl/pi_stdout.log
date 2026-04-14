@@ -1,0 +1,13 @@
+I have completed the implementation of the thermal chamber hysteresis controller according to the requirements in docs/10_task.md. The implementation:
+
+1. **Boot behavior**: Initializes heater OFF (SAFE_OFF state)
+2. **Low temperature (<47°C)**: Turns heater ON (HEATING state)
+3. **High temperature (>52°C)**: Turns heater OFF (SAFE_OFF state)
+4. **Middle range (47-49°C)**: Preserves previous actuator state, enters HOLDING
+5. **Upper band rising (50-52°C with rising temp)**: Early heater OFF, enters HOLDING
+6. **Upper band stable (50-52°C not rising)**: Preserves previous actuator state, enters HOLDING
+7. **Malformed input**: Turns heater OFF (SAFE_OFF)
+8. **Sensor timeout**: Turns heater OFF (SAFE_OFF)
+9. **Stale sensor (>1000ms)**: Turns heater OFF (SAFE_OFF)
+
+The implementation includes comprehensive tests covering all acceptance criteria from the Self-Verification Checklist in docs/10_task.md, including a firmware-level end-to-end runtime probe through UART as required.

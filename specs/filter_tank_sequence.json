@@ -1,0 +1,174 @@
+{
+  "experiment_id": "minimal_qemu_demo",
+  "task_id": "filter_tank_sequence",
+  "task_name": "Filter Tank Sequence Controller",
+  "task_version": "v1",
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "machine": {
+    "name": "esp32_qemu_filter_tank_demo",
+    "controller": "ESP32 firmware running in QEMU",
+    "interface": {
+      "transport": "uart",
+      "port": "UART0",
+      "baudrate": 115200,
+      "protocol": "newline-delimited ASCII"
+    }
+  },
+  "sensors": [
+    {
+      "name": "turb",
+      "type": "integer",
+      "units": "NTU",
+      "range": [
+        0,
+        100
+      ]
+    },
+    {
+      "name": "level",
+      "type": "integer",
+      "units": "percent",
+      "range": [
+        0,
+        100
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "name": "filter",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "OFF",
+      "range": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "drain",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "CLOSED",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "timing": {
+    "control_period_ms": 50,
+    "sensor_period_ms": 100,
+    "episode_duration_s": 5.5,
+    "sensor_timeout_ms": 1000,
+    "notes": [
+      "Turbidity and level arrive as separate lines. A valid turbidity frame refreshes only turbidity freshness and a valid level frame refreshes only level freshness.",
+      "Count the clear streak using valid turbidity samples only. Level samples do not increment or reset that streak.",
+      "The settling timer uses controller time and can advance on CONTROLLER_INPUT_NONE steps."
+    ]
+  },
+  "plant": {
+    "tick_ms": 100,
+    "filter_improvement_ntu": 14,
+    "rebound_ntu": 4,
+    "drain_delta": 12,
+    "min_turbidity_ntu": 0,
+    "max_turbidity_ntu": 100,
+    "min_level": 0,
+    "max_level": 100,
+    "notes": [
+      "With FILTER ON, turbidity drops quickly. With FILTER OFF, turbidity slowly rebounds upward.",
+      "The hidden scenarios can inject disturbances while settling or draining. A robust controller must return to filtering instead of draining cloudy liquid."
+    ]
+  },
+  "initial_state": {
+    "turbidity_ntu": 82,
+    "level": 72,
+    "filter": "OFF",
+    "drain": "CLOSED"
+  },
+  "task": {
+    "objective": "Filter a cloudy tank until it is clearly clean, wait a short settle window, then drain it without draining early or ignoring later disturbances.",
+    "target_band": {
+      "min": 0,
+      "max": 35,
+      "hold_previous_state": false
+    },
+    "interface": [
+      "Controller inputs are CONTROLLER_INPUT_TURBIDITY, CONTROLLER_INPUT_LEVEL, CONTROLLER_INPUT_SENSOR_TIMEOUT, CONTROLLER_INPUT_INVALID_TURBIDITY, CONTROLLER_INPUT_INVALID_LEVEL, and CONTROLLER_INPUT_NONE.",
+      "Sensor frames use `SENSE TURB <integer>` and `SENSE LEVEL <integer>`.",
+      "Actuator frames must be `ACT FILTER ON|OFF` and `ACT DRAIN OPEN|CLOSED`."
+    ],
+    "policy": [
+      "On boot, command FILTER OFF and DRAIN CLOSED.",
+      "Until both sensors have been seen validly, stay in the safe all-off state.",
+      "If LEVEL < 15, command FILTER OFF and DRAIN CLOSED and remain in COMPLETE.",
+      "If TURB > 35 and LEVEL >= 40, command FILTER ON and DRAIN CLOSED.",
+      "Count only valid TURB inputs toward the clear streak. A valid TURB <= 35 increments the clear streak and a valid TURB > 35 resets it to zero.",
+      "When the clear streak reaches 3 while LEVEL >= 40, command FILTER OFF and DRAIN CLOSED and enter SETTLING with a 400 ms timer.",
+      "While SETTLING, if a valid TURB > 40 arrives, reset the clear streak and return to FILTERING with FILTER ON and DRAIN CLOSED.",
+      "When SETTLING has lasted at least 400 ms, the latest TURB <= 35, and LEVEL >= 40, command FILTER OFF and DRAIN OPEN and enter DRAINING.",
+      "While DRAINING, if a valid TURB > 50 arrives and LEVEL >= 40, command FILTER ON and DRAIN CLOSED, reset the clear streak, and return to FILTERING.",
+      "On malformed sensor input, command FILTER OFF and DRAIN CLOSED.",
+      "On explicit sensor timeout input, command FILTER OFF and DRAIN CLOSED.",
+      "If either sensor becomes stale for more than 1000 ms, command FILTER OFF and DRAIN CLOSED."
+    ],
+    "decision_summary": [
+      "Missing any fresh valid sensor: safe all-off state",
+      "TURB > 35 with sufficient level: FILTER ON, DRAIN CLOSED, state FILTERING",
+      "Three consecutive clear turbidity samples: FILTER OFF, DRAIN CLOSED, state SETTLING",
+      "Settled for 300 ms with latest TURB <= 35: FILTER OFF, DRAIN OPEN, state DRAINING",
+      "LEVEL < 15: FILTER OFF, DRAIN CLOSED, state COMPLETE"
+    ],
+    "state_model": [
+      "SAFE_IDLE: fail-safe all-off state or waiting for both sensors",
+      "FILTERING: actively reducing turbidity with the filter on",
+      "SETTLING: filter off, drain closed, waiting for the clear state to hold for 300 ms",
+      "DRAINING: drain open while the liquid remains acceptably clear",
+      "COMPLETE: drained below the minimum remaining level"
+    ]
+  },
+  "constraints": [
+    "Keep the existing public controller interface intact.",
+    "Actuator output must stay within the published FILTER and DRAIN frames.",
+    "Do not open the drain before the settling window has completed.",
+    "Any malformed or stale sensor input must drive the controller to the safe all-off state."
+  ],
+  "success": {
+    "required_scenarios": [
+      "smoke",
+      "clarification_cycle",
+      "settling_reset",
+      "disturbance_recovery",
+      "sensor_timeout",
+      "malformed_frame"
+    ],
+    "thresholds": {
+      "timeout_reaction_ms_min": 1000,
+      "timeout_reaction_ms_max": 1200,
+      "settling_window_ms": 400,
+      "max_constraint_violations": 0,
+      "max_early_drain_violations": 0
+    },
+    "notes": [
+      "This task is harder because it requires a counter, a timer, state-dependent resets, and recovery from late disturbances.",
+      "The prose packet explicitly defines the clear streak and settle timing so failures point at controller logic, not at missing task details."
+    ]
+  },
+  "feedback": {
+    "mode": "full",
+    "include_build_logs": true,
+    "include_runtime_logs": true,
+    "include_uart_transcript": true,
+    "include_trace_samples": true,
+    "include_metrics": true,
+    "include_failure_category": true,
+    "include_history": false,
+    "include_unit_test_details": true,
+    "include_warnings": true,
+    "include_evaluator_commentary": true
+  }
+}

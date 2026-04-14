@@ -1,0 +1,103 @@
+{
+  "agent_name": "pi-filter_tank_sequence-oneshot_blind-qwen35-4b-ud-q4kxl-20260327T185742Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/baseline",
+  "efficiency": {
+    "build_attempts": 0,
+    "first_submission_at_utc": "2026-03-28T20:30:05.350000Z",
+    "hidden_eval_calls": 2,
+    "iterations": 2,
+    "time_to_first_submission_seconds": 26.781,
+    "wall_clock_seconds": 43.335726803634316
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oneshot_blind-qwen35-4b-ud-q4kxl-20260327T185742Z/20260328T203005Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oneshot_blind-qwen35-4b-ud-q4kxl-20260327T185742Z/20260328T203019Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oneshot_blind-qwen35-4b-ud-q4kxl-20260327T185742Z/20260328T203019Z",
+    "failure_category": null,
+    "failure_family": "unknown",
+    "hidden_summary_path": null,
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": null,
+    "status": null
+  },
+  "mode": "oneshot_blind",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-4b-ud-q4kxl",
+    "model": "qwen35-4b-ud-q4kxl",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 5681,
+    "completion_tokens_after_first_submission": 2242,
+    "completion_tokens_before_first_submission": 3439,
+    "cost": 0.0,
+    "prompt_tokens": 176063,
+    "prompt_tokens_after_first_submission": 90924,
+    "prompt_tokens_before_first_submission": 85139,
+    "total_tokens": 181744,
+    "total_tokens_after_first_submission": 93166,
+    "total_tokens_before_first_submission": 88578
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-4b-ud-q4kxl",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as one-shot code generation. Do not build a new local harness or spend time on repeated verification loops. Make exactly one submission with python3 tools/run_eval.py, then report the final visible submission status."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 0,
+    "runtime_probe_executed": false,
+    "runtime_probe_files": [],
+    "runtime_probe_present": false,
+    "runtime_probe_runs": 0,
+    "self_test_runs": 0,
+    "self_tests_written": 0
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 1,
+    "lines_added": 228,
+    "lines_changed_total": 255,
+    "lines_deleted": 27,
+    "tool_call_breakdown": {
+      "bash": 2,
+      "edit": 3,
+      "ls": 3,
+      "read": 10,
+      "write": 1
+    },
+    "tool_call_count": 19
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/filter_tank_sequence__oneshot_blind__qwen35-4b-ud-q4kxl/workspace"
+}

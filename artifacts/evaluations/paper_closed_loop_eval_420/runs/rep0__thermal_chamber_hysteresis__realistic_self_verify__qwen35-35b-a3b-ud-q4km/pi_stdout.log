@@ -1,0 +1,42 @@
+The implementation is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Thermal Chamber Hysteresis Controller according to the specifications in `docs/10_task.md`. The implementation includes:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot state**: Heater starts OFF, state is SAFE_OFF
+2. **Temperature < 47°C**: Turn heater ON (HEATING state)
+3. **Temperature > 52°C**: Turn heater OFF (SAFE_OFF state)
+4. **47 ≤ TEMP < 50°C**: Hold previous safe actuator state (HOLDING state)
+5. **50 ≤ TEMP ≤ 52°C with rising temperature**: Turn heater OFF early, count as HOLDING
+6. **50 ≤ TEMP ≤ 52°C with non-rising temperature**: Hold previous state
+7. **Sensor timeout/invalid input**: Force heater OFF (SAFE_OFF)
+8. **Stale sensor data (>1000ms)**: Force heater OFF (SAFE_OFF)
+
+### Tests Created (`agent_tests/test_thermal_controller.py`)
+
+All 12 tests pass, covering the Self-Verification Checklist:
+
+**Unit Tests:**
+- Boot leaves heater off
+- Low temperature (35°C) drives heater ON
+- High temperature (53°C) drives heater OFF
+- Holding preserves state in 47-49 range
+- Rising temp near upper band triggers early heater OFF
+
+**Firmware End-to-End Tests (via UART):**
+- Boot and heater response at low temp
+- Nominal warmup sequence (low→high temp)
+- Rising temp at upper band triggers early off
+- Sensor timeout handling
+- Malformed input handling
+- Stale sensor data timeout
+
+**Closed-Loop Simulation:**
+- Temperature stays below 56°C limit
+
+### Submission
+
+Submitted using `python3 tools/run_eval.py` - submission recorded successfully. In `realistic_self_verify` mode, hidden grader results are withheld, but all visible tests pass.

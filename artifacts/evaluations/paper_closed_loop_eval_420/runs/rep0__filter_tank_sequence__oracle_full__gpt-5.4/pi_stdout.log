@@ -1,0 +1,31 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Key fix:
+- Added the full SAFE_IDLE / FILTERING / SETTLING / DRAINING / COMPLETE state machine
+- Enforced per-sensor freshness and safe timeout behavior
+- Implemented clear-streak logic, settling timing, disturbance recovery, and complete behavior
+- Fixed an important edge case: clear turbidity samples no longer preload the streak before level has been valid/fresh
+
+Visible verification completed:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+
+Added visible tests in:
+- `agent_tests/test_filter_tank_controller.py`
+
+These cover the checklist bullets, including:
+- boot defaults
+- safe idle until both sensors valid
+- filtering start
+- settling after 3 clear turbidity samples
+- settling disturbance reset
+- no early drain before 400 ms
+- draining disturbance recovery
+- complete on low level
+- malformed input / timeout safe fallback
+- firmware-level UART end-to-end nominal batch probe
+
+Hidden evaluation:
+- `python3 tools/run_eval.py` → PASS

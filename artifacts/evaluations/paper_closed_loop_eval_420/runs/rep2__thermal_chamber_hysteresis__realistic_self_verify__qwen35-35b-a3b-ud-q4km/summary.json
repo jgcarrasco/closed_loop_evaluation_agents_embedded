@@ -1,0 +1,106 @@
+{
+  "agent_name": "pi-thermal_chamber_hysteresis-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 2,
+    "first_submission_at_utc": "2026-03-30T01:03:30.847000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 6,
+    "time_to_first_submission_seconds": 642.127,
+    "wall_clock_seconds": 647.5211995090358
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260330T010330Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260330T010330Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-realistic_self_verify-qwen35-35b-a3b-ud-q4km-20260329T205029Z/20260330T010330Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 15242,
+    "completion_tokens_after_first_submission": 465,
+    "completion_tokens_before_first_submission": 14777,
+    "cost": 0.0,
+    "prompt_tokens": 1475413,
+    "prompt_tokens_after_first_submission": 144749,
+    "prompt_tokens_before_first_submission": 1330664,
+    "total_tokens": 1490655,
+    "total_tokens_after_first_submission": 145214,
+    "total_tokens_before_first_submission": 1345441
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "thermal_chamber_hysteresis",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 1,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 9,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_thermal_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 6,
+    "self_test_runs": 6,
+    "self_tests_written": 7
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_thermal_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 183,
+    "lines_changed_total": 187,
+    "lines_deleted": 4,
+    "tool_call_breakdown": {
+      "bash": 32,
+      "edit": 1,
+      "ls": 2,
+      "read": 14,
+      "write": 6
+    },
+    "tool_call_count": 55
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/thermal_chamber_hysteresis__realistic_self_verify__qwen35-35b-a3b-ud-q4km/workspace"
+}

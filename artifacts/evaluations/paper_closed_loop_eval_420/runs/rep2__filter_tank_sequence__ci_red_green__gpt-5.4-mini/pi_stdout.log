@@ -1,0 +1,22 @@
+Implemented the filter tank controller state machine in:
+
+- `components/controller/controller.c`
+
+Also added visible firmware-level self-tests in:
+
+- `agent_tests/test_filter_tank_sequence.py`
+
+What’s covered:
+- boot-safe idle behavior
+- gating until both sensors are valid
+- filtering → settling → draining → complete flow
+- settle timing and early-drain prevention
+- disturbance recovery in settling and draining
+- malformed input and sensor timeout safe fallback
+- UART end-to-end probes via `FirmwareSession`
+
+Verification run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+
+

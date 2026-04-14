@@ -1,0 +1,122 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260325T110603Z/mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 8,
+    "first_submission_at_utc": "2026-03-25T12:51:42.245000Z",
+    "hidden_eval_calls": 13,
+    "iterations": 20,
+    "time_to_first_submission_seconds": 718.58,
+    "wall_clock_seconds": 2840.119304941036
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T125142Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T125302Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T130408Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T130656Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T131249Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132027Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132113Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132201Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132248Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132334Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132419Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132507Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132555Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132555Z",
+    "failure_category": "sensor_timeout",
+    "failure_family": "integration",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-35b-a3b-ud-q4km-20260325T110603Z/20260325T132555Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "integration",
+    "status": "INTEGRATION_FAILED"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 61435,
+    "completion_tokens_after_first_submission": 36511,
+    "completion_tokens_before_first_submission": 24924,
+    "cost": 0.0,
+    "prompt_tokens": 9664993,
+    "prompt_tokens_after_first_submission": 7488403,
+    "prompt_tokens_before_first_submission": 2176590,
+    "total_tokens": 9726428,
+    "total_tokens_after_first_submission": 7524914,
+    "total_tokens_before_first_submission": 2201514
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 13,
+    "false_green_numerator": 13,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 8,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 19,
+    "self_test_runs": 20,
+    "self_tests_written": 8
+  },
+  "tool_behavior": {
+    "files_touched": [
+      ".pytest_cache/.gitignore",
+      ".pytest_cache/CACHEDIR.TAG",
+      ".pytest_cache/README.md",
+      ".pytest_cache/v/cache/lastfailed",
+      ".pytest_cache/v/cache/nodeids",
+      ".pytest_cache/v/cache/stepwise",
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 8,
+    "lines_added": 382,
+    "lines_changed_total": 387,
+    "lines_deleted": 5,
+    "tool_call_breakdown": {
+      "bash": 73,
+      "edit": 38,
+      "read": 17,
+      "write": 2
+    },
+    "tool_call_count": 130
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260325T110603Z/mixing_tank_fill_heat__ci_red_green__qwen35-35b-a3b-ud-q4km/workspace"
+}

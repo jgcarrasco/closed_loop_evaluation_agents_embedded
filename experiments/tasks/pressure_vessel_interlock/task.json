@@ -1,0 +1,24 @@
+{
+  "task_id": "pressure_vessel_interlock",
+  "task_name": "Pressure Vessel Interlock Controller",
+  "task_version": "v1",
+  "task_spec_path": "specs/pressure_vessel_interlock.json",
+  "feedback": {
+    "mode": "full",
+    "include_history": false
+  },
+  "benchmark": {
+    "mode": "realistic_self_verify"
+  },
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "sync_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h",
+    "components/protocol/protocol.c",
+    "components/protocol/include/protocol.h",
+    "main/uart_transport.c"
+  ]
+}

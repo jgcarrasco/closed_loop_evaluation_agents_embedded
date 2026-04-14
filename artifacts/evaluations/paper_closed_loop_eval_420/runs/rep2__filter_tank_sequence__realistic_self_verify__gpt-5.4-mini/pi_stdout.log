@@ -1,0 +1,25 @@
+Implemented the filter tank controller state machine in:
+
+- `components/controller/controller.c`
+
+Visible verification added in:
+
+- `agent_tests/test_filter_tank_sequence.py`
+
+Checks covered:
+- boot/off/closed and startup gating
+- cloudy start to filtering
+- clear streak to settling
+- settling disturbance recovery
+- no early drain before 400 ms
+- draining disturbance recovery
+- low-level complete
+- malformed input and stale timeout safe idle
+- firmware-level UART end-to-end nominal cycle
+
+Verified with:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+
+Submitted with:
+- `python3 tools/run_eval.py`

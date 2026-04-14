@@ -1,0 +1,5 @@
+Implemented the controller in `components/controller/controller.c` and submitted once with `python3 tools/run_eval.py`.
+
+Final visible submission status: `SUBMISSION_RECORDED`
+
+Hidden grader results are withheld in `oneshot_blind`.

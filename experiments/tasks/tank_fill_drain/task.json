@@ -1,0 +1,17 @@
+{
+  "task_id": "tank_fill_drain",
+  "task_name": "Tank Fill/Drain Controller",
+  "task_version": "v2",
+  "task_spec_path": "specs/tank_fill_drain.json",
+  "feedback": {
+    "mode": "full",
+    "include_history": false
+  },
+  "benchmark": {
+    "mode": "realistic_self_verify"
+  },
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ]
+}

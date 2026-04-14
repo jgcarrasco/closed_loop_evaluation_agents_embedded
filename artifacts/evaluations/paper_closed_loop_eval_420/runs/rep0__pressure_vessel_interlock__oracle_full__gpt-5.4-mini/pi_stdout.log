@@ -1,0 +1,13 @@
+Implemented the pressure-vessel interlock controller in:
+
+- `components/controller/controller.c`
+
+Added visible firmware-level self-tests in:
+
+- `agent_tests/test_pressure_vessel_controller.py`
+
+Verified with:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py` → PASS

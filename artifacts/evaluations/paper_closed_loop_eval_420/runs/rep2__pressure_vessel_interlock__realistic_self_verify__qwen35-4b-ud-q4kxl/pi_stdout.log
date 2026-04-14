@@ -1,0 +1,20 @@
+The solution has been submitted three times. The controller implementation is complete and follows all the requirements from `docs/10_task.md`. 
+
+**Summary of the solution:**
+
+1. **Modified files:**
+   - `components/controller/include/controller.h` - Fixed the enum definition for `controller_state_t` and added string constants for state names
+   - `components/controller/controller.c` - Rewrote the controller logic to properly handle all input cases, send state names via UART, and ensure safe vent-open behavior
+
+2. **Controller behavior:**
+   - Boot: COMPRESSOR OFF, VENT OPEN (SAFE_VENT state)
+   - Low pressure + door closed: COMPRESSOR ON, VENT CLOSED (PRESSURIZING state)
+   - High pressure + door closed: COMPRESSOR OFF, VENT OPEN (RELIEVING state)
+   - Medium pressure (40-60) + door closed: Holds previous state (HOLDING state)
+   - Door open: Immediately forces SAFE_VENT state
+   - Invalid input or stale sensors: Forces SAFE_VENT state
+
+3. **Tests written:**
+   - `agent_tests/test_controller.py` - Contains firmware-level end-to-end tests using QEMU/UART to verify all acceptance criteria
+
+The solution is complete and has been submitted for evaluation.

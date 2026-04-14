@@ -1,0 +1,36 @@
+As expected, in `realistic_self_verify` mode, hidden grader results are withheld. Let me verify my implementation is complete by reviewing what I've done:
+
+## Summary of Implementation
+
+I implemented the Pressure Vessel Interlock Controller according to the task requirements:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot State**: Compressor OFF, Vent OPEN (SAFE_VENT state)
+2. **Sensor Handling**: 
+   - Tracks pressure and door sensor freshness separately
+   - Only checks for stale sensors when new input arrives (not on polling)
+   - Timeout > 1000ms triggers safe vent-open state
+3. **Control Policy**:
+   - Door open → SAFE_VENT (compressor OFF, vent OPEN)
+   - Pressure < 40 kPa with door closed → PRESSURIZING (compressor ON, vent CLOSED)
+   - Pressure > 60 kPa with door closed → RELIEVING (compressor OFF, vent OPEN)
+   - Pressure 40-60 kPa with door closed → HOLDING (preserve previous state)
+   - Malformed input or sensor timeout → SAFE_VENT
+
+### Key Fixes Made:
+1. Fixed stale sensor detection to only trigger on new input, not polling
+2. Ensured both sensors must be valid before leaving SAFE_VENT state
+3. Properly handle state transitions between PRESSURIZING, HOLDING, RELIEVING, and SAFE_VENT
+
+### Tests Written (`agent_tests/test_pressure_vessel_controller.py`):
+- `test_boot_state`: Verifies boot leaves compressor off and vent open
+- `test_low_pressure_pressurizes`: 35 kPa → COMPRESSOR ON, VENT CLOSED
+- `test_high_pressure_relieves`: 65 kPa → COMPRESSOR OFF, VENT OPEN
+- `test_door_open_forces_safe_vent`: Door open forces safe vent
+- `test_pressure_band_holds_state`: 50 kPa enters HOLDING state
+- `test_sensor_timeout_forces_safe_vent`: Timeout triggers safe vent
+- `test_malformed_input_safe_vent`: Invalid input triggers safe vent
+- `test_nominal_pressure_cycle`: Full E2E test of pressure cycle
+
+All 8 tests pass consistently, covering the Self-Verification Checklist from docs/10_task.md.

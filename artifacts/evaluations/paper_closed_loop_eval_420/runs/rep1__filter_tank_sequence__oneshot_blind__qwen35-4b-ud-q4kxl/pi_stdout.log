@@ -1,0 +1,21 @@
+I've made my final submission. The benchmark mode is `oneshot_blind` which allows only one submission, and I've now submitted my implementation. 
+
+**Summary of implementation:**
+
+The filter tank controller implements a state machine with the following states:
+1. **SAFE_IDLE** - Start state, filter off, drain closed, waits for both sensors to be valid
+2. **FILTERING** - Filter ON, drain closed, actively reducing turbidity
+3. **SETTLING** - Filter OFF, drain closed, waiting 400ms after clear streak of 3 samples
+4. **DRAINING** - Drain open, filter off, draining after settle period
+5. **COMPLETE** - Level < 15, no action needed
+
+**Key behaviors:**
+- Sensor timeout (>1000ms) or malformed input forces SAFE_IDLE with `timed_out = true`
+- LEVEL < 15 keeps controller in COMPLETE state
+- TURB > 35 AND LEVEL >= 40 enters FILTERING
+- After 3 valid clear turbidity samples (TURB <= 35) while LEVEL >= 40, enters SETTLING
+- During SETTLING, TURB > 40 resets streak and returns to FILTERING
+- After 400ms in SETTLING with latest TURB <= 35 AND LEVEL >= 40, enters DRAINING
+- During DRAINING, TURB > 50 AND LEVEL >= 40 closes drain, restarts filtering, resets streak
+
+The submission has been recorded to `artifacts/latest/`.

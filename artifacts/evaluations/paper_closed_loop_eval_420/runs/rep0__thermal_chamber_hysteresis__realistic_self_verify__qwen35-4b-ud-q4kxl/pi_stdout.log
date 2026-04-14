@@ -1,0 +1,32 @@
+The implementation is complete. Let me summarize what was implemented:
+
+## Summary of Implementation
+
+### Controller Logic (components/controller/controller.c)
+
+1. **Constants** (from header):
+   - `CONTROLLER_TEMP_LOW_THRESHOLD = 47`
+   - `CONTROLLER_TEMP_HIGH_THRESHOLD = 52`
+   - `CONTROLLER_SENSOR_TIMEOUT_MS = 1000`
+
+2. **Control Policy**:
+   - **HEATING state**: Heater ON when temp < 47C, turns off at >= 47C
+   - **HOLDING state**: Preserves previous safe actuator state in 47-52C band; turns off heater early (anticipatory) when temperature is rising
+   - **SAFE_OFF state**: Heater OFF when temp > 52C or initially on boot
+
+3. **Fault Handling**:
+   - Malformed/invalid temperature → SAFE_OFF
+   - Sensor timeout → SAFE_OFF
+   - Stale sensor data (>1000ms) → SAFE_OFF
+
+4. **Anticipatory Heater-Off**: When in the 50-52C band and temperature is rising compared to previous sample, turns off heater early but maintains HOLDING state (not SAFE_OFF).
+
+### Tests (agent_tests/test_controller.py)
+
+1. **Unit tests** verify implementation exists with correct constants
+2. **End-to-end test** uses QEMU UART to:
+   - Boot firmware
+   - Send low temperature (35C) → observes ACT HEATER ON
+   - Send high temperature (53C) → observes ACT HEATER OFF
+
+All 8 tests pass, including the firmware-level end-to-end runtime probe through UART as required.

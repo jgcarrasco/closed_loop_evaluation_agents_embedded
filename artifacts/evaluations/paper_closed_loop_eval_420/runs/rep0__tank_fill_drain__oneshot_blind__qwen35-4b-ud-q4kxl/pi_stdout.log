@@ -1,0 +1,22 @@
+The implementation is complete. Here's a summary of what was implemented:
+
+## Final Submission Summary
+
+**Files Modified:**
+1. `components/controller/controller.c` - Implemented the control logic
+2. `components/controller/include/controller.h` - Added `level` field to `controller_t` struct
+
+**Control Logic Implemented:**
+- **Boot state**: Pump OFF (default via `controller_init`)
+- **Low level (< 30)**: Turn pump ON, set state to PUMPING
+- **High level (> 80)**: Turn pump OFF, set state to SAFE_OFF
+- **Mid-band (30 <= LEVEL <= 80)**: Hold previous safe output, set state to HOLDING
+- **Fail-safe conditions** (SENSOR_TIMEOUT, INVALID_LEVEL, NO INPUT): Pump OFF
+
+**Submission Status:**
+- Benchmark mode: `oneshot_blind`
+- Submission index: 1
+- Status: **SUBMISSION_RECORDED**
+- Hidden grader results are withheld in this benchmark mode.
+
+The task asked for exactly one submission with `python3 tools/run_eval.py`, which has been completed.

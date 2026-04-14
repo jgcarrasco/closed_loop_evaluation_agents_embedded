@@ -1,0 +1,15 @@
+Implemented the tank fill/drain controller behavior in:
+
+- `components/controller/controller.c`
+
+Also added visible end-to-end UART firmware tests in:
+
+- `agent_tests/test_controller_runtime.py`
+
+Verified with:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Hidden grader result: PASS

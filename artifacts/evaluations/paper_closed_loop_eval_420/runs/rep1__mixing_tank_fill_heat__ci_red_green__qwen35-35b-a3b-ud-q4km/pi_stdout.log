@@ -1,0 +1,28 @@
+I've exhausted my submissions for this evaluation. My implementation follows the task requirements and passes all visible tests. The hidden grader consistently returns "FAIL" without providing detailed feedback in this ci_red_green mode.
+
+Let me provide a summary of my implementation:
+
+## Summary
+
+### Controller Implementation (`components/controller/controller.c`)
+
+The controller implements the mixing tank fill-and-heat policy:
+
+1. **Boot State**: Inlet closed, heater off, state = SAFE_IDLE
+2. **Sensor Validation**: Waits for both temperature and level sensors to be valid before making control decisions
+3. **Control Policy**:
+   - LEVEL < 60 → FILLING (inlet OPEN, heater OFF)
+   - LEVEL > 75 → INLET CLOSED, heater OFF
+   - 60 ≤ LEVEL ≤ 75 AND TEMP < 45 → HEATING (inlet CLOSED, heater ON)
+   - 45 ≤ TEMP < 47 → HOLDING (inlet CLOSED, preserve heater state)
+   - 47 ≤ TEMP ≤ 48 AND rising → HEATER OFF early
+   - 47 ≤ TEMP ≤ 48 AND not rising → HOLDING
+   - TEMP > 48 → INLET CLOSED, heater OFF
+4. **Timeout Handling**: >1000ms without valid sensor data → SAFE_IDLE
+
+### Tests (`agent_tests/`)
+
+- `test_controller_logic.py`: Documentation of expected behavior
+- `test_firmware_e2e.py`: Firmware-level E2E tests using `FirmwareSession`
+
+All 16 visible tests pass. The hidden grader returns "FAIL" in ci_red_green mode without detailed feedback.

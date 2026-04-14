@@ -1,0 +1,34 @@
+The implementation is complete. Let me provide a summary of what was done:
+
+## Summary
+
+### Implementation in `components/controller/controller.c`:
+
+1. **Initialization (`controller_init`):** Sets pump to OFF and state to SAFE_OFF by default.
+
+2. **Control Policy (`controller_step`):**
+   - **LEVEL < 30:** Turns pump ON (PUMPING state)
+   - **LEVEL > 80:** Turns pump OFF (SAFE_OFF state)
+   - **30 <= LEVEL <= 80:** Holds previous output (HOLDING state)
+   - **Malformed input / Invalid level:** Fails safe to PUMP OFF
+   - **Timeout (> 1000ms):** Fails safe to PUMP OFF
+
+3. **State Machine:**
+   - `CONTROLLER_STATE_SAFE_OFF`: Pump off, safe state
+   - `CONTROLLER_STATE_PUMPING`: Pump on, filling tank
+   - `CONTROLLER_STATE_HOLDING`: Maintaining previous output in mid-band
+
+### Tests in `agent_tests/test_controller.py`:
+
+All 12 tests pass, covering the Self-Verification Checklist:
+- ✅ Boot leaves pump off before any valid sensor input
+- ✅ Low level (20) produces ACT PUMP ON
+- ✅ High level (85) produces ACT PUMP OFF  
+- ✅ Mid-band level (50) preserves previous output
+- ✅ Short idle steps don't trip timeout immediately
+- ✅ Malformed input forces ACT PUMP OFF
+- ✅ Timeout (> 1000ms) forces ACT PUMP OFF
+- ✅ End-to-end firmware-level runtime probe through UART
+
+### Submission:
+Submitted to hidden grader via `python3 tools/run_eval.py`. In `realistic_self_verify` mode, results are withheld - the visible self-tests serve as the verification mechanism.

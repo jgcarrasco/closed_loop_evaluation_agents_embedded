@@ -1,0 +1,12 @@
+**Final Submission Status:** `SUBMISSION_RECORDED`
+
+The controller implementation has been completed and submitted. The thermal chamber hysteresis controller now implements the full control policy:
+
+1. **Boot state**: Heater off (SAFE_OFF)
+2. **Low temp (< 47°C)**: Heater ON (HEATING state)
+3. **High temp (> 52°C)**: Heater OFF (SAFE_OFF state)
+4. **Middle band (47-49°C)**: Hold previous actuator state (HOLDING state)
+5. **Upper band (50-52°C) with rising temp**: Early heater OFF, counted as HOLDING
+6. **Malformed/timeout/stale sensor data**: Fail-safe to heater OFF
+
+In `oneshot_blind` mode, the hidden grader results are withheld after submission. The submission was recorded successfully.

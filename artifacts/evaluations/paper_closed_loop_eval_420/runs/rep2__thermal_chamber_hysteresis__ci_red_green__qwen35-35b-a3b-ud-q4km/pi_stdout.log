@@ -1,0 +1,39 @@
+The submission passed with status "PASS". 
+
+Let me summarize what was implemented:
+
+## Summary
+
+I implemented a thermal chamber hysteresis controller for an ESP32 firmware that runs in QEMU and communicates over UART0 at 115200 baud.
+
+### Controller Logic (`components/controller/controller.c`)
+
+The controller implements the following policy:
+
+1. **On boot**: Heater is OFF (SAFE_OFF state)
+2. **Temperature < 47°C**: Turn heater ON (HEATING state)
+3. **Temperature > 52°C**: Turn heater OFF (SAFE_OFF state)
+4. **47°C ≤ Temperature < 50°C**: Hold previous safe actuator state (HOLDING state)
+5. **50°C ≤ Temperature ≤ 52°C**: 
+   - If temperature is rising compared to previous sample: Turn heater OFF early (HOLDING state)
+   - If temperature is not rising: Hold previous safe actuator state (HOLDING state)
+6. **Malformed input**: Turn heater OFF (SAFE_OFF state)
+7. **Sensor timeout input**: Turn heater OFF (SAFE_OFF state)
+8. **Stale sensor data (>1000ms)**: Turn heater OFF (SAFE_OFF state, timed_out flag set)
+
+### Self-Verification Tests (`agent_tests/test_controller.py`)
+
+Created comprehensive tests covering:
+- Controller behavior simulation tests (unit tests for each acceptance criterion)
+- Firmware-level end-to-end runtime probes through UART:
+  - Boot leaves heater off
+  - Rising temperature to 51°C causes heater off
+  - High temperature (53°C) drives heater off
+  - Sensor timeout forces heater off
+
+### Key Implementation Details
+
+- Proper tracking of previous temperature to detect rising trend in the 50-52°C range
+- Timeout detection based on elapsed time since last valid sensor frame
+- State preservation during idle periods (no new sensor frames within 1000ms)
+- Correct handling of malformed and timeout inputs

@@ -1,0 +1,108 @@
+{
+  "agent_name": "pi-thermal_chamber_hysteresis-ci_red_green-gpt-5.4-20260327T135426Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/thermal_chamber_hysteresis__ci_red_green__gpt-5.4/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-27T15:53:01.324000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 5,
+    "time_to_first_submission_seconds": 339.466,
+    "wall_clock_seconds": 395.20479365764186
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-gpt-5.4-20260327T135426Z/20260327T155301Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-gpt-5.4-20260327T135426Z/20260327T155301Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/thermal_chamber_hysteresis/pi-thermal_chamber_hysteresis-ci_red_green-gpt-5.4-20260327T135426Z/20260327T155301Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4",
+    "model": "gpt-5.4",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 515200,
+    "cache_write_tokens": 0,
+    "completion_tokens": 12786,
+    "completion_tokens_after_first_submission": 230,
+    "completion_tokens_before_first_submission": 12556,
+    "cost": 0.0,
+    "prompt_tokens": 26805,
+    "prompt_tokens_after_first_submission": 125,
+    "prompt_tokens_before_first_submission": 26680,
+    "total_tokens": 554791,
+    "total_tokens_after_first_submission": 37091,
+    "total_tokens_before_first_submission": 517700
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__thermal_chamber_hysteresis__ci_red_green__gpt-5.4/pi_stdout.log",
+  "task_id": "thermal_chamber_hysteresis",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 0,
+    "false_green_rate": 0.0,
+    "runtime_probe_case_count": 1,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_firmware_runtime.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 5,
+    "self_test_runs": 5,
+    "self_tests_written": 6
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller_logic.py",
+      "agent_tests/test_firmware_runtime.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 275,
+    "lines_changed_total": 283,
+    "lines_deleted": 8,
+    "tool_call_breakdown": {
+      "bash": 8,
+      "edit": 5,
+      "find": 6,
+      "grep": 4,
+      "ls": 1,
+      "read": 16,
+      "write": 2
+    },
+    "tool_call_count": 42
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T135426Z/thermal_chamber_hysteresis__ci_red_green__gpt-5.4/workspace"
+}

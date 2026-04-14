@@ -1,0 +1,20 @@
+Implemented the mixing tank controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+What’s covered:
+- boot safe all-off
+- sensor freshness / 1000 ms timeout handling
+- low-level fill guard
+- safe-level heating
+- hold behavior in the mid-band
+- early heater off near the upper band when temperature is rising
+- malformed input → safe all-off
+
+Verification completed:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ passed all hidden scenarios
+
+

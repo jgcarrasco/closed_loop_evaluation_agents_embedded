@@ -1,0 +1,23 @@
+Implemented the controller behavior and added visible self-tests.
+
+What changed:
+- `components/controller/controller.c`
+  - Implemented the full filter/settle/drain state machine
+  - Added stale-sensor timeout handling
+  - Added malformed-input safe fallback
+  - Preserved freshness tracking and clear-streak logic
+  - Added disturbance recovery and complete-state handling
+- `agent_tests/test_filter_tank_sequence.py`
+  - Added firmware-level UART runtime probes covering:
+    - boot/safe-idle behavior
+    - filtering start
+    - settling/draining timing
+    - disturbance recovery
+    - complete state
+    - malformed input
+    - stale timeout
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py --strict-exit-code` ✅ PASS

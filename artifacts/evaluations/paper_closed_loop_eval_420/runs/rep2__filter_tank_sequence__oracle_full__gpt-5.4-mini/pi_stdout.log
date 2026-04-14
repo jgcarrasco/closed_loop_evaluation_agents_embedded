@@ -1,0 +1,15 @@
+Implemented the controller logic and added visible firmware-level self-tests.
+
+What’s done:
+- Boot-safe all-off behavior
+- Sensor validity tracking and state machine
+- Filtering / settling / draining transitions
+- Disturbance handling
+- Timeout/malformed input handling
+- UART end-to-end probe tests under `agent_tests/`
+
+Visible checks:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+
+I also submitted via `python3 tools/run_eval.py`, but the hidden host unit tests still report a mismatch on the settling/drain transition path.

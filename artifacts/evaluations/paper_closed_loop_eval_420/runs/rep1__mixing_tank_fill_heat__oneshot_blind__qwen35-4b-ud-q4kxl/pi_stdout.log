@@ -1,0 +1,18 @@
+The submission has been recorded. In `oneshot_blind` mode, hidden grader results are withheld as per the benchmark design. The task is complete with exactly one submission made.
+
+**Summary:**
+- Read all required files: START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, experiment.json
+- Implemented the fill-and-heat controller logic in `components/controller/controller.c` based on the requirements in docs/10_task.md
+- Submitted exactly once using `python3 tools/run_eval.py` as required by the `oneshot_blind` benchmark mode
+
+The implementation covers all acceptance criteria:
+1. Safe idle on boot (inlet closed, heater off)
+2. Stays safe-all-off until both sensors seen validly
+3. LEVEL < 60 → INLET OPEN, HEATER OFF
+4. LEVEL > 75 → INLET CLOSED
+5. LEVEL < 55 → HEATER OFF even at low temp
+6. 60-75 level with TEMP < 45 → INLET CLOSED, HEATER ON
+7. 45-47 range → holds previous safe heater state
+8. 47-48 range with rising temp → early HEATER OFF
+9. TEMP > 48 → INLET CLOSED, HEATER OFF
+10. Malformed/stale input → safe all-off

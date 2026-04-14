@@ -1,0 +1,21 @@
+Implemented the pressure vessel interlock controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+What’s covered:
+- boot safe vent behavior
+- waiting for both valid sensors before leaving safe vent
+- low/high pressure control
+- holding in the working band
+- door-open immediate safe vent
+- malformed input and sensor timeout handling
+- stale-sensor timeout after 1000 ms
+- actuator interlock guarantee
+
+Verification completed:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Also added a visible firmware-level UART end-to-end runtime probe in `agent_tests/test_pressure_vessel_interlock.py`.

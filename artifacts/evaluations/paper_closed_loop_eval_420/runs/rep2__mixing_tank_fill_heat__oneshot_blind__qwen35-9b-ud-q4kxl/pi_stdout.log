@@ -1,0 +1,18 @@
+The submission was recorded. In `oneshot_blind` mode, the hidden grader results are intentionally withheld, so I cannot see the actual pass/fail result. However, my implementation should be complete based on the requirements in `docs/10_task.md`.
+
+Let me verify my implementation once more by reviewing the key acceptance criteria:
+
+1. ✅ **Boot leaves inlet closed and heater off** - `controller_init()` calls `controller_set_safe_idle()`
+2. ✅ **Stays safe until both sensors seen validly** - Each input case checks `has_valid_temperature` and `has_valid_level` before applying control logic
+3. ✅ **LEVEL < 60 commands INLET OPEN and HEATER OFF** - In `controller_apply_control_policy()`, when level < 60, sets inlet_open=true and heater_on=false
+4. ✅ **Safe level with low temp (LEVEL 65, TEMP 40) commands INLET CLOSED and HEATER ON** - When 60 <= level <= 75 and temp < 45, sets inlet_open=false and heater_on=true
+5. ✅ **If LEVEL < 55, heater remains off** - The `controller_apply_control_policy()` starts with: if level < 55, heater_on = false
+6. ✅ **Near upper band (47-48), rising temp causes early HEATER OFF** - When temp >= 47 && temp <= 48 and current_temp > previous_temperature_c, sets heater_on=false
+7. ✅ **Malformed input/timeout forces SAFE_IDLE** - All error cases call `controller_set_safe_idle()`
+8. ✅ **Temperature ceiling at 51 C** - The controller turns heater off when temp > 48, which should keep it below 51
+
+The implementation looks correct. My final submission status is:
+
+**Status: SUBMISSION_RECORDED**
+
+The hidden grader results are withheld in `oneshot_blind` mode as per the benchmark design. The submission was recorded successfully with index 1 out of 1 allowed submission budget.

@@ -1,0 +1,18 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld as documented in the task instructions. 
+
+## Summary
+
+I have implemented the thermal chamber hysteresis controller according to the requirements in `docs/10_task.md`:
+
+**Key implementation details:**
+1. **Boot state**: Heater OFF (fail-safe) ✓
+2. **TEMP < 47**: Turn heater ON (state: HEATING) ✓
+3. **TEMP > 52**: Turn heater OFF (state: SAFE_OFF) ✓
+4. **47 <= TEMP < 50**: Hold previous safe actuator state (state: SAFE_OFF) ✓
+5. **50 <= TEMP <= 52, rising temp**: Turn heater OFF early (state: HOLDING) ✓
+6. **50 <= TEMP <= 52, not rising**: Hold previous safe actuator state (state: SAFE_OFF) ✓
+7. **Malformed input / sensor timeout**: Turn heater OFF ✓
+8. **Stale data > 1000ms**: Turn heater OFF ✓
+9. **Safety ceiling > 56°C**: Fail safe to heater OFF ✓
+
+The implementation is in `components/controller/controller.c` with the header in `components/controller/include/controller.h`. The submission was recorded successfully via `python3 tools/run_eval.py`.

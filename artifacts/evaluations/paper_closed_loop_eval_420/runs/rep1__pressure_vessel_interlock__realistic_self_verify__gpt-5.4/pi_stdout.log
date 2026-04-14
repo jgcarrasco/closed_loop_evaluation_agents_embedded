@@ -1,0 +1,34 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+What changed:
+- Added full pressure/door interlock policy
+- Tracks independent sensor freshness
+- Fails safe on malformed input and timeout
+- Enforces `> 1000 ms` staleness cutoff
+- Preserves previous safe output in the `40..60` band
+- Prevents `COMPRESSOR ON` + `VENT OPEN`
+
+Visible verification added in:
+
+- `agent_tests/test_pressure_vessel.py`
+
+Coverage includes:
+- boot safe state
+- wait-for-both-sensors behavior
+- low-pressure pressurizing
+- high-pressure relieving
+- holding-band output preservation
+- immediate safe vent on door open
+- malformed input and stale-sensor timeout behavior
+- invariant that compressor-on/vent-open is never commanded
+- firmware-level UART end-to-end cycle probe
+
+Ran successfully:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Latest hidden submission feedback:
+- `artifacts/latest/feedback.md` → submission recorded; hidden grader details withheld in this mode.

@@ -1,0 +1,33 @@
+The submission was recorded (index 2). Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Mixing Tank Fill-and-Heat Controller according to the task specification in `docs/10_task.md`.
+
+### Controller Implementation (`components/controller/controller.c`)
+
+The controller implements the following control policy:
+
+1. **Boot state**: Inlet closed, heater off (SAFE_IDLE)
+2. **Sensor validity requirement**: Stays in SAFE_IDLE until both temperature and level sensors have valid readings
+3. **Low level (< 60)**: Opens inlet, keeps heater off (FILLING state)
+4. **Safe level (60-75)**: 
+   - If temp < 45°C: Closes inlet, turns heater on (HEATING state)
+   - If 45-47°C: Holds previous heater state (HOLDING state)
+   - If 47-48°C and rising: Turns heater off early (HOLDING state)
+   - If > 48°C: Turns heater off (SAFE_IDLE state)
+5. **High level (> 75)**: Same temperature-based heating policy as safe level range
+6. **Safety guard**: Heater always off when level < 55%
+7. **Timeout handling**: Goes to SAFE_IDLE if sensors become stale (>1000ms) or receive invalid input
+
+### Self-Verification Tests (`agent_tests/test_controller.py`)
+
+Created comprehensive tests covering all acceptance criteria:
+- Unit tests for controller logic
+- Firmware-level end-to-end runtime probe through UART that exercises the full fill-then-heat sequence
+- Tests for rising temperature early-off behavior
+- Tests for sensor timeout and malformed input handling
+
+### Build Status
+- All visible tests pass (8/8)
+- Clean build with no warnings

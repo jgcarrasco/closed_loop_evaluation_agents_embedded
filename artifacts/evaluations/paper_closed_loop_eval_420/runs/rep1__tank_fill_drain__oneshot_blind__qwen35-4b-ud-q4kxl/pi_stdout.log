@@ -1,0 +1,21 @@
+The submission has been recorded. This is a **oneshot_blind** benchmark mode, which means:
+- One submission only (submission index: 1, budget: 1)
+- Hidden grader results are withheld
+- No public self-verification helpers available
+
+Let me verify my implementation is correct by reviewing the requirements one more time against what I implemented:
+
+**Requirements from docs/10_task.md:**
+1. ✅ **Default to PUMP OFF on boot** - `controller_init()` calls `controller_set_safe_off()` which sets `pump_on = false` and `state = CONTROLLER_STATE_SAFE_OFF`
+
+2. ✅ **Turn pump ON when LEVEL < 30** - In the `CONTROLLER_INPUT_LEVEL` case, if `input.level < CONTROLLER_LEVEL_LOW_THRESHOLD` (30), we set `pump_on = true` and `state = CONTROLLER_STATE_PUMPING`
+
+3. ✅ **Turn pump OFF when LEVEL > 80** - If `input.level > CONTROLLER_LEVEL_HIGH_THRESHOLD` (80), we set `pump_on = false` and `state = CONTROLLER_STATE_SAFE_OFF`
+
+4. ✅ **Hold previous safe output when 30 <= LEVEL <= 80** - In the else branch of the level check, we don't modify `pump_on` or `state`, preserving the previous value
+
+5. ✅ **Fail safe to PUMP OFF on malformed input or timeout** - For `CONTROLLER_INPUT_SENSOR_TIMEOUT`, `CONTROLLER_INPUT_INVALID_LEVEL`, and stale data in `CONTROLLER_INPUT_NONE/default`, we call `controller_set_safe_off()` which sets `pump_on = false`
+
+6. ✅ **Timeout handling for >1000ms** - We check elapsed time against `CONTROLLER_SENSOR_TIMEOUT_MS` (1000U) and trigger timeout behavior if exceeded
+
+The implementation is complete and submitted. The benchmark mode (`oneshot_blind`) intentionally withholds the hidden grader results, so I cannot see the actual evaluation feedback.

@@ -1,0 +1,13 @@
+The submission has been recorded. Since this is `oneshot_blind` mode, the hidden grader results are withheld. The task is complete with one submission made as required.
+
+**Final Submission Status:**
+- **Status:** SUBMISSION_RECORDED
+- **Benchmark mode:** oneshot_blind
+- **Submission index:** 1/1 (budget exhausted)
+
+The controller implementation:
+1. Starts with pump OFF on boot ✓
+2. Turns pump ON when LEVEL < 30 ✓
+3. Turns pump OFF when LEVEL > 80 ✓
+4. Holds previous state when 30 <= LEVEL <= 80 ✓
+5. Fails safe to PUMP OFF on malformed input or timeout ✓

@@ -1,0 +1,115 @@
+{
+  "agent_name": "pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/filter_tank_sequence__ci_red_green__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 10,
+    "first_submission_at_utc": "2026-03-29T17:57:04.270000Z",
+    "hidden_eval_calls": 8,
+    "iterations": 13,
+    "time_to_first_submission_seconds": 329.134,
+    "wall_clock_seconds": 1271.7598589151166
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T175704Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T175948Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T180259Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T180445Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T180707Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T180913Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T181103Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T181214Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T181214Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-ci_red_green-gpt-5.4-mini-20260329T155511Z/20260329T181214Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 2917376,
+    "cache_write_tokens": 0,
+    "completion_tokens": 55756,
+    "completion_tokens_after_first_submission": 35932,
+    "completion_tokens_before_first_submission": 19824,
+    "cost": 0.0,
+    "prompt_tokens": 144957,
+    "prompt_tokens_after_first_submission": 82987,
+    "prompt_tokens_before_first_submission": 61970,
+    "total_tokens": 3118089,
+    "total_tokens_after_first_submission": 2720391,
+    "total_tokens_before_first_submission": 397698
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__ci_red_green__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 8,
+    "false_green_numerator": 8,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 3,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_filter_tank_sequence.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 13,
+    "self_test_runs": 13,
+    "self_tests_written": 3
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_filter_tank_sequence.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 290,
+    "lines_changed_total": 301,
+    "lines_deleted": 11,
+    "tool_call_breakdown": {
+      "bash": 31,
+      "edit": 16,
+      "find": 5,
+      "grep": 6,
+      "ls": 1,
+      "read": 16,
+      "write": 2
+    },
+    "tool_call_count": 77
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/filter_tank_sequence__ci_red_green__gpt-5.4-mini/workspace"
+}

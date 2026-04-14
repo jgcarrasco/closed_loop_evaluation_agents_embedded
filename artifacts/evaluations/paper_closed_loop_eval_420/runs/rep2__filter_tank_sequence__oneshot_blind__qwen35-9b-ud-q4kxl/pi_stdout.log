@@ -1,0 +1,32 @@
+The implementation is complete. Let me summarize what was implemented:
+
+## Summary
+
+I implemented the Filter Tank Sequence Controller in `components/controller/controller.c` following the requirements in `docs/10_task.md`:
+
+### Key Implementation Details:
+
+1. **State Machine**: Implemented a finite state machine with states: SAFE_IDLE → FILTERING → SETTLING → DRAINING → COMPLETE
+
+2. **Boot Behavior**: Initializes to SAFE_IDLE (filter OFF, drain CLOSED)
+
+3. **Sensor Validation**: 
+   - Requires both turbidity and level sensors valid before leaving SAFE_IDLE
+   - Tracks sensor freshness; goes to SAFE_IDLE if either sensor stale > 1000ms
+
+4. **Control Policy**:
+   - FILTERING: Filter ON when TURB > 35 AND LEVEL >= 40, tracks clear streak (TURB <= 35)
+   - SETTLING: After 3 consecutive clear samples with LEVEL >= 40, filter OFF, drain CLOSED for 400ms
+   - DRAINING: Opens drain after settling period + latest clear sample + LEVEL >= 40
+   - COMPLETE: When LEVEL < 15
+
+5. **Disturbance Handling**:
+   - SETTLING: TURB > 40 resets streak, returns to FILTERING
+   - DRAINING: TURB > 50 AND LEVEL >= 40 closes drain, restarts filter, returns to FILTERING
+
+6. **Safety**: Malformed input or timeout forces SAFE_IDLE state
+
+### Submission Status:
+- **Status**: SUBMISSION_RECORDED
+- **Benchmark mode**: oneshot_blind (hidden grader results withheld by design)
+- **Submission index**: 1 of 1 budget used

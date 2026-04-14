@@ -1,0 +1,25 @@
+Now I have more detailed feedback! The new assertion errors show:
+- Line 65: expects CONTROLLER_STATE_PRESSURIZING but got something else
+- Line 90: expects CONTROLLER_STATE_RELIEVING but got something else
+- Line 121: expects CONTROLLER_STATE_HOLDING but got something else
+
+This gives me more insight into what the test is checking. Let me think about what sequence of inputs would cause these assertions to fail.
+
+The test names are:
+1. "low pressure with closed door turns compressor on" - FAIL
+2. "high pressure with closed door opens vent" - FAIL
+3. "mid-band holds prior pressurizing state" - FAIL
+
+These correspond to lines 65, 90, and 121 respectively. So:
+- Line 65: After some input related to "low pressure with closed door", expects PRESSURIZING state
+- Line 90: After some input related to "high pressure with closed door", expects RELIEVING state
+- Line 121: After some input related to "mid-band holds prior pressurizing state", expects HOLDING state
+
+Maybe the test is checking that when PRESSURE comes in and the door is closed, we should act immediately. Let me try a different approach - maybe the issue is that I'm not updating the internal state correctly when DOOR_CLOSED comes in, so when PRESSURE comes in, `previous_compressor_on` and `previous_vent_open` are wrong.
+
+Actually, let me re-examine my DOOR_CLOSED case. When DOOR_CLOSED comes in:
+- I set has_valid_door=true, door_closed=true
+- I don't change compressor_on or vent_open (they stay at their previous values)
+- But the output should reflect the current state
+
+Wait, I think I see the issue! When DOOR_CLOSED comes in and we have valid pressure, I'm not acting. So the output is just copying `previous_compressor_on` and `previous_vent_open

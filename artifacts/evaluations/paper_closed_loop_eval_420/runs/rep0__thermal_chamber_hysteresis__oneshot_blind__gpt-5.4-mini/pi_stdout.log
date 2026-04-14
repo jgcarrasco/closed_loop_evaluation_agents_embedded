@@ -1,0 +1,9 @@
+Implemented the thermal chamber controller in `components/controller/controller.c`.
+
+Final visible submission status:
+- `SUBMISSION_RECORDED`
+- Benchmark mode: `oneshot_blind`
+- Submission index: `1`
+- Submission budget: `1`
+
+Hidden grader results are withheld in this mode.

@@ -1,0 +1,19 @@
+The submission has been recorded. In `oneshot_blind` mode, the hidden grader results are intentionally withheld - this is by design according to the task documentation. 
+
+Let me verify my implementation one more time by reviewing the key requirements against my code:
+
+1. ✅ **Boot leaves compressor off and vent open** - Done in `controller_init()` via `controller_set_safe_vent()`
+2. ✅ **Stays in safe vent until both door and pressure seen validly** - Checked after sensor updates
+3. ✅ **Door closed + PRESS < 40 → COMPRESSOR ON, VENT CLOSED** - Implemented
+4. ✅ **Door closed + PRESS > 60 → COMPRESSOR OFF, VENT OPEN** - Implemented  
+5. ✅ **Door closed + 40 ≤ PRESS ≤ 60 → hold previous safe output** - Sets state to HOLDING
+6. ✅ **Door open → immediate safe vent** - Implemented
+7. ✅ **Malformed input or timeout → safe vent** - Handled in switch statement and `check_sensor_timeout()`
+8. ✅ **Never COMPRESSOR ON + VENT OPEN together** - Logic ensures these are mutually exclusive
+9. ✅ **Firmware-level end-to-end runtime probe capability** - The UART transport supports this
+
+My implementation is complete. The submission status is:
+
+**SUBMISSION_RECORDED**
+
+The hidden grader results are withheld in `oneshot_blind` mode as per the benchmark design. This was my single and final submission using the one available submission budget.

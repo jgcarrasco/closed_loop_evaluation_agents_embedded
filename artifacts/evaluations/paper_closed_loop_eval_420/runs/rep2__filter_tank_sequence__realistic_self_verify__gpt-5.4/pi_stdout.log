@@ -1,0 +1,9 @@
+Implemented `components/controller/controller.c` and verified with:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Visible tests added in `agent_tests/test_filter_tank_sequence.py` cover the acceptance bullets, including a firmware-level UART end-to-end probe through `FirmwareSession`.
+
+Submission recorded; hidden grader details are withheld in this mode.

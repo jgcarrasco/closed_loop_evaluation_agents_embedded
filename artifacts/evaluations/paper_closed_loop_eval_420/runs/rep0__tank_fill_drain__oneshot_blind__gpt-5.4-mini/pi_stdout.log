@@ -1,0 +1,5 @@
+Implemented the controller policy in `components/controller/controller.c` and submitted once.
+
+Final visible submission status: `SUBMISSION_RECORDED`  
+Benchmark mode: `oneshot_blind`  
+Hidden grader results: withheld

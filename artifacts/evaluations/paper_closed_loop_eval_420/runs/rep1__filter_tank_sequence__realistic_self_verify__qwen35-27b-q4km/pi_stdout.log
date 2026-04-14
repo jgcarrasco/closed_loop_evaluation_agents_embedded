@@ -1,0 +1,39 @@
+The implementation looks complete. Let me summarize what was implemented:
+
+## Summary
+
+I implemented a Filter Tank Sequence Controller for ESP32 firmware that manages the clarification, settling, and draining of a batch tank. The controller implements the following state machine:
+
+### States:
+1. **SAFE_IDLE** - Fail-safe all-off state (filter off, drain closed)
+2. **FILTERING** - Filter is actively reducing turbidity (filter on, drain closed)
+3. **SETTLING** - Waiting for settle timer with filter off and drain closed
+4. **DRAINING** - Drain is open after clear-and-settle conditions satisfied
+5. **COMPLETE** - Level below minimum threshold
+
+### Control Logic:
+- Boot starts in SAFE_IDLE with filter off and drain closed
+- Stays in SAFE_IDLE until both turbidity and level sensors are valid
+- If LEVEL < 15 → COMPLETE state
+- If TURB > 35 and LEVEL >= 40 → FILTER ON, enter FILTERING
+- Clear streak: TURB <= 35 increments it, TURB > 35 resets to 0
+- When clear_streak reaches 3 with LEVEL >= 40 → FILTER OFF, enter SETTLING
+- During SETTLING, if TURB > 40 → reset streak, return to FILTERING
+- After 400ms settling with latest TURB <= 35 and LEVEL >= 40 → DRAIN OPEN, enter DRAINING
+- During DRAINING, if TURB > 50 and LEVEL >= 40 → close drain, turn filter on, reset streak, return to FILTERING
+- Sensor timeout (>1000ms) or malformed input → SAFE_IDLE
+
+### Tests:
+All 10 tests pass, covering:
+1. Boot leaves filter off and drain closed
+2. Controller stays in SAFE_IDLE until both sensors valid
+3. Cloudy input with sufficient level starts FILTERING
+4. Three clear samples enter SETTLING
+5. Disturbance during SETTLING returns to FILTERING
+6. No early drain before 400ms settling
+7. Disturbance during DRAINING closes drain and restarts filtering
+8. Low level (<15) enters COMPLETE
+9. Sensor timeout forces safe state
+10. End-to-end firmware probe through UART
+
+The submission has been recorded with `python3 tools/run_eval.py`.

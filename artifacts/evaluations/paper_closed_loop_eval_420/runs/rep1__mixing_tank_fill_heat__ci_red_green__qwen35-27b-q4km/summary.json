@@ -1,0 +1,116 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 8,
+    "first_submission_at_utc": "2026-03-28T04:56:32.837000Z",
+    "hidden_eval_calls": 11,
+    "iterations": 27,
+    "time_to_first_submission_seconds": 1302.982,
+    "wall_clock_seconds": 2698.988550676033
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T045632Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T050005Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T050520Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T050815Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T050918Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051111Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051213Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051325Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051355Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051653Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051928Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051928Z",
+    "failure_category": "qemu_smoke",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-ci_red_green-qwen35-27b-q4km-20260327T185742Z/20260328T051928Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "QEMU_SMOKE_FAILED"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-27b-q4km",
+    "model": "qwen35-27b-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 49093,
+    "completion_tokens_after_first_submission": 24108,
+    "completion_tokens_before_first_submission": 24985,
+    "cost": 0.0,
+    "prompt_tokens": 5463887,
+    "prompt_tokens_after_first_submission": 3681080,
+    "prompt_tokens_before_first_submission": 1782807,
+    "total_tokens": 5512980,
+    "total_tokens_after_first_submission": 3705188,
+    "total_tokens_before_first_submission": 1807792
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-27b-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 11,
+    "false_green_numerator": 11,
+    "false_green_rate": 1.0,
+    "runtime_probe_case_count": 9,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 10,
+    "self_test_runs": 27,
+    "self_tests_written": 10
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 412,
+    "lines_changed_total": 418,
+    "lines_deleted": 6,
+    "tool_call_breakdown": {
+      "bash": 49,
+      "edit": 19,
+      "ls": 7,
+      "read": 20,
+      "write": 4
+    },
+    "tool_call_count": 99
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/mixing_tank_fill_heat__ci_red_green__qwen35-27b-q4km/workspace"
+}

@@ -1,0 +1,29 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests in:
+
+- `agent_tests/test_controller.py`
+
+Validation performed:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py --strict-exit-code`
+
+Result:
+
+- Hidden eval: PASS
+
+Behavior covered visibly:
+
+- boot safe-off
+- waits for both valid sensors
+- low-level fill with heater off
+- safe-level heating
+- heater off below level 55
+- early heater-off on rising 47–48 C
+- malformed input / timeout safe-off
+- simulated closed-loop ceiling at or below 51 C
+- firmware-level UART end-to-end probe through QEMU

@@ -1,0 +1,6 @@
+I've made multiple submissions but there's no feedback available in self-verify mode. The controller logic looks correct according to the spec, but I'm unable to debug why it's not working correctly in practice.
+
+Let me try one final debugging approach - let me check if maybe there's an issue with how I'm tracking sensor validity between calls. Maybe when we receive "SENSE LEVEL 50", the level is set, but then something resets has_valid_level?
+
+Actually, I just realized something! The fact that we're seeing "STATE SAFE_IDLE" multiple times suggests that the controller IS being called multiple times (from polls), but it's always returning SAFE_IDLE. This means that either:
+1. `controller_compute

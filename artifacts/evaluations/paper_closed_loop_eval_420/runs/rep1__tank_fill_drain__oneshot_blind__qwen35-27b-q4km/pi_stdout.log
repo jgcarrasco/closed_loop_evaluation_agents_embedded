@@ -1,0 +1,17 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld from view. The final visible submission status is:
+
+**Status: SUBMISSION_RECORDED**
+
+Summary of what was implemented in `components/controller/controller.c`:
+
+1. **Boot behavior**: Default to PUMP OFF (via `controller_init()` calling `controller_set_safe_off()`)
+
+2. **Low level handling** (`LEVEL < 30`): Turns pump ON and sets state to PUMPING
+
+3. **High level handling** (`LEVEL > 80`): Turns pump OFF and sets state to SAFE_OFF
+
+4. **Mid-band handling** (`30 <= LEVEL <= 80`): Holds previous safe output (PUMP stays ON if was pumping, stays OFF if was off), sets state to HOLDING
+
+5. **Timeout handling**: When `CONTROLLER_INPUT_NONE` is received and more than 1000ms has elapsed since last valid sensor, fails safe to PUMP OFF
+
+6. **Malformed/invalid input**: Forces PUMP OFF (fail safe) via `CONTROLLER_INPUT_INVALID_LEVEL` or `CONTROLLER_INPUT_SENSOR_TIMEOUT`

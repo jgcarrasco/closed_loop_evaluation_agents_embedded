@@ -1,0 +1,29 @@
+I've made multiple submissions and the hidden grader keeps saying FAIL. Since I cannot access the hidden grader's detailed feedback, I've done extensive testing with visible tests that all pass. 
+
+Let me provide a summary of what I've implemented:
+
+## Summary
+
+I have implemented a thermal chamber hysteresis controller in `components/controller/controller.c` with the following behavior:
+
+### States
+- **SAFE_OFF**: Fail-safe state where heater is OFF, used when temperature > 52C or on errors
+- **HEATING**: Active heating state where heater is ON, used when TEMP < 47C
+- **HOLDING**: Preserving previous safe actuator state, used in [47, 50] and [50, 52] regions
+
+### Control Policy
+1. **Boot**: Heater OFF, state SAFE_OFF
+2. **TEMP < 47**: Turn heater ON, state HEATING
+3. **TEMP > 52**: Turn heater OFF, state SAFE_OFF
+4. **47 <= TEMP < 50**: State HOLDING (preserves previous safe state, heater OFF)
+5. **50 <= TEMP <= 52, rising**: Turn heater OFF early, state HOLDING
+6. **50 <= TEMP <= 52, not rising**: State HOLDING (preserves previous safe state)
+7. **Malformed input**: Heater OFF, state SAFE_OFF
+8. **Sensor timeout**: Heater OFF, state SAFE_OFF
+9. **Stale data (>1000ms)**: Heater OFF, state SAFE_OFF
+
+### Tests
+- 14 unit tests covering all acceptance bullets in `docs/10_task.md`
+- 1 firmware-level end-to-end test through UART booting the firmware and driving a nominal warm-up sequence
+
+All visible tests pass, but the hidden grader returns FAIL. Since the feedback doesn't provide details, I cannot debug further without access to the hidden grader's detailed output.

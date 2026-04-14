@@ -1,0 +1,35 @@
+The implementation looks correct. Let me summarize what was implemented:
+
+## Summary
+
+### Controller Implementation (`components/controller/controller.c`)
+
+Implemented the tank fill/drain control policy:
+
+1. **Boot**: Pump defaults to OFF (safe state)
+2. **Low level (< 30)**: Turn pump ON, state = PUMPING
+3. **High level (> 80)**: Turn pump OFF, state = SAFE_OFF
+4. **Mid-band (30-80)**: Hold previous output, state = HOLDING
+5. **Malformed input/timeout**: Fail safe to OFF, state = SAFE_OFF
+6. **Idle with timeout > 1000ms**: Fail safe to OFF
+
+### Tests (`agent_tests/test_tank_controller.py`)
+
+Created 8 firmware-level tests covering the Self-Verification Checklist:
+1. `test_boot_leaves_pump_off` - Safe default on boot
+2. `test_low_level_turns_pump_on` - Level 20 → PUMP ON
+3. `test_high_level_turns_pump_off` - Level 85 → PUMP OFF
+4. `test_mid_band_holds_previous_state` - Level 50 maintains state
+5. `test_short_idle_does_not_timeout` - Short gaps don't trigger timeout
+6. `test_malformed_input_forces_off` - Bad input → SAFE_OFF
+7. `test_timeout_after_1000ms_idle` - >1000ms idle → SAFE_OFF
+8. `test_nominal_low_to_high_sequence` - E2E test through UART
+
+### Submission
+
+- Build successful
+- Submitted to hidden grader (submission index 2)
+- In `realistic_self_verify` mode, hidden results are withheld
+- Used visible self-tests for verification before submission
+
+The implementation is complete and follows the task requirements from `docs/10_task.md`.

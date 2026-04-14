@@ -1,0 +1,25 @@
+Implemented the pressure-vessel controller policy in:
+
+- `components/controller/controller.c`
+
+Added visible self-verification coverage in:
+
+- `agent_tests/test_pressure_vessel_controller.py`
+
+What’s covered:
+- boot safe vent behavior
+- gating until both sensors have been seen validly
+- low / high / in-band control
+- preserving previous output in-band
+- immediate safe vent on door open
+- malformed input handling
+- stale sensor timeout handling
+- no compressor-on + vent-open combination
+- firmware-level UART end-to-end nominal cycle probe
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` submitted ✅
+
+Hidden grader feedback is withheld in this mode, and the latest visible feedback was recorded in `artifacts/latest/feedback.md`.

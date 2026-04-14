@@ -1,0 +1,21 @@
+Implemented the mixing tank fill-and-heat controller and added visible UART runtime probes.
+
+Changed:
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+- `agent_tests/test_controller.py`
+
+What’s covered:
+- boot-safe all-off state
+- wait until both sensors are valid
+- low-level fill/open behavior
+- safe-level heating
+- low-fill heater guard
+- early heater-off near the upper band
+- malformed input and timeout safe shutdown
+- firmware-level end-to-end UART probe
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS

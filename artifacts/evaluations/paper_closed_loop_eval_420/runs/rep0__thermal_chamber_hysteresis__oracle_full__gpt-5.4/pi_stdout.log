@@ -1,0 +1,31 @@
+Implemented the thermal chamber hysteresis controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-tests in:
+
+- `agent_tests/test_controller_behavior.py`
+
+What changed:
+- Boot-safe heater-off initialization
+- Proper banded hysteresis behavior:
+  - `<47` → `HEATING` / heater on
+  - `>52` → `SAFE_OFF` / heater off
+  - `47..49` → `HOLDING` / preserve actuator state
+  - `50..52` rising → early heater off in `HOLDING`
+  - `50..52` not rising → preserve actuator state in `HOLDING`
+- Fail-safe off on:
+  - malformed input
+  - explicit sensor timeout
+  - stale valid sensor gap `>1000 ms`
+- No false timeout on ordinary one-step sensor gaps
+
+Visible verification completed:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Hidden eval result:
+- All stages passed
+- Integration passed all scenarios
+- Hard limit respected (`56 C` ceiling not exceeded)

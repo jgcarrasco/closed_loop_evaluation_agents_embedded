@@ -1,0 +1,20 @@
+Implemented `components/controller/controller.c` to enforce the pressure-vessel interlock policy:
+
+- boot-safe vent state
+- wait for both valid sensor streams
+- low/high pressure actions
+- in-band hold behavior
+- immediate door-open safe venting
+- malformed input handling
+- stale-sensor timeout handling
+- invariant: never compressor on with vent open
+
+Added visible firmware-level UART probes in:
+
+- `agent_tests/test_pressure_vessel_controller.py`
+
+Verification run:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` → `PASS` ✅

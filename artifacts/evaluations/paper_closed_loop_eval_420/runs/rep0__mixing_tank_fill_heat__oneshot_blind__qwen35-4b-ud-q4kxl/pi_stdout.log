@@ -1,0 +1,17 @@
+The submission has been recorded successfully. This is a one-shot blind mode, so the hidden grader results are withheld as expected per the task instructions. The implementation has been completed and submitted.
+
+**Summary of Implementation:**
+
+I implemented the mixing tank fill-and-heat controller in `components/controller/controller.c` with the following behavior:
+
+1. **Safe Idle State**: On boot, inlet closed and heater off
+2. **Sensor Validity**: Stays in safe all-off until both temperature and level sensors have been seen validly; if either becomes stale (timeout/invalid), goes to safe all-off
+3. **Fill Phase** (LEVEL < 60): Opens inlet, keeps heater off
+4. **High Level** (LEVEL > 75): Closes inlet, heater off
+5. **Heating Phase** (60 ≤ LEVEL ≤ 75 and TEMP < 45): Closes inlet, turns heater on
+6. **Holding Phase** (45 ≤ TEMP < 47): Closes inlet, preserves previous heater state
+7. **Early Off** (47 ≤ TEMP ≤ 48): Turns heater off early if temperature is rising; otherwise holds previous safe heater state
+8. **High Temp** (TEMP > 48): Closes inlet and turns heater off
+9. **Heater Guard**: If LEVEL < 55, heater remains off regardless of temperature
+
+The submission was recorded successfully for the one-shot blind benchmark mode.

@@ -1,0 +1,107 @@
+{
+  "agent_name": "pi-pressure_vessel_interlock-realistic_self_verify-gpt-5.4-mini-20260324T125039Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/baseline",
+  "efficiency": {
+    "build_attempts": 2,
+    "first_submission_at_utc": "2026-03-24T16:44:49.819000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 2,
+    "time_to_first_submission_seconds": 325.953,
+    "wall_clock_seconds": 366.15077363094315
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T164449Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T164449Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-realistic_self_verify-gpt-5.4-mini-20260324T125039Z/20260324T164449Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "realistic_self_verify",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4-mini",
+    "model": "gpt-5.4-mini",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 605184,
+    "cache_write_tokens": 0,
+    "completion_tokens": 20188,
+    "completion_tokens_after_first_submission": 262,
+    "completion_tokens_before_first_submission": 19926,
+    "cost": 0.0,
+    "prompt_tokens": 37748,
+    "prompt_tokens_after_first_submission": 896,
+    "prompt_tokens_before_first_submission": 36852,
+    "total_tokens": 663120,
+    "total_tokens_after_first_submission": 91270,
+    "total_tokens_before_first_submission": 571850
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4-mini",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Treat this as a realistic engineering setup. Use the visible build loop and write your own tests when the workspace exposes them. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before your first hidden submission. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. Hidden grader results are withheld in this mode, so rely on your own verification and submit with python3 tools/run_eval.py when appropriate."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep0__pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/pi_stdout.log",
+  "task_id": "pressure_vessel_interlock",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 0,
+    "false_green_rate": 0.0,
+    "runtime_probe_case_count": 3,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_pressure_vessel_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 2,
+    "self_test_runs": 2,
+    "self_tests_written": 3
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_pressure_vessel_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 187,
+    "lines_changed_total": 195,
+    "lines_deleted": 8,
+    "tool_call_breakdown": {
+      "bash": 5,
+      "edit": 6,
+      "find": 9,
+      "grep": 6,
+      "ls": 1,
+      "read": 18,
+      "write": 1
+    },
+    "tool_call_count": 46
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260324T125039Z/pressure_vessel_interlock__realistic_self_verify__gpt-5.4-mini/workspace"
+}

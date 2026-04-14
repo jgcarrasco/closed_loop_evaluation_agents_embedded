@@ -1,0 +1,29 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Key behaviors added:
+
+- safe boot state
+- independent turbidity/level freshness tracking
+- stale-sensor fail-safe after `> 1000 ms`
+- clear-streak counting on valid turbidity samples only
+- transitions for `FILTERING`, `SETTLING`, `DRAINING`, and `COMPLETE`
+- disturbance recovery during settling/draining
+- safe handling for malformed input and timeout
+
+Light visible check run:
+
+- `gcc -std=c99 -Wall -Werror -Icomponents/controller/include -fsyntax-only components/controller/controller.c`
+
+Final submission run:
+
+- `python3 tools/run_eval.py`
+
+Final visible submission status:
+
+- `SUBMISSION_RECORDED`
+- benchmark mode: `oneshot_blind`
+- submission index: `1 / 1`
+
+Visible feedback says hidden grader results are withheld in this mode.

@@ -1,0 +1,31 @@
+The submission is complete. Here's the final status:
+
+## Final Submission Status
+
+**Submission Recorded**: ✅
+
+- **Benchmark Mode**: `oneshot_blind`
+- **Submission Index**: 1/1 (budget exhausted)
+- **Status**: SUBMISSION_RECORDED
+
+### Implementation Summary
+
+I implemented the complete filter tank sequence controller in `components/controller/controller.c`:
+
+1. **State Machine**: Implemented all states (`SAFE_IDLE`, `FILTERING`, `SETTLING`, `DRAINING`, `COMPLETE`)
+
+2. **Sensor Freshness**: Added `sensors_fresh()` to check both turbidity and level sensors are valid within 1000ms timeout
+
+3. **Control Logic**:
+   - Boot: filter off, drain closed
+   - `LEVEL < 15`: stay in COMPLETE with filter off, drain closed
+   - `TURB > 35` and `LEVEL >= 40`: enter FILTERING, turn filter on
+   - Clear streak counter (valid `TURB <= 35` increments, `TURB > 35` resets)
+   - After 3 clear samples at `LEVEL >= 40`: enter SETTLING
+   - During SETTLING: `TURB > 40` disturbance resets to FILTERING
+   - After 400ms settling with clear turbidity and sufficient level: enter DRAINING
+   - During DRAINING: `TURB > 50` disturbance closes drain, restarts filtering
+
+4. **Timeout Handling**: Malformed input or sensor timeout (>1000ms) forces safe all-off state
+
+The submission has been recorded in the hidden grader for evaluation.

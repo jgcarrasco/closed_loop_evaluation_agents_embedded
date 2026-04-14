@@ -1,0 +1,169 @@
+{
+  "experiment_id": "minimal_qemu_demo",
+  "task_id": "pressure_vessel_interlock",
+  "task_name": "Pressure Vessel Interlock Controller",
+  "task_version": "v1",
+  "editable_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h"
+  ],
+  "machine": {
+    "name": "esp32_qemu_pressure_demo",
+    "controller": "ESP32 firmware running in QEMU",
+    "interface": {
+      "transport": "uart",
+      "port": "UART0",
+      "baudrate": 115200,
+      "protocol": "newline-delimited ASCII"
+    }
+  },
+  "sensors": [
+    {
+      "name": "pressure",
+      "type": "integer",
+      "units": "kPa",
+      "range": [
+        0,
+        120
+      ]
+    },
+    {
+      "name": "door",
+      "type": "binary",
+      "units": "state",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "name": "compressor",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "OFF",
+      "range": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "vent",
+      "type": "binary",
+      "units": "state",
+      "safe_state": "OPEN",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "timing": {
+    "control_period_ms": 50,
+    "sensor_period_ms": 100,
+    "episode_duration_s": 4.0,
+    "sensor_timeout_ms": 1000,
+    "notes": [
+      "Pressure and door frames are separate ASCII lines. A valid pressure frame refreshes only pressure freshness and a valid door frame refreshes only door freshness.",
+      "Stay in the safe vent-open state until both sensors have been observed validly.",
+      "A controller step can happen between valid sensor frames, so idle input is not itself a fault."
+    ]
+  },
+  "plant": {
+    "tick_ms": 100,
+    "compressor_gain_kpa": 10,
+    "vent_relief_kpa": 14,
+    "natural_leak_kpa": 2,
+    "door_relief_kpa": 10,
+    "min_pressure_kpa": 0,
+    "max_pressure_kpa": 120,
+    "notes": [
+      "Pressure rises only when the vessel is sealed, the compressor is on, and the vent is closed.",
+      "Opening the vent or opening the door rapidly relieves pressure."
+    ]
+  },
+  "initial_state": {
+    "pressure_kpa": 20,
+    "door": "CLOSED",
+    "compressor": "OFF",
+    "vent": "OPEN"
+  },
+  "task": {
+    "objective": "Keep a sealed vessel inside the working pressure band while forcing a vented safe state whenever the door is open or either sensor becomes stale.",
+    "target_band": {
+      "min": 40,
+      "max": 60,
+      "hold_previous_state": true
+    },
+    "interface": [
+      "Controller inputs are CONTROLLER_INPUT_PRESSURE, CONTROLLER_INPUT_DOOR_OPEN, CONTROLLER_INPUT_DOOR_CLOSED, CONTROLLER_INPUT_SENSOR_TIMEOUT, CONTROLLER_INPUT_INVALID_PRESSURE, CONTROLLER_INPUT_INVALID_DOOR, and CONTROLLER_INPUT_NONE.",
+      "Sensor frames use `SENSE PRESS <integer>` and `SENSE DOOR OPEN|CLOSED`.",
+      "Actuator frames must be `ACT COMPRESSOR ON|OFF` and `ACT VENT OPEN|CLOSED`."
+    ],
+    "policy": [
+      "On boot, command COMPRESSOR OFF and VENT OPEN.",
+      "Until both sensors have been seen validly, stay in the safe vent-open state.",
+      "If the door is open, command COMPRESSOR OFF and VENT OPEN.",
+      "If the door is closed and PRESS < 40, command COMPRESSOR ON and VENT CLOSED.",
+      "If the door is closed and PRESS > 60, command COMPRESSOR OFF and VENT OPEN.",
+      "If the door is closed and 40 <= PRESS <= 60, hold the previous safe actuator state.",
+      "On malformed sensor input, command COMPRESSOR OFF and VENT OPEN.",
+      "On explicit sensor timeout input, command COMPRESSOR OFF and VENT OPEN.",
+      "If either sensor becomes stale for more than 1000 ms, command COMPRESSOR OFF and VENT OPEN.",
+      "Never command COMPRESSOR ON and VENT OPEN at the same time."
+    ],
+    "decision_summary": [
+      "Missing any fresh valid sensor: safe vented state",
+      "Door open: compressor off, vent open, state SAFE_VENT",
+      "Door closed and PRESS < 40: compressor on, vent closed, state PRESSURIZING",
+      "Door closed and 40 <= PRESS <= 60: preserve the previous safe output, state HOLDING",
+      "Door closed and PRESS > 60: compressor off, vent open, state RELIEVING"
+    ],
+    "state_model": [
+      "SAFE_VENT: fail-safe vent-open state",
+      "PRESSURIZING: actively raising pressure with the vessel sealed",
+      "HOLDING: inside the working band while preserving the previous safe output",
+      "RELIEVING: venting pressure above the working band"
+    ]
+  },
+  "constraints": [
+    "Keep the existing public controller interface intact.",
+    "Do not command COMPRESSOR ON and VENT OPEN at the same time.",
+    "Pressure values are expected to stay within 0..120 kPa.",
+    "Any malformed or stale sensor input must drive the controller to the safe vent-open state."
+  ],
+  "success": {
+    "required_scenarios": [
+      "smoke",
+      "pressurize_control",
+      "relief_control",
+      "door_open_interlock",
+      "sensor_timeout",
+      "malformed_frame"
+    ],
+    "thresholds": {
+      "timeout_reaction_ms_min": 1000,
+      "timeout_reaction_ms_max": 1200,
+      "max_constraint_violations": 0,
+      "max_mutual_exclusion_violations": 0
+    },
+    "notes": [
+      "The difficulty comes from combining two independent sensor streams and preserving a safe output across the pressure band.",
+      "The packet is intentionally explicit about the input grammar and stale-data behavior so task failures point back to controller logic."
+    ]
+  },
+  "feedback": {
+    "mode": "full",
+    "include_build_logs": true,
+    "include_runtime_logs": true,
+    "include_uart_transcript": true,
+    "include_trace_samples": true,
+    "include_metrics": true,
+    "include_failure_category": true,
+    "include_history": false,
+    "include_unit_test_details": true,
+    "include_warnings": true,
+    "include_evaluator_commentary": true
+  }
+}

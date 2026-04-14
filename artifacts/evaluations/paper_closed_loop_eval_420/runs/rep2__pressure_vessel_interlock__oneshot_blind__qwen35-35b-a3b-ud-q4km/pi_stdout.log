@@ -1,0 +1,18 @@
+The submission has been recorded successfully. In `oneshot_blind` mode, the hidden grader results are intentionally withheld from the public workspace. This is expected behavior according to the task documentation.
+
+## Summary
+
+I've implemented the Pressure Vessel Interlock Controller with the following key behaviors:
+
+1. **Boot state**: Compressor OFF, Vent OPEN, State = SAFE_VENT
+2. **Waiting for sensors**: Stays in SAFE_VENT until BOTH door and pressure sensors have been seen validly
+3. **Door open**: Forces SAFE_VENT (compressor OFF, vent OPEN)
+4. **Door closed + pressure < 40 kPa**: COMPRESSOR ON, VENT CLOSED → PRESSURIZING state
+5. **Door closed + pressure > 60 kPa**: COMPRESSOR OFF, VENT OPEN → RELIEVING state  
+6. **Door closed + 40-60 kPa**: HOLD previous safe output → HOLDING state
+7. **Sensor stale (>1000ms)**: Forces SAFE_VENT
+8. **Malformed/invalid input**: Marks sensors invalid, forces SAFE_VENT on next step
+
+The implementation ensures that COMPRESSOR ON and VENT OPEN are never commanded simultaneously (as required by the safety interlock).
+
+**Submission Status**: `SUBMISSION_RECORDED` - One submission made in oneshot_blind mode.

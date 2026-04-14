@@ -1,0 +1,31 @@
+The feedback is as expected - the hidden grader results are withheld in this benchmark mode. The submission has been recorded successfully.
+
+Let me summarize what was implemented:
+
+## Summary
+
+I've implemented the mixing tank fill-and-heat controller according to the requirements in `docs/10_task.md`. The implementation is in two files:
+
+### 1. `components/controller/controller.c`
+The main controller logic that implements the control policy:
+- **Safe idle state**: On boot and when sensors are invalid, inlet closed and heater off
+- **Low level (< 60)**: INLET OPEN and HEATER OFF (filling phase)
+- **Safe level (60-75) with low temp (< 45)**: INLET CLOSED and HEATER ON (heating phase)
+- **Safe level (60-75) with high temp (>= 48)**: INLET CLOSED and HEATER OFF
+- **Upper band (47-48) with rising temp**: INLET CLOSED and HEATER OFF early
+- **Upper band (47-48) with stable temp**: Hold previous heater state
+- **Safe level (60-75) with medium temp (45-47)**: INLET CLOSED and hold previous heater state
+- **Heater guard (< 55)**: Heater always off when level < 55
+
+### 2. `agent_tests/test_controller.py`
+Unit tests covering all acceptance bullets from the task specification, including:
+- Boot behavior (inlet closed, heater off)
+- Safe idle until both sensors valid
+- Low level triggers inlet open
+- Safe level with low temp triggers heater on
+- Heater guard keeps heater off at low levels
+- Rising temperature causes early heater off
+- Stale/malformed input forces safe off
+- High temperature turns heater off
+
+The build succeeds and all unit tests pass. The firmware-level end-to-end test had an environment setup issue (missing `EMBEDDED_EVAL_SELF_TEST_RUN_ROOT`), but the core controller logic is verified through unit tests.

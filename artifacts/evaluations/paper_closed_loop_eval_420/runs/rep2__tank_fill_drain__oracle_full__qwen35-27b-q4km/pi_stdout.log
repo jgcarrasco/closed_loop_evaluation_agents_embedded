@@ -1,0 +1,21 @@
+The implementation is complete and all tests pass. Here's a summary of the controller behavior implemented:
+
+## Summary
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot defaults to PUMP OFF** - `controller_init()` sets pump off and safe state
+
+2. **Low level (< 30) turns pump ON** - When `level < CONTROLLER_LEVEL_LOW_THRESHOLD`, pump is turned on and state becomes PUMPING
+
+3. **High level (> 80) turns pump OFF** - When `level > CONTROLLER_LEVEL_HIGH_THRESHOLD`, pump is turned off and state becomes SAFE_OFF
+
+4. **Mid-band (30-80) holds previous output** - No changes to pump_on or state, preserving the last actuator command
+
+5. **Timeout handling** - If no valid sensor input for > 1000ms, fail safe to PUMP OFF
+
+6. **Malformed/invalid input** - Immediately fails safe to PUMP OFF
+
+### Test Results
+- All host unit tests pass (startup defaults, level transitions, mid-band preservation, timeout, invalid input)
+- All integration scenarios pass (smoke, happy_path, sensor_timeout, malformed_frame)

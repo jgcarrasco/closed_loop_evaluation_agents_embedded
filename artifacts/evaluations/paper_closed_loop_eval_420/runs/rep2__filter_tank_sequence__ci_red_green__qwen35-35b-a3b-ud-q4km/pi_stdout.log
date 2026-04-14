@@ -1,0 +1,100 @@
+Still failing. Let me review the task requirements more carefully to see if I missed anything...
+
+Looking at the task again, I notice that the task mentions:
+> Treat this markdown as the behavior source of truth.
+
+Let me re-read the key requirements:
+
+1. **Sensor semantics**: "A valid turbidity line refreshes only turbidity freshness. A valid level line refreshes only level freshness."
+
+This means that when we receive a TURB message, only the turbidity timestamp is updated, not the level timestamp (and vice versa). My implementation does this correctly:
+```c
+if (input.kind == CONTROLLER_INPUT_TURBIDITY) {
+    controller->has_valid_turbidity = true;
+    controller->last_turbidity_ntu = input.turbidity_ntu;
+    controller->last_turbidity_ms = input.now_ms;
+}
+
+if (input.kind == CONTROLLER_INPUT_LEVEL) {
+    controller->has_valid_level = true;
+    controller->last_level = input.level;
+    controller->last_level_ms = input.now_ms;
+}
+```
+
+2. **Stay in the safe all-off state until both sensors have been seen validly.**
+
+My implementation checks `controller_all_sensors_valid` which requires both sensors to be valid. This should be correct.
+
+3. **If either sensor becomes stale for more than 1000ms, go to the safe all-off state.**
+
+My implementation checks this correctly.
+
+4. **Control policy**: Let me re-read the key points...
+   - On boot: filter off, drain closed
+   - If LEVEL < 15: filter off, drain closed, remain in COMPLETE
+   - If TURB > 35 and LEVEL >= 40: FILTER ON, DRAIN CLOSED (enter FILTERING)
+   - Clear streak: valid TURB <= 35 increments, > 35 resets
+   - When clear streak reaches 3 while LEVEL >= 40: FILTER OFF, DRAIN CLOSED, enter SETTLING
+   - While SETTLING, if TURB > 40: reset clear streak, return to FILTERING
+   - When SETTLING has lasted at least 400ms, latest TURB <= 35, and LEVEL >= 40: DRAIN OPEN, enter DRAINING
+   - While DRAINING, if TURB > 50 and LEVEL >= 40: close drain, turn filter on, reset clear streak, return to FILTERING
+
+Let me check my implementation against these requirements...
+
+Actually, I just noticed something! Looking at the task:
+> If `TURB > 35` and `LEVEL >= 40`, command `FILTER ON` and `DRAIN CLOSED`.
+
+But my code checks:
+```c
+if (controller->last_turbidity_ntu > CONTROLLER_CLEAR_THRESHOLD_NTU) {
+    controller_update_state_and_actuators(controller, CONTROLLER_STATE_FILTERING);
+}
+```
+
+Where `CONTROLLER_CLEAR_THRESHOLD_NTU` is 35. So if TURB > 35, we enter FILTERING. This is correct!
+
+But wait, there's another requirement:
+> Count the clear streak using valid `TURB` inputs only.
+> A valid `TURB <= 35` increments the clear streak.
+> A valid `TURB > 35` resets the clear streak to zero.
+
+So if TURB > 35, we reset the clear streak. But this is only in the FILTERING state! Let me check my implementation...
+
+Looking at my code:
+```c
+case CONTROLLER_STATE_FILTERING:
+    /* Clear streak logic: valid TURB <= 35 increments, > 35 resets */
+    if (controller->last_turbidity_ntu <= CONTROLLER_CLEAR_THRESHOLD_NTU) {
+        controller->clear_streak_count++;
+        
+        /* Check if we have enough clear samples and can move to settling */
+        if (controller->clear_streak_count >= CONTROLLER_CLEAR_STREAK_REQUIRED) {
+            controller->settling_started_ms = input.now_ms;
+            controller_update_state_and_actuators(controller, CONTROLLER_STATE_SETTLING);
+        }
+    } else {
+        /* Turbidity increased - reset clear streak */
+        controller->clear_streak_count = 0;
+    }
+    break;
+```
+
+This looks correct. When TURB > 35 in FILTERING state, we reset the clear streak to 0.
+
+Hmm, I'm not seeing any obvious issues with my implementation. Let me try a different approach - let me check if there's an issue with how I'm handling the initial state transitions when both sensors arrive at the same time...
+
+Actually, I just realized something! Looking at my SAFE_IDLE logic:
+```c
+case CONTROLLER_STATE_SAFE_IDLE:
+    /* Stay in SAFE_IDLE until both sensors have valid data and level >= 40 */
+    if (controller->has_valid_turbidity && controller->has_valid_level) {
+        if (controller->last_level >= CONTROLLER_MIN_PROCESS_LEVEL) {
+            if (controller->last_turbidity_ntu > CONTROLLER_CLEAR_THRESHOLD_NTU) {
+                controller_update_state_and_actuators(controller, CONTROLLER_STATE_FILTERING);
+            } else {
+                /* Level is sufficient but turbidity is already clear - go to settling */
+                controller->settling_started_ms = input.now_ms;
+                controller_update_state_and_actuators(controller, CONTROLLER_STATE_SETTLING);
+            }
+       

@@ -1,0 +1,11 @@
+The submission has been recorded. This was a one-shot blind submission as specified in the experiment.json configuration. The controller logic has been implemented according to the task requirements:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (SAFE_VENT) ✓
+2. **Door open**: Stays in SAFE_VENT (compressor OFF, vent OPEN) ✓
+3. **Door closed, PRESS < 40**: COMPRESSOR ON, VENT CLOSED (PRESSURIZING) ✓
+4. **Door closed, PRESS > 60**: COMPRESSOR OFF, VENT OPEN (RELIEVING) ✓
+5. **Door closed, 40 <= PRESS <= 60**: Holds previous safe output (HOLDING) ✓
+6. **Timeout/malformed input**: Goes to SAFE_VENT ✓
+7. **Never commands COMPRESSOR ON and VENT OPEN together** ✓
+
+The final visible submission status is: **SUBMISSION_RECORDED**

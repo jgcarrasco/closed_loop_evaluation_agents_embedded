@@ -1,0 +1,22 @@
+The submission has been recorded. The `oneshot_blind` benchmark mode intentionally withholds hidden grader results, but my implementation is complete.
+
+## Final Submission Summary
+
+I have implemented the Filter Tank Sequence Controller in `components/controller/controller.c` with the following behavior:
+
+**State Machine:**
+1. **SAFE_IDLE**: Starts here, stays until both turbidity and level sensors are valid
+2. **FILTERING**: When TURB > 35 and LEVEL >= 40, commands FILTER ON + DRAIN CLOSED
+   - Tracks clear streak (increment on TURB <= 35, reset on TURB > 35)
+3. **SETTLING**: After 3 clear streaks with latest TURB <= 35 and LEVEL >= 40, after 400ms settle time
+   - On TURB > 40 disturbance, returns to FILTERING
+4. **DRAINING**: After settle period with latest TURB <= 35 and LEVEL >= 40, commands DRAIN OPEN
+   - On TURB > 50 disturbance with LEVEL >= 40, closes drain and returns to FILTERING
+5. **COMPLETE**: When LEVEL < 15, filter off and drain closed
+
+**Safety Features:**
+- Sensor timeout (1000ms) triggers safe all-off state
+- Invalid/malformed inputs trigger safe all-off state
+- Both sensors must be valid before transitioning from SAFE_IDLE
+
+The submission was recorded successfully.

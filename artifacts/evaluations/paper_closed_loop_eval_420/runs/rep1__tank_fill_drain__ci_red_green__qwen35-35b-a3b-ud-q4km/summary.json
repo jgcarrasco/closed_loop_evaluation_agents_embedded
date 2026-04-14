@@ -1,0 +1,106 @@
+{
+  "agent_name": "pi-tank_fill_drain-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 1,
+    "first_submission_at_utc": "2026-03-28T00:45:34.920000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 2,
+    "time_to_first_submission_seconds": 219.763,
+    "wall_clock_seconds": 250.06127654016018
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/tank_fill_drain/pi-tank_fill_drain-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260328T004534Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/tank_fill_drain/pi-tank_fill_drain-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260328T004534Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/tank_fill_drain/pi-tank_fill_drain-ci_red_green-qwen35-35b-a3b-ud-q4km-20260327T185742Z/20260328T004534Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "ci_red_green",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-35b-a3b-ud-q4km",
+    "model": "qwen35-35b-a3b-ud-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 9770,
+    "completion_tokens_after_first_submission": 476,
+    "completion_tokens_before_first_submission": 9294,
+    "cost": 0.0,
+    "prompt_tokens": 495307,
+    "prompt_tokens_after_first_submission": 60738,
+    "prompt_tokens_before_first_submission": 434569,
+    "total_tokens": 505077,
+    "total_tokens_after_first_submission": 61214,
+    "total_tokens_before_first_submission": 443863
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-35b-a3b-ud-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before relying on the hidden red/green signal. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode returns only hidden pass/fail, so use that red/green signal sparingly together with your own verification."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km",
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep1__tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/pi_stdout.log",
+  "task_id": "tank_fill_drain",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 1,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_firmware_e2e.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 2,
+    "self_test_runs": 2,
+    "self_tests_written": 15
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "agent_tests/test_firmware_e2e.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 359,
+    "lines_changed_total": 362,
+    "lines_deleted": 3,
+    "tool_call_breakdown": {
+      "bash": 15,
+      "edit": 1,
+      "ls": 2,
+      "read": 10,
+      "write": 4
+    },
+    "tool_call_count": 32
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260327T185742Z/tank_fill_drain__ci_red_green__qwen35-35b-a3b-ud-q4km/workspace"
+}

@@ -1,0 +1,18 @@
+Implemented the controller policy and verified it.
+
+What changed:
+- `components/controller/controller.c`
+  - Added full fill/heat/hold/safe-idle decision logic
+  - Enforced sensor freshness timeout handling
+  - Enforced low-fill heater lockout
+  - Added early heater-off behavior near the upper band
+  - Kept outputs safe on malformed input / timeout
+- `agent_tests/test_controller_runtime.py`
+  - Added visible firmware-level UART runtime probes covering the checklist bullets
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+

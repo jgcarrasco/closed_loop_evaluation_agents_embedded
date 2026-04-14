@@ -1,0 +1,3 @@
+The compilation succeeds. The issue is that the functions are not being linked because they're not defined in any .c file. But I added controller.c which should have the definitions. Let me check if there's a conflict:
+
+When gcc compiles from the workspace root, it looks for files

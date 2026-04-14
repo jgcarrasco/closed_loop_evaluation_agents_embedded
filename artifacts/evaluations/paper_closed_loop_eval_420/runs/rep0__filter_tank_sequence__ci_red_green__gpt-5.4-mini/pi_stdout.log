@@ -1,0 +1,18 @@
+Implemented the controller state machine and added visible firmware-level tests.
+
+What’s included:
+- Filtering / settling / draining / complete state logic
+- Sensor freshness and timeout handling
+- Malformed input handling
+- UART end-to-end visible probes with `FirmwareSession`
+- Build and self-tests pass locally
+
+Files changed:
+- `components/controller/controller.c`
+- `agent_tests/test_filter_tank_sequence.py`
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+
+

@@ -1,0 +1,8 @@
+model_name,pass_count,run_count,pass_rate_pct
+gpt-5.4,56,60,93.3
+gpt-5.4-mini,41,60,68.3
+qwen3.5-27B,38,60,63.3
+qwen3.5-2B,0,60,0.0
+qwen3.5-35B-A3B,26,60,43.3
+qwen3.5-4B,5,60,8.3
+qwen3.5-9B,14,60,23.3

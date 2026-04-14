@@ -1,0 +1,36 @@
+The submission passed with status "PASS". Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Pressure Vessel Interlock Controller for an ESP32 firmware running in QEMU. The implementation includes:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot state**: Compressor OFF, Vent OPEN (safe vent state)
+2. **Sensor handling**: Tracks pressure and door sensor freshness with 1000ms timeout
+3. **Control policy**:
+   - Door open → SAFE_VENT (compressor OFF, vent OPEN)
+   - Door closed + pressure < 40 → PRESSURIZING (compressor ON, vent CLOSED)
+   - Door closed + pressure > 60 → RELIEVING (compressor OFF, vent OPEN)
+   - Door closed + 40 ≤ pressure ≤ 60 → HOLDING (preserve previous state)
+   - Sensor timeout or malformed input → SAFE_VENT
+
+### Header File (`components/controller/include/controller.h`)
+
+Added `saved_compressor_on` and `saved_vent_open` fields to persist the last safe actuator state for holding behavior.
+
+### Self-Verification Tests (`agent_tests/test_pressure_vessel_controller.py`)
+
+Created comprehensive tests covering all checklist items:
+1. Boot leaves compressor off and vent open
+2. Controller stays in safe vent-open until both sensors seen
+3. Low pressure (35) commands COMPRESSOR ON and VENT CLOSED
+4. High pressure (65) commands COMPRESSOR OFF and VENT OPEN
+5. Holding behavior in 40-60 band preserves previous output
+6. Door open forces safe vent
+7. Stale sensor data (>1000ms) forces safe vent
+8. Malformed input forces safe vent
+9. Never commands COMPRESSOR ON and VENT OPEN together
+10. Firmware-level E2E test through UART
+
+All 10 tests pass, and the hidden grader returns PASS status.

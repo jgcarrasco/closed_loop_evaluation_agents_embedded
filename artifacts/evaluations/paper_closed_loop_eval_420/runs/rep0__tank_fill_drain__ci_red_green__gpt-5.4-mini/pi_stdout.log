@@ -1,0 +1,22 @@
+Implemented the tank fill/drain controller and added visible self-tests.
+
+What changed:
+- `components/controller/controller.c`
+  - Boot defaults to pump off.
+  - Low levels `< 30` turn pump on.
+  - High levels `> 80` turn pump off.
+  - Mid-band levels `30..80` hold the previous pump output.
+  - Malformed input fails safe to pump off.
+  - Timeout after `> 1000 ms` since last valid sensor input fails safe to pump off.
+  - Timeout flag is surfaced on actual timeout handling.
+
+- `agent_tests/test_controller.py`
+  - Added controller unit tests covering all checklist bullets.
+  - Added firmware-level UART end-to-end probes:
+    - nominal low-to-high sequence
+    - idle-gap no-immediate-timeout behavior
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS

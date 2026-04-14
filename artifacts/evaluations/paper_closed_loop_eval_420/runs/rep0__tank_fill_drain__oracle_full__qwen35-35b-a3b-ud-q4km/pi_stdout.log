@@ -1,0 +1,31 @@
+The implementation is complete and all tests pass. Let me provide a summary:
+
+## Summary
+
+I implemented the Tank Fill/Drain controller with the following behavior:
+
+### Control Policy (in `components/controller/controller.c`)
+1. **Boot**: Pump defaults to OFF (`CONTROLLER_STATE_SAFE_OFF`)
+2. **Low level (< 30)**: Turn pump ON (`CONTROLLER_STATE_PUMPING`)
+3. **High level (> 80)**: Turn pump OFF (`CONTROLLER_STATE_SAFE_OFF`)
+4. **Mid-band (30 ≤ level ≤ 80)**: Hold previous state (`CONTROLLER_STATE_HOLDING` if previously pumping)
+5. **Malformed input / Sensor timeout**: Fail safe to pump OFF
+6. **Idle with no new frame**: Check for timeout (> 1000ms), otherwise hold previous state
+
+### Tests Written (in `agent_tests/test_controller.py`)
+Covered all checklist items from `docs/10_task.md`:
+- Boot leaves pump off before any valid sensor input
+- Low level (20) produces ACT PUMP ON
+- High level (85) produces ACT PUMP OFF
+- Mid-band level (50) preserves previous state
+- Short idle steps don't trip timeout
+- Malformed input forces pump OFF
+- Loss of valid input > 1000ms forces pump OFF
+- Firmware-level end-to-end UART probe for nominal low-to-high sequence
+
+### Results
+All tests passed:
+- **Build**: PASS
+- **Host unit tests**: PASS  
+- **Integration**: PASS (4 scenarios: happy_path, malformed_frame, sensor_timeout, smoke)
+- **No constraint violations**

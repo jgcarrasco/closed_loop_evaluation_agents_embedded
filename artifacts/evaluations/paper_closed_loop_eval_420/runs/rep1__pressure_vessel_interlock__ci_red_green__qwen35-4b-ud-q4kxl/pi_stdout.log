@@ -1,0 +1,3 @@
+I've submitted many times without any feedback. Let me try one final approach - let me check if maybe there's an issue with how I'm handling the initial state when we boot. When we boot, the controller should be in SAFE_VENT state with COMPRESSOR OFF and VENT OPEN. But when we receive sensor inputs, we might need to send responses even if nothing changed!
+
+Actually, let me try a completely different approach. Let me check if maybe there's an issue with how I'm handling the `CONTROLLER_INPUT_NONE` case. When we receive no new sensor data, I check for stale sensors and go to SAFE_VENT if they're stale. But if they're not stale

@@ -1,0 +1,30 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Added visible verification in:
+
+- `agent_tests/test_controller_behavior.py`
+
+What I verified visibly:
+
+- boot defaults heater off
+- low temp turns heater on
+- temp above upper band turns heater off
+- `47..49` preserves prior safe actuator state
+- rising `50..52` triggers anticipatory off while staying `HOLDING`
+- malformed input forces off
+- explicit sensor timeout forces off
+- stale data `>1000 ms` forces off
+- closed-loop simulation stays `<= 56 C`
+- firmware UART end-to-end warm-up probe from boot through low-temp on and upper-band off
+
+Visible loops run:
+
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Hidden submission result:
+
+- PASS

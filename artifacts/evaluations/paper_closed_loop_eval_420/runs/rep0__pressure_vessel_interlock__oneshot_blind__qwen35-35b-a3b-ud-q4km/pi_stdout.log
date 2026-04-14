@@ -1,0 +1,16 @@
+## Final Submission Status
+
+**Submission recorded successfully.** 
+
+The implementation follows the pressure vessel interlock control policy:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (safe vent)
+2. **Sensor validation**: Both door and pressure must be seen validly before leaving safe vent state
+3. **Timeout handling**: If either sensor is stale (>1000ms), go to safe vent
+4. **Door open**: Always safe vent (compressor OFF, vent OPEN)
+5. **Pressure < 40** with door closed: COMPRESSOR ON, VENT CLOSED (pressurizing)
+6. **Pressure > 60** with door closed: COMPRESSOR OFF, VENT OPEN (relieving)
+7. **Pressure 40-60** with door closed: Hold previous state (holding)
+8. **Never**: Compressor ON and Vent OPEN together
+
+**Benchmark mode**: `oneshot_blind` - Hidden grader results are withheld by design. One submission used.

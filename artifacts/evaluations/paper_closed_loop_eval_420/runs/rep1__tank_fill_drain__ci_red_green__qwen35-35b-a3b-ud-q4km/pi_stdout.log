@@ -1,0 +1,28 @@
+The task is complete. The controller implementation passed the hidden grader. Let me provide a summary of what was done:
+
+## Summary
+
+I implemented the Tank Fill/Drain Controller as specified in `docs/10_task.md`:
+
+### Changes made to `components/controller/controller.c`:
+- Implemented the control policy with hysteresis:
+  - **Default**: Pump OFF on boot (via `controller_init`)
+  - **Low level** (`< 30`): Turn pump ON, state = PUMPING
+  - **High level** (`> 80`): Turn pump OFF, state = SAFE_OFF  
+  - **Mid-band** (`30-80`): Hold previous state (PUMPING → HOLDING, or SAFE_OFF stays SAFE_OFF)
+  - **Malformed input** (`INVALID_LEVEL` or `SENSOR_TIMEOUT`): Fail safe to PUMP OFF
+  - **No new input** (`NONE`): Check timeout - if elapsed >= 1000ms, fail safe; otherwise hold previous state
+
+### Tests written:
+1. **Controller unit tests** (`agent_tests/test_controller.py`): Python simulation testing all control policy scenarios
+2. **Firmware E2E tests** (`agent_tests/test_firmware_e2e.py`): Real firmware tests via UART including:
+   - Boot leaves pump off
+   - Low level (20) produces PUMP ON
+   - High level (85) produces PUMP OFF
+   - Nominal fill sequence (low → mid → high)
+   - Malformed input handling
+   - Sensor timeout fault handling
+
+### Result:
+- Build succeeded with `python3 tools/run_build.py`
+- Hidden grader submission returned **PASS**

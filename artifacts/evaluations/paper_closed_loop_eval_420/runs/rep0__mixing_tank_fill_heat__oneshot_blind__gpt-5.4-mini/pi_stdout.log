@@ -1,0 +1,7 @@
+Implemented the controller and made the single allowed submission.
+
+Final visible submission status:
+- `Status: SUBMISSION_RECORDED`
+- Benchmark mode: `oneshot_blind`
+- Submission index: `1/1`
+- Hidden grader results are withheld in this mode.

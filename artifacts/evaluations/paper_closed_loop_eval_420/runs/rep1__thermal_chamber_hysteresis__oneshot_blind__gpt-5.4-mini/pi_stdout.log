@@ -1,0 +1,5 @@
+Implemented the thermal controller behavior in `components/controller/controller.c` and submitted once with `python3 tools/run_eval.py`.
+
+Final visible submission status: `SUBMISSION_RECORDED`  
+Benchmark mode: `oneshot_blind`  
+Hidden grader result: withheld in this mode

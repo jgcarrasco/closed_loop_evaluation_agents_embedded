@@ -1,0 +1,31 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller_behavior.py`
+
+What was verified:
+
+- boot defaults to pump off
+- low level turns pump on
+- high level turns pump off
+- mid-band holds previous safe output
+- short idle gaps do not timeout immediately
+- malformed input forces off
+- >1000 ms loss of valid input forces off
+- explicit sensor-timeout fault forces off
+- firmware-level UART probes for:
+  - nominal low→high sequence
+  - mid-band hold, idle timeout, and malformed input
+
+Visible checks run:
+
+- `python3 tools/run_build.py --flash-image`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Hidden result:
+
+- PASS

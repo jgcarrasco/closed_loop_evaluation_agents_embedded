@@ -1,0 +1,19 @@
+The submission was recorded. The implementation is complete with:
+
+1. **Controller logic** (`components/controller/controller.c`): Implements the thermal chamber hysteresis controller with:
+   - Boot leaves heater OFF (fail-safe)
+   - TEMP < 47: turns heater ON
+   - TEMP > 52: turns heater OFF
+   - 47 <= TEMP < 50: preserves previous state
+   - 50 <= TEMP <= 52 with rising temp: turns heater OFF early with HOLDING state
+   - Malformed input or sensor timeout: turns heater OFF
+   - Stale data (>1000ms): turns heater OFF
+   - Safety ceiling at 56 C
+
+2. **Tests** (`agent_tests/test_controller.py`): Comprehensive tests covering all acceptance criteria including:
+   - Unit-style controller behavior tests
+   - Firmware-level end-to-end runtime probe through UART (`test_nominal_warm_up_sequence`)
+
+3. **UART transport fixes** (`main/uart_transport.c`): Properly handles malformed input by turning heater off immediately
+
+The implementation follows the task requirements and passes all visible self-verification tests.

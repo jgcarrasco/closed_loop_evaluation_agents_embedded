@@ -1,0 +1,8 @@
+Implemented the thermal hysteresis controller in `components/controller/controller.c` and added visible UART-level self-tests in `agent_tests/test_controller_behavior.py`.
+
+Verified:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+

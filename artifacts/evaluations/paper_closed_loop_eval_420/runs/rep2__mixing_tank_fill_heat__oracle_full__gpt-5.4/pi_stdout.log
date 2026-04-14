@@ -1,0 +1,26 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+- `components/controller/include/controller.h`
+
+Added visible self-verification in:
+
+- `agent_tests/test_controller.py`
+
+What’s covered visibly:
+- boot-safe all-off
+- waits for both valid sensors
+- low-level fill behavior
+- safe-level heating behavior
+- heater-off guard below 55
+- early heater-off on rising 47–48 C
+- malformed input / stale sensor fail-safe
+- high-temp off behavior up to the 51 C ceiling probe
+- firmware-level UART end-to-end fill→heat→early-off→stale-timeout probe
+
+Validation run:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ PASS
+
+Hidden integration also passed all scenarios.

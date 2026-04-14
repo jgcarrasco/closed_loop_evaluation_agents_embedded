@@ -1,0 +1,27 @@
+The task is complete. The submission passed all tests:
+
+## Summary
+
+**Status: PASS** ✅
+
+### Key Results:
+- **6/6 scenarios passed** with 0 constraint violations
+- All hard limits respected (51°C ceiling never exceeded, max observed was 48°C)
+- Low-level heating guard working (heater stays off when level < 55)
+- Sensor timeout safety working (forces safe state after 1000ms of stale data)
+- Early heater-off at upper band working (anticipates thermal lag)
+- Malformed input handling working (ignores invalid frames)
+
+### Implementation Details:
+I implemented the fill-and-heat controller in `components/controller/controller.c` with the following logic:
+
+1. **Boot state**: Inlet closed, heater off, SAFE_IDLE state
+2. **Sensor freshness tracking**: Both temperature and level must be valid within 1000ms
+3. **Fill phase** (level < 60): Open inlet, keep heater off
+4. **Heat phase** (level ≥ 60, temp < 45): Close inlet, turn on heater
+5. **Low-level guard**: If level drops below 55 at any time, heater stays off
+6. **Upper band handling** (47-48°C): Turn heater off early when temperature is rising to account for thermal lag
+7. **Timeout safety**: When sensors become stale (>1000ms), go to SAFE_IDLE with both actuators off
+
+### Tests Created:
+Created 8 visible firmware-level tests in `agent_tests/test_controller_fill_heat.py` covering all checklist items from the task, including end-to-end UART probes through QEMU.

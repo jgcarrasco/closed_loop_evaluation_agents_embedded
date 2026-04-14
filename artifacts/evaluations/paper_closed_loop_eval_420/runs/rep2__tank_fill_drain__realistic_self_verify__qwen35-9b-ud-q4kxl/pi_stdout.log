@@ -1,0 +1,33 @@
+All 11 tests pass. Let me provide a summary of what was implemented:
+
+## Summary
+
+I have successfully implemented the Tank Fill/Drain Controller according to the requirements in `docs/10_task.md`.
+
+### Implementation Details
+
+**File modified:** `components/controller/controller.c`
+
+The controller implements the following control policy:
+- **Boot:** Defaults to PUMP OFF state
+- **Low level (< 30):** Turns pump ON, sets state to PUMPING
+- **High level (> 80):** Turns pump OFF, sets state to SAFE_OFF
+- **Mid-band (30-80):** Preserves the previous pump state (holds)
+- **Idle gaps:** Preserves current state (no timeout on short gaps)
+- **Invalid input:** Forces PUMP OFF fail-safe
+- **Sensor timeout:** Forces PUMP OFF fail-safe
+
+### Test Coverage
+
+Created comprehensive end-to-end tests in `agent_tests/test_controller.py` that verify each acceptance criterion from the Self-Verification Checklist:
+
+1. ✅ Boot leaves the pump off before any valid sensor input arrives
+2. ✅ A low level such as `20` produces `ACT PUMP ON`
+3. ✅ A high level such as `85` produces `ACT PUMP OFF`
+4. ✅ A mid-band level such as `50` preserves the previous safe actuator output
+5. ✅ Short idle controller steps do not trip the timeout path immediately
+6. ✅ Malformed input forces `ACT PUMP OFF`
+7. ✅ Loss of valid input for more than 1000 ms forces `ACT PUMP OFF`
+8. ✅ Firmware-level end-to-end runtime probe through UART (low-to-high sequence)
+
+All 11 tests pass successfully, including the required firmware-level end-to-end runtime probe through UART that exercises a nominal task path from boot to the expected steady-state outcome.

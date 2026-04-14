@@ -1,0 +1,33 @@
+The submission passed with a green signal. Let me summarize what was implemented:
+
+## Summary
+
+I successfully implemented the tank fill/drain controller for the ESP32 firmware. Here's what was done:
+
+### Implementation (`components/controller/controller.c`)
+
+The controller implements the following control policy:
+1. **Default to PUMP OFF on boot** - `controller_init()` initializes pump to OFF state
+2. **Turn pump ON when LEVEL < 30** - Low threshold triggers pumping
+3. **Turn pump OFF when LEVEL > 80** - High threshold stops pumping  
+4. **Hold previous output when 30 <= LEVEL <= 80** - Mid-band levels preserve current state without changes
+5. **Fail safe to PUMP OFF on malformed input or timeout** - Invalid input and sensor timeouts force safe state
+
+### Key Logic:
+- Timeout detection checks if elapsed time since last valid sensor reading exceeds 1000ms
+- Malformed input (`CONTROLLER_INPUT_INVALID_LEVEL`) and explicit timeout (`CONTROLLER_INPUT_SENSOR_TIMEOUT`) both trigger fail-safe
+- Short idle gaps don't immediately trip timeout - only sustained loss of input (>1000ms) does
+
+### Tests (`agent_tests/test_controller.py`)
+Created 9 firmware-level end-to-end tests covering all checklist items:
+1. Boot leaves pump off
+2. Low level (20) turns pump ON
+3. High level (85) turns pump OFF
+4. Mid-band preserves previous ON state
+5. Mid-band preserves previous OFF state
+6. Short idle doesn't cause timeout
+7. Malformed input forces PUMP OFF
+8. Timeout (>1000ms) forces PUMP OFF
+9. Low-to-high sequence end-to-end probe
+
+All tests pass and the hidden grader returns PASS status.

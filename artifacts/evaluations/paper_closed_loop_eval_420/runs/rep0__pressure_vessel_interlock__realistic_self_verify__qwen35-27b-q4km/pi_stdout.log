@@ -1,0 +1,40 @@
+The submission was recorded successfully. In `realistic_self_verify` mode, the hidden grader results are withheld, so I rely on my own verification. Let me summarize what was implemented:
+
+## Summary
+
+I implemented a pressure vessel interlock controller with the following behavior:
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot State**: Initializes to SAFE_VENT (compressor off, vent open)
+
+2. **Sensor Validation**: 
+   - Tracks validity of both pressure and door sensors
+   - Stays in SAFE_VENT until both sensors have been seen validly
+   - Detects sensor timeouts (>1000ms stale) and returns to SAFE_VENT
+
+3. **Control Policy** (when door is closed and sensors are valid):
+   - **PRESSURIZING**: Pressure < 40 kPa → Compressor ON, Vent CLOSED
+   - **RELIEVING**: Pressure > 60 kPa → Compressor OFF, Vent OPEN  
+   - **HOLDING**: 40 ≤ Pressure ≤ 60 kPa → Preserve previous safe output
+
+4. **Safety Interlocks**:
+   - Door open → Immediate SAFE_VENT (compressor off, vent open)
+   - Malformed input or sensor timeout → SAFE_VENT
+   - Never commands COMPRESSOR ON and VENT OPEN simultaneously
+
+### Tests (`agent_tests/test_controller.py`)
+
+All 10 tests pass, covering:
+- Boot state verification
+- Safe vent until both sensors valid
+- Low pressure pressurizing
+- High pressure relieving
+- In-band holding behavior
+- Door open forcing safe vent
+- Malformed input handling
+- Sensor timeout detection
+- Safety check (never compressor on + vent open)
+- End-to-end firmware-level test through UART
+
+The implementation follows the visible workflow and includes both controller-level tests and firmware-level end-to-end runtime probes through UART as required.

@@ -1,0 +1,7 @@
+Implemented the controller logic in `components/controller/controller.c` and submitted once.
+
+Final visible submission status:
+- `SUBMISSION_RECORDED`
+- Benchmark mode: `oneshot_blind`
+- Submission index: `1` of `1`
+- Hidden grader result: withheld in this mode

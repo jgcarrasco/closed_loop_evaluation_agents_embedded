@@ -1,0 +1,20 @@
+Implemented the controller policy and added visible UART-based self-tests.
+
+What changed:
+- `components/controller/controller.c`
+  - Implemented fill/heat/hold/safe-idle behavior
+  - Added stale-sensor detection using the 1000 ms timeout
+  - Added low-fill heater guard
+  - Added early heater-off on rising temperature near the upper band
+  - Preserved safe heater state for hold behavior
+- `components/controller/include/controller.h`
+  - Added one internal controller field to track the safe heater state
+- `agent_tests/test_controller_behavior.py`
+  - Added firmware-level end-to-end UART probes covering boot, safe startup, fill, heat, low-level guard, early off, malformed input, stale timeout, and the temperature ceiling scenario
+
+Verification:
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅ submitted
+
+

@@ -1,0 +1,11 @@
+Implemented the hysteresis controller in `components/controller/controller.c` only.
+
+Final visible submission status:
+- `Status: SUBMISSION_RECORDED`
+- `Benchmark mode: oneshot_blind`
+- `Submission index: 1`
+- `Submission budget: 1`
+
+Visible feedback:
+- Hidden grader results are withheld in this mode.
+- Public self-verification helpers are intentionally omitted.

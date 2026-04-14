@@ -1,0 +1,34 @@
+The submission passed successfully. Let me provide a summary of what was implemented:
+
+## Summary
+
+I implemented the Tank Fill/Drain Controller according to the task requirements in `docs/10_task.md`.
+
+### Implementation (`components/controller/controller.c`)
+
+The control policy implements hysteresis-based pump control:
+
+1. **Boot**: Pump defaults to OFF (safe state)
+2. **Low level (< 30)**: Turn pump ON, enter PUMPING state
+3. **High level (> 80)**: Turn pump OFF, enter SAFE_OFF state  
+4. **Mid-band (30-80)**: Hold previous actuator output, enter HOLDING state
+5. **Malformed input / Sensor timeout**: Fail safe to PUMP OFF
+6. **No new input with timeout**: After 1000ms without valid sensor frame, fail safe to PUMP OFF
+
+### Self-Verification Tests (`agent_tests/test_controller.py`)
+
+Created comprehensive tests covering all checklist items:
+
+- `test_boot_pump_off`: Verifies pump is OFF on boot
+- `test_low_level_turns_pump_on`: Level 20 produces ACT PUMP ON
+- `test_high_level_turns_pump_off`: Level 85 produces ACT PUMP OFF
+- `test_mid_band_holds_previous_state`: Level 50 preserves previous state
+- `test_malformed_input_forces_pump_off`: Invalid input triggers safe-off
+- `test_sensor_timeout_forces_pump_off`: >1000ms timeout forces pump OFF
+- `test_nominal_low_to_high_sequence`: Firmware-level E2E test through UART
+
+### Result
+
+✅ Build successful  
+✅ All 7 visible tests pass  
+✅ Hidden grader submission: **PASS**

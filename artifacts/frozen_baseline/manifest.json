@@ -1,0 +1,22 @@
+{
+  "baseline_status": "green_verified",
+  "allowed_edit_paths": [
+    "components/controller/controller.c",
+    "components/controller/include/controller.h",
+    "components/protocol/protocol.c"
+  ],
+  "forbidden_edit_paths": [
+    "sim",
+    "tools",
+    "host_tests",
+    "docs",
+    "main"
+  ],
+  "protocol_format": "newline-delimited ASCII",
+  "plant_dynamics": "level[t+1] = clamp(level[t] + 6*(pump_on ? 1 : 0) - 1, 0, 100)",
+  "thresholds": {
+    "low": 30,
+    "high": 80,
+    "timeout_ms": 1000
+  }
+}

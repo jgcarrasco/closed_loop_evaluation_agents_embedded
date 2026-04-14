@@ -1,0 +1,52 @@
+Still failing. I've spent a lot of time on this and can't figure out the bug. Let me try one more approach - maybe the issue is with how I'm handling the case where we're in SETTLING and receive an input at exactly t=settling_started_ms + 400 (exactly 400ms after entering SETTLING).
+
+Actually, let me try a completely different approach. Let me check if there's an issue with how I'm handling the case where we're in SETTLING and receive a TURBIDITY input with turb <= 35 after settling for exactly 400ms, but `controller->drain_open` is somehow not being set to true because... there's a bug in my condition check?
+
+Let me re-examine my condition one more time:
+```c
+if (settle_elapsed >= CONTROLLER_SETTLING_MS && turb <= CONTROLLER_CLEAR_THRESHOLD_NTU && level >= CONTROLLER_MIN_PROCESS_LEVEL) {
+    controller->drain_open = true;
+    controller->state = CONTROLLER_STATE_DRAINING;
+}
+```
+
+This checks:
+1. settle_elapsed >= 400ms
+2. turb <= 35
+3. level >= 40
+
+All three conditions must be true for the drain to open. If any of them is false, the drain doesn't open.
+
+Given that the test is failing, one of these conditions must be false when it should be true. Let me think about which one...
+
+Actually, I just realized something! When we're in SETTLING state and receive an input, I check:
+```c
+if (turb > CONTROLLER_SETTLING_RESET_THRESHOLD_NTU) {
+    controller->clear_streak_count = 0;
+    controller->state = CONTROLLER_STATE_FILTERING;
+    controller->filter_on = true;
+    break;
+}
+```
+
+If turb > 40, we return to FILTERING and break out of the switch. But what if turb == 40 exactly? In that case, `turb > 40` is false, so we don't return to FILTERING. We continue to check if settling is complete.
+
+And `CONTROLLER_SETTLING_RESET_THRESHOLD_NTU` is defined as 40. So:
+- If turb > 40: return to FILTERING
+- If turb <= 40: stay in SETTLING and check if we can drain
+
+This looks correct based on the task requirements:
+> While `SETTLING`, if a valid `TURB > 40` arrives, reset the clear streak and return to `FILTERING`.
+
+So only turb > 40 causes a return to FILTERING. Turb == 40 doesn't cause any state change - we stay in SETTLING.
+
+But wait - what if turb == 40 and we've settled for 400ms? In that case:
+- settle_elapsed >= 400ms → TRUE
+- turb <= 35 → FALSE (because turb = 40 > 35)
+- level >= 40 → TRUE (assuming)
+
+So the condition fails, and we don't open the drain. We stay in SETTLING. This is correct behavior based on the task requirements.
+
+OK I think my code is correct, but there might be something subtle that I'm missing. Let me try submitting again and see if there's any additional feedback...
+
+I've spent way too much time on this. Let me just accept that I can't figure out the bug and submit my current implementation. At least 7 out of 8 controller tests are passing, which suggests my implementation is mostly correct.

@@ -1,0 +1,118 @@
+{
+  "agent_name": "pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/baseline",
+  "efficiency": {
+    "build_attempts": 12,
+    "first_submission_at_utc": "2026-03-30T12:26:40.128000Z",
+    "hidden_eval_calls": 11,
+    "iterations": 83,
+    "time_to_first_submission_seconds": 1363.704,
+    "wall_clock_seconds": 1836.2506065419875
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122640Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122714Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122802Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122810Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122843Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T122926Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123020Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123142Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123224Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123306Z",
+    "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123347Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123347Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/mixing_tank_fill_heat/pi-mixing_tank_fill_heat-oracle_full-qwen35-9b-ud-q4kxl-20260329T205029Z/20260330T123347Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-9b-ud-q4kxl",
+    "model": "qwen35-9b-ud-q4kxl",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 40588,
+    "completion_tokens_after_first_submission": 13817,
+    "completion_tokens_before_first_submission": 26771,
+    "cost": 0.0,
+    "prompt_tokens": 5117472,
+    "prompt_tokens_after_first_submission": 1624329,
+    "prompt_tokens_before_first_submission": 3493143,
+    "total_tokens": 5158060,
+    "total_tokens_after_first_submission": 1638146,
+    "total_tokens_before_first_submission": 3519914
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-9b-ud-q4kxl",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/pi_stdout.log",
+  "task_id": "mixing_tank_fill_heat",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 8,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py",
+      "agent_tests/test_fill_heat_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 1,
+    "self_test_runs": 83,
+    "self_tests_written": 18
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "agent_tests/test_fill_heat_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 4,
+    "lines_added": 487,
+    "lines_changed_total": 506,
+    "lines_deleted": 19,
+    "tool_call_breakdown": {
+      "bash": 81,
+      "edit": 9,
+      "read": 17,
+      "write": 2
+    },
+    "tool_call_count": 109
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/mixing_tank_fill_heat__oracle_full__qwen35-9b-ud-q4kxl/workspace"
+}

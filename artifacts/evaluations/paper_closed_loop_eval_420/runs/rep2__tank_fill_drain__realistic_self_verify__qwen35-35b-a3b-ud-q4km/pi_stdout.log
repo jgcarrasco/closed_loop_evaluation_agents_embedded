@@ -1,0 +1,46 @@
+As expected, in `realistic_self_verify` mode, hidden grader results are withheld. Let me provide a summary of what was implemented:
+
+## Summary
+
+I've successfully implemented the Tank Fill/Drain Controller according to the requirements in `docs/10_task.md`. Here's what was done:
+
+### Controller Implementation (`components/controller/controller.c`)
+
+Implemented the control policy with the following behavior:
+- **Default state on boot**: Pump OFF (SAFE_OFF)
+- **Low level (< 30)**: Turn pump ON (PUMPING state)
+- **High level (> 80)**: Turn pump OFF (SAFE_OFF state)  
+- **Mid-band (30-80)**: Hold previous safe output (HOLDING state)
+- **Timeout (> 1000ms without valid input)**: Fail safe to pump OFF
+- **Malformed/invalid sensor input**: Fail safe to pump OFF
+
+### Tests Written (`agent_tests/`)
+
+1. **test_controller.py** - Source code verification tests that check:
+   - Controller files exist
+   - Correct constants are used (LOW_THRESHOLD=30, HIGH_THRESHOLD=80, TIMEOUT_MS=1000)
+   - Proper handling of all input types
+   
+2. **test_firmware_e2e.py** - Firmware-level end-to-end tests through UART:
+   - Boot and first response test
+   - Nominal low-to-high level sequence (key E2E probe from checklist)
+   - Timeout behavior (>1000ms forces pump off)
+   - Malformed input handling
+   - Complete fill/drain cycle
+   - Edge case boundary conditions (levels 30 and 80)
+
+### Self-Verification Checklist Coverage
+
+All acceptance bullets from the Self-Verification Checklist are covered:
+- ✅ Boot leaves pump off before any valid sensor input
+- ✅ Low level (20) produces ACT PUMP ON
+- ✅ High level (85) produces ACT PUMP OFF
+- ✅ Mid-band level (50) preserves previous output
+- ✅ Short idle steps don't trip timeout immediately
+- ✅ Malformed input forces ACT PUMP OFF
+- ✅ Loss of valid input >1000ms forces ACT PUMP OFF
+- ✅ Firmware-level E2E runtime probe through UART included
+
+### Build & Test Results
+- **Build**: Success (no errors)
+- **Self-tests**: 22/22 tests passing

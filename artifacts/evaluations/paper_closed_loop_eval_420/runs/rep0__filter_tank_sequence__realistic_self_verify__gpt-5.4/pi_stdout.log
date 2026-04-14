@@ -1,0 +1,20 @@
+Implemented the controller in:
+
+- `components/controller/controller.c`
+
+No header changes were needed.
+
+Verified with:
+- `python3 tools/run_build.py`
+- `python3 tools/run_self_tests.py`
+- `python3 tools/run_eval.py`
+
+Visible self-tests added under:
+- `agent_tests/test_controller.py`
+
+Coverage includes the acceptance bullets via:
+- host-side controller tests for boot, SAFE_IDLE gating, filtering start, clear streak, settling, no early drain, settling disturbance, draining disturbance, COMPLETE, malformed input, explicit timeout, and stale-data fallback
+- one firmware-level UART end-to-end probe from boot through `FILTERING` → `SETTLING` → `DRAINING` → `COMPLETE` without early drain
+
+Submission completed:
+- `artifacts/latest/feedback.md` shows `SUBMISSION_RECORDED`

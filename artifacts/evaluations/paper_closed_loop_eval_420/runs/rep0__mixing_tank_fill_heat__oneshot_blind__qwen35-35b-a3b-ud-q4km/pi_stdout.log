@@ -1,0 +1,29 @@
+## Final Submission Status
+
+**Submission completed successfully.**
+
+### Summary
+
+I implemented the mixing tank fill-and-heat controller in `components/controller/controller.c` with the following behavior:
+
+1. **Boot state**: Inlet closed, heater off (SAFE_IDLE)
+2. **Sensor validation**: Stays in SAFE_IDLE until both temperature and level sensors have valid readings
+3. **Low level (< 60)**: Opens inlet, keeps heater off
+4. **High level (> 75)**: Closes inlet
+5. **Heater guard**: Heater stays off when level < 55 (minimum heating level)
+6. **Heating phase** (60 ≤ level ≤ 75 and temp < 45): Closes inlet, turns heater on
+7. **Near upper band** (45 ≤ temp < 47): Keeps inlet closed, holds previous safe heater state
+8. **Early off condition** (47 ≤ temp ≤ 48 and rising): Turns heater off early
+9. **Over-temperature** (temp > 48): Closes inlet, turns heater off
+10. **Timeout/malformed input**: Returns to SAFE_IDLE (all off)
+
+### Submission Result
+
+```
+Status: SUBMISSION_RECORDED
+Benchmark mode: oneshot_blind
+Submission index: 1
+Submission budget: 1
+```
+
+In `oneshot_blind` mode, hidden grader results are intentionally withheld. The submission has been recorded and synced into the hidden harness for evaluation.

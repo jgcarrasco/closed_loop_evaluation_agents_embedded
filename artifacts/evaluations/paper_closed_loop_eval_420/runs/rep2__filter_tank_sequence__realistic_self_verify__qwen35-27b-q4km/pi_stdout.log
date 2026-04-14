@@ -1,0 +1,38 @@
+The submission was recorded successfully. Let me summarize what I've implemented:
+
+## Summary
+
+I implemented a filter tank sequence controller for ESP32 firmware that manages a batch clarification process with the following states and behavior:
+
+### States Implemented:
+1. **SAFE_IDLE** - Fail-safe state with filter off and drain closed
+2. **FILTERING** - Actively filtering cloudy water (turbidity > 35 NTU)
+3. **SETTLING** - Waiting 400ms after water is clear before draining
+4. **DRAINING** - Tank is being drained after settling period
+5. **COMPLETE** - Tank level below minimum threshold (< 15)
+
+### Control Logic:
+- Boot starts in SAFE_IDLE with filter off and drain closed
+- Requires both turbidity and level sensors to be valid before proceeding
+- Cloudy water (TURB > 35) with sufficient level (>= 40) triggers FILTERING
+- Three consecutive clear samples (TURB <= 35) trigger transition to SETTLING
+- Disturbance during settling (TURB > 40) returns to FILTERING
+- After 400ms settling with clear water and sufficient level, drain opens (DRAINING)
+- Disturbance during draining (TURB > 50) closes drain and restarts filtering
+- Low level (< 15) transitions to COMPLETE state
+- Sensor timeout (> 1000ms) or invalid input forces SAFE_IDLE
+
+### Tests Created:
+All 11 tests in `agent_tests/test_filter_tank.py` cover the Self-Verification Checklist:
+1. Boot leaves filter off and drain closed ✓
+2. Controller stays in SAFE_IDLE until both sensors valid ✓
+3. Cloudy input with sufficient level starts FILTERING ✓
+4. Three clear turbidity samples enter SETTLING ✓
+5. TURB > 40 disturbance during SETTLING returns to FILTERING ✓
+6. Drain doesn't open before 400ms settling ✓
+7. TURB > 50 disturbance during DRAINING closes drain and restarts filtering ✓
+8. LEVEL < 15 leaves controller in COMPLETE ✓
+9. Malformed input or stale sensor data forces safe state ✓
+10. Firmware-level end-to-end runtime probe through UART ✓
+
+The implementation uses the `components/controller/controller.c` file as specified in `experiment.json`.

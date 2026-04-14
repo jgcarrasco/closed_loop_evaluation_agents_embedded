@@ -1,0 +1,109 @@
+{
+  "agent_name": "pi-pressure_vessel_interlock-oracle_full-gpt-5.4-20260329T155511Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/pressure_vessel_interlock__oracle_full__gpt-5.4/baseline",
+  "efficiency": {
+    "build_attempts": 2,
+    "first_submission_at_utc": "2026-03-29T17:00:50.087000Z",
+    "hidden_eval_calls": 1,
+    "iterations": 7,
+    "time_to_first_submission_seconds": 476.047,
+    "wall_clock_seconds": 514.7154815909453
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-oracle_full-gpt-5.4-20260329T155511Z/20260329T170050Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-oracle_full-gpt-5.4-20260329T155511Z/20260329T170050Z",
+    "failure_category": "none",
+    "failure_family": "pass",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/pressure_vessel_interlock/pi-pressure_vessel_interlock-oracle_full-gpt-5.4-20260329T155511Z/20260329T170050Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": true,
+    "stage_reached": "integration",
+    "status": "PASS"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "remote",
+    "label": "gpt-5.4",
+    "model": "gpt-5.4",
+    "provider": "github-copilot"
+  },
+  "model_usage": {
+    "cache_read_tokens": 880384,
+    "cache_write_tokens": 0,
+    "completion_tokens": 14832,
+    "completion_tokens_after_first_submission": 243,
+    "completion_tokens_before_first_submission": 14589,
+    "cost": 0.0,
+    "prompt_tokens": 42864,
+    "prompt_tokens_after_first_submission": 5876,
+    "prompt_tokens_before_first_submission": 36988,
+    "total_tokens": 938080,
+    "total_tokens_after_first_submission": 53863,
+    "total_tokens_before_first_submission": 884217
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "github-copilot",
+    "--model",
+    "gpt-5.4",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__pressure_vessel_interlock__oracle_full__gpt-5.4/pi_stdout.log",
+  "task_id": "pressure_vessel_interlock",
+  "testing_behavior": {
+    "false_green_denominator": 1,
+    "false_green_numerator": 0,
+    "false_green_rate": 0.0,
+    "runtime_probe_case_count": 2,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_pressure_vessel_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 2,
+    "self_test_runs": 7,
+    "self_tests_written": 2
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_pressure_vessel_controller.py",
+      "components/controller/controller.c",
+      "components/controller/include/controller.h"
+    ],
+    "files_touched_count": 3,
+    "lines_added": 295,
+    "lines_changed_total": 440,
+    "lines_deleted": 145,
+    "tool_call_breakdown": {
+      "bash": 10,
+      "edit": 4,
+      "find": 12,
+      "grep": 2,
+      "ls": 7,
+      "read": 20,
+      "write": 3
+    },
+    "tool_call_count": 58
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T155511Z/pressure_vessel_interlock__oracle_full__gpt-5.4/workspace"
+}

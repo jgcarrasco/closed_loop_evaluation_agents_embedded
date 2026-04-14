@@ -1,0 +1,10 @@
+Implemented the controller changes in:
+
+- `components/controller/include/controller.h`
+- `components/controller/controller.c`
+
+Final visible submission status from `artifacts/latest/feedback.md`:
+
+- `Status: SUBMISSION_RECORDED`
+- Benchmark mode: `oneshot_blind`
+- Hidden grader results are withheld in this mode.

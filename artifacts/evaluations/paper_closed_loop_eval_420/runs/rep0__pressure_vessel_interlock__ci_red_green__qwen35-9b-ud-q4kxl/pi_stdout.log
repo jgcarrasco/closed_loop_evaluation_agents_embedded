@@ -1,0 +1,18 @@
+The submission passes again. My implementation is correct. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the pressure vessel interlock controller in `components/controller/controller.c` according to the requirements in `docs/10_task.md`. The key features are:
+
+1. **Boot state**: Compressor OFF, Vent OPEN (SAFE_VENT)
+2. **Door open**: Forces SAFE_VENT state (compressor OFF, vent OPEN)
+3. **Door closed + PRESS < 40**: Pressurizes (COMPRESSOR ON, VENT CLOSED)
+4. **Door closed + PRESS > 60**: Relieves (COMPRESSOR OFF, VENT OPEN)
+5. **Door closed + 40 <= PRESS <= 60**: Holds previous safe output
+6. **Timeout (>1000ms)**: Forces SAFE_VENT state
+7. **Malformed input**: Forces SAFE_VENT state
+8. **Safety constraint**: Never commands COMPRESSOR ON and VENT OPEN together
+
+The controller properly tracks sensor freshness separately for pressure and door, and applies the control policy based on current sensor states. It also tracks whether we came from pressurizing or relieving to restore the correct output when entering the holding band.
+
+The hidden grader confirms the implementation is correct (PASS status).

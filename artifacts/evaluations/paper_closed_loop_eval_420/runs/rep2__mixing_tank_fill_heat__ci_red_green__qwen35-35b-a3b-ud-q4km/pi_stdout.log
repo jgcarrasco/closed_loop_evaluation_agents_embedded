@@ -1,0 +1,30 @@
+The task is complete. Let me provide a summary of what was implemented:
+
+## Summary
+
+I successfully implemented the Mixing Tank Fill-and-Heat Controller for an ESP32-based embedded system. The controller manages a mixing tank with a fill inlet and heater, following these key rules:
+
+### Controller Logic (in `components/controller/controller.c`):
+1. **Boot state**: Inlet closed, heater off, SAFE_IDLE state
+2. **Sensor validity**: Both temperature and level sensors must be valid before control activates
+3. **Fill mode** (`LEVEL < 60`): Open inlet, keep heater off
+4. **High level** (`LEVEL > 75`): Close inlet, keep heater off
+5. **Low level guard** (`LEVEL < 55`): Keep heater off regardless of temperature
+6. **Heating mode** (`60 <= LEVEL <= 75` and `TEMP < 45`): Close inlet, turn heater on
+7. **Holding band** (`45 <= TEMP < 47`): Hold previous safe heater state
+8. **Early off** (`47 <= TEMP <= 48` with rising temp): Turn heater off early
+9. **Over-temp** (`TEMP > 48`): Close inlet, turn heater off
+10. **Timeout handling**: After 1000ms of stale sensor data, return to SAFE_IDLE
+
+### Tests Created (in `agent_tests/`):
+- `test_firmware_e2e.py`: 9 firmware-level end-to-end tests covering all acceptance criteria:
+  - Boot and initial actuator response
+  - Low level filling behavior
+  - Safe level heating behavior
+  - Rising temperature early shutdown
+  - Sensor timeout handling
+  - Nominal fill-then-heat sequence
+  - Low level heater guard
+  - High level behavior
+
+The implementation passed all visible self-tests and the hidden grader submission.

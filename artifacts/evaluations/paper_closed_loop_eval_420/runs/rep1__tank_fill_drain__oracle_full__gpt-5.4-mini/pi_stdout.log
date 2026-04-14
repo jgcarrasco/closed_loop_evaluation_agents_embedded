@@ -1,0 +1,24 @@
+Implemented the tank fill/drain controller policy in:
+
+- `components/controller/controller.c`
+
+Added visible verification coverage in:
+
+- `agent_tests/test_controller.py`
+
+Checks now covered include:
+
+- boot/default off
+- low level -> `ACT PUMP ON`
+- high level -> `ACT PUMP OFF`
+- mid-band hold behavior
+- short idle steps without timeout
+- malformed input -> safe off
+- timeout after >1000 ms -> safe off
+- firmware-level UART end-to-end nominal probe
+
+Validation completed successfully:
+
+- `python3 tools/run_build.py` ✅
+- `python3 tools/run_self_tests.py` ✅
+- `python3 tools/run_eval.py` ✅

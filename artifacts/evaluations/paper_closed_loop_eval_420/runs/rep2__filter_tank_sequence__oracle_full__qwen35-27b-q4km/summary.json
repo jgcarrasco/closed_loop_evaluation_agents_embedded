@@ -1,0 +1,122 @@
+{
+  "agent_name": "pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z",
+  "baseline_workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/filter_tank_sequence__oracle_full__qwen35-27b-q4km/baseline",
+  "efficiency": {
+    "build_attempts": 5,
+    "first_submission_at_utc": "2026-03-30T03:26:32.746000Z",
+    "hidden_eval_calls": 16,
+    "iterations": 16,
+    "time_to_first_submission_seconds": 816.594,
+    "wall_clock_seconds": 2262.3755104737356
+  },
+  "evaluation_dirs": [
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T032632Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T032935Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T033605Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034104Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034209Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034344Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034453Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034537Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034629Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034704Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034740Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034811Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034850Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034916Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T034932Z",
+    "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T035013Z"
+  ],
+  "final_hidden_outcome": {
+    "evaluation_dir": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T035013Z",
+    "failure_category": "host_tests",
+    "failure_family": "host_tests",
+    "hidden_summary_path": "$REPO_ROOT/experiments/results/filter_tank_sequence/pi-filter_tank_sequence-oracle_full-qwen35-27b-q4km-20260329T205029Z/20260330T035013Z/hidden_summary.md",
+    "infra_failure": false,
+    "infra_failure_reason": null,
+    "pass_fail": false,
+    "stage_reached": "host unit tests",
+    "status": "HOST_TEST_FAILED"
+  },
+  "mode": "oracle_full",
+  "model": {
+    "execution_group": "local",
+    "label": "qwen35-27b-q4km",
+    "model": "qwen35-27b-q4km",
+    "provider": "llama-cpp-eval"
+  },
+  "model_usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "completion_tokens": 66319,
+    "completion_tokens_after_first_submission": 49436,
+    "completion_tokens_before_first_submission": 16883,
+    "cost": 0.0,
+    "prompt_tokens": 3642400,
+    "prompt_tokens_after_first_submission": 2718926,
+    "prompt_tokens_before_first_submission": 923474,
+    "total_tokens": 3708719,
+    "total_tokens_after_first_submission": 2768362,
+    "total_tokens_before_first_submission": 940357
+  },
+  "pi_command": [
+    "pi",
+    "--provider",
+    "llama-cpp-eval",
+    "--model",
+    "qwen35-27b-q4km",
+    "--tools",
+    "read,bash,edit,write,grep,find,ls",
+    "--no-extensions",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--session-dir",
+    "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km/pi_session_dir",
+    "-p",
+    "You are in an embedded benchmark workspace. Read START_HERE.md, docs/00_common_instructions.md, docs/10_task.md, and experiment.json. Implement the required behavior only in the allowed files. Follow the visible workflow in this workspace and stop after your final submission. Use the visible build loop and your own tests when available. Turn each explicit acceptance bullet in docs/10_task.md into a visible test or explicit runtime probe before leaning on detailed hidden feedback. Include at least one firmware-level end-to-end runtime probe through UART, not just controller-only unit tests. This mode exposes detailed hidden feedback after submissions, so iterate until the task is solved or you are clearly stuck."
+  ],
+  "pi_returncode": 0,
+  "pi_timed_out": false,
+  "prompt_path": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km/prompt.txt",
+  "run_dir": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km",
+  "runner_exception": null,
+  "session_copy": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km/session.jsonl",
+  "stderr_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km/pi_stderr.log",
+  "stdout_log": "$REPO_ROOT/artifacts/evaluations/paper_closed_loop_eval_420/runs/rep2__filter_tank_sequence__oracle_full__qwen35-27b-q4km/pi_stdout.log",
+  "task_id": "filter_tank_sequence",
+  "testing_behavior": {
+    "false_green_denominator": 0,
+    "false_green_numerator": 0,
+    "false_green_rate": null,
+    "runtime_probe_case_count": 11,
+    "runtime_probe_executed": true,
+    "runtime_probe_files": [
+      "agent_tests/test_controller.py"
+    ],
+    "runtime_probe_present": true,
+    "runtime_probe_runs": 3,
+    "self_test_runs": 3,
+    "self_tests_written": 11
+  },
+  "tool_behavior": {
+    "files_touched": [
+      "agent_tests/test_controller.py",
+      "components/controller/controller.c"
+    ],
+    "files_touched_count": 2,
+    "lines_added": 545,
+    "lines_changed_total": 569,
+    "lines_deleted": 24,
+    "tool_call_breakdown": {
+      "bash": 28,
+      "edit": 16,
+      "grep": 2,
+      "ls": 7,
+      "read": 20,
+      "write": 2
+    },
+    "tool_call_count": 75
+  },
+  "workspace": "$TMPDIR/embedded_agent_eval_matrix/20260329T205029Z/filter_tank_sequence__oracle_full__qwen35-27b-q4km/workspace"
+}

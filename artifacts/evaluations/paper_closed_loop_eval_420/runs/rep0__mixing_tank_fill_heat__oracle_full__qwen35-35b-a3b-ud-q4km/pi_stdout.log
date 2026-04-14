@@ -1,0 +1,34 @@
+**SUCCESS!** All 6 scenarios pass:
+
+- **build**: PASS
+- **upload**: PASS  
+- **run**: PASS
+- **host unit tests**: PASS
+- **integration**: PASS (all 6 scenarios)
+
+The controller implementation is complete and working. Here's a summary of what was implemented:
+
+## Summary
+
+### Controller Logic (`components/controller/controller.c`)
+
+1. **Boot State**: Inlet closed, heater off, state = SAFE_IDLE
+
+2. **Sensor Validation**: Controller stays in safe state until both temperature AND level sensors have been seen validly
+
+3. **Control Policy**:
+   - **LEVEL < 60**: FILLING state - INLET OPEN, HEATER OFF
+   - **LEVEL > 75**: Close inlet, heat if temp < 45 and level >= 55
+   - **60 <= LEVEL <= 75** (working region):
+     - **TEMP < 45**: HEATING - INLET CLOSED, HEATER ON
+     - **45 <= TEMP < 47**: HOLDING - preserve previous heater state
+     - **47 <= TEMP <= 48**: Turn OFF heater early to prevent overshoot beyond 51°C hard limit
+     - **TEMP > 48**: SAFE_IDLE - INLET CLOSED, HEATER OFF
+
+4. **Sensor Timeout**: If either sensor hasn't received valid data for > 1000ms, transition to SAFE_IDLE (INLET CLOSED, HEATER OFF)
+
+### Tests (`agent_tests/test_controller.py`)
+
+- Unit tests covering all control policy branches
+- Firmware-level end-to-end runtime probes using `FirmwareSession`
+- Tests for: boot state, low-level filling, safe-level heating, heater guard at low level, early heater off at upper band, sensor timeout handling

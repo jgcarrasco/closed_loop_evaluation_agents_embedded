@@ -1,0 +1,30 @@
+The submission was recorded successfully. Let me verify my implementation one more time by reviewing what I've done:
+
+## Summary
+
+I have implemented a Tank Fill/Drain Controller that meets all the acceptance criteria from `docs/10_task.md`:
+
+### Implementation (`components/controller/controller.c`):
+1. **Default to PUMP OFF on boot** - The `controller_init()` function calls `controller_set_safe_off()` which sets `pump_on = false`
+2. **Turn pump ON when LEVEL < 30** - In `controller_step()`, when receiving a valid level input, if `level < CONTROLLER_LEVEL_LOW_THRESHOLD (30)`, sets `pump_on = true` and state to `CONTROLLER_STATE_PUMPING`
+3. **Turn pump OFF when LEVEL > 80** - If `level > CONTROLLER_LEVEL_HIGH_THRESHOLD (80)`, sets `pump_on = false` and state to `CONTROLLER_STATE_SAFE_OFF`
+4. **Hold previous safe output while 30 <= LEVEL <= 80** - For mid-band levels, sets state to `CONTROLLER_STATE_HOLDING` but leaves `pump_on` unchanged (preserves previous state)
+5. **Fail safe to PUMP OFF on malformed input or timeout** - Both `CONTROLLER_INPUT_SENSOR_TIMEOUT` and `CONTROLLER_INPUT_INVALID_LEVEL` cases call `controller_set_safe_off()`. Timeout is checked in `controller_check_timeout()` when no new valid input arrives for more than 1000ms
+
+### Added to header (`components/controller/include/controller.h`):
+- Added `bool timed_out;` member to `controller_t` struct to track timeout state
+
+### Tests (`agent_tests/test_controller.py`):
+Created comprehensive firmware-level end-to-end tests that verify all acceptance bullets:
+1. `test_boot_leaves_pump_off` - Boot leaves pump off
+2. `test_low_level_turns_pump_on` - LEVEL 20 produces ACT PUMP ON
+3. `test_high_level_turns_pump_off` - LEVEL 85 produces ACT PUMP OFF
+4. `test_mid_band_preserves_previous_output` - LEVEL 50 preserves previous pump state
+5. `test_short_idle_does_not_trip_timeout` - Short idle steps don't timeout
+6. `test_malformed_input_forces_pump_off` - Malformed input (negative level) forces OFF
+7. `test_sensor_timeout_forces_pump_off` - Loss of valid input for >1000ms forces OFF
+8. `test_nominal_low_to_high_sequence` - Full e2e probe with low→high sequence
+9. `test_full_cycle_low_mid_high` - Complete cycle: low → mid-band (hold) → high
+10. `test_fault_sensor_timeout_forces_off` - FAULT SENSOR_TIMEOUT forces OFF
+
+All 10 tests pass, including the required firmware-level end-to-end runtime probe through UART (`test_nominal_low_to_high_sequence`).

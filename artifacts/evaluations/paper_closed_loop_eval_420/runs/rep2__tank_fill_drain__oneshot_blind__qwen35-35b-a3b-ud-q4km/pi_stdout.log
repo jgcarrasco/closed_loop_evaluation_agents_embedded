@@ -1,0 +1,20 @@
+## Final Submission Status
+
+**Submission Recorded Successfully**
+
+- **Benchmark mode**: `oneshot_blind`
+- **Submission index**: 1 of 1
+- **Status**: SUBMISSION_RECORDED
+
+### Implementation Summary
+
+I implemented the tank fill/drain controller in `components/controller/controller.c` with the following behavior:
+
+1. **Boot state**: Pump starts OFF (via `controller_init`)
+2. **Low level (< 30)**: Turn pump ON, enter PUMPING state
+3. **High level (> 80)**: Turn pump OFF, enter SAFE_OFF state  
+4. **Mid-band (30-80)**: Hold previous pump state, enter HOLDING state
+5. **Malformed input / SENSOR_TIMEOUT**: Fail safe to OFF
+6. **Timeout handling**: When no valid sensor input for >1000ms, force OFF and set timeout flag
+
+The implementation follows the control policy specified in `docs/10_task.md` and respects the timing requirements for idle gaps vs. true timeout conditions.
